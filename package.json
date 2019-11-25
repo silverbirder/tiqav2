@@ -1,0 +1,25 @@
+{
+  "name": "budgie",
+  "version": "1.0.0",
+  "description": "budgie is the platform that provide image search API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silver-birder/budgie.git"
+  },
+  "keywords": [],
+  "author": "silverbirder <silverbirder@gmail.com> (https://silver-birder.github.io)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Silver-birder/budgie/issues"
+  },
+  "homepage": "https://github.com/Silver-birder/budgie#readme",
+  "dependencies": {
+    "@types/node": "^12.12.11",
+    "cloudinary": "^1.17.0"
+  }
+}
