@@ -1,4 +1,6 @@
-const {CloudinaryImage, Image} = require('./image')
+import { IImage } from './image/i_image'
+import {CloudinaryImage} from './image/cloudinaryImage'
 
-const image = new CloudinaryImage();
-image.save();
+let image: IImage;
+image = new CloudinaryImage();
+image.save('./my_image.jpg');
