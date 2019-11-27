@@ -1,4 +1,5 @@
 import {IImage} from './i_image';
+import * as cloudinary from 'cloudinary';
 
 export class CloudinaryImage extends IImage {
     private cloudinary: any;
@@ -17,8 +18,13 @@ export class CloudinaryImage extends IImage {
             api_secret: cloudApiSecret
         })
     }
-    async save(path: string): Promise<void>{
-        await this.cloudinary.uploader.upload(path);
-        return;
+    async save(path: string): Promise<JSON>{
+        const res: JSON = await this.cloudinary.uploader.upload(path);
+        console.log(`updated ${path}`)
+        console.log(res);
+        return res;
+    }
+    get(path: string): string{
+        return this.cloudinary.url(path)
     }
 }
