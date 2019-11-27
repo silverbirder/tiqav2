@@ -5,3 +5,4 @@ let image: IImage;
 image = new CloudinaryImage();
 // image.save('./my_image.jpg');
 // console.logimage.get('mrfvbud0m4z0jeklxcaa'));
+image.text('./my_image.jpg');

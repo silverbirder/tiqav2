@@ -1,22 +1,23 @@
 import {IImage} from './i_image';
-import * as cloudinary from 'cloudinary';
 
 export class CloudinaryImage extends IImage {
     private cloudinary: any;
+    private vision: any;
     constructor() {
         super();
-        const clondName: string = process.env.CLOUDINARY_CLOUD_NAME || '';
-        const cloudApiKey: string = process.env.CLOUDINARY_API_KEY || '';
-        const cloudApiSecret: string = process.env.CLOUDINARY_API_SECRET || '';
-        if (!clondName || !cloudApiKey || !cloudApiSecret) {
-            throw new Error('No set cloudinary environment');
-        }
+        // const clondName: string = process.env.CLOUDINARY_CLOUD_NAME || '';
+        // const cloudApiKey: string = process.env.CLOUDINARY_API_KEY || '';
+        // const cloudApiSecret: string = process.env.CLOUDINARY_API_SECRET || '';
+        // if (!clondName || !cloudApiKey || !cloudApiSecret) {
+        //     throw new Error('No set cloudinary environment');
+        // }
         this.cloudinary = require('cloudinary').v2;
-        this.cloudinary.config({
-            cloud_name: clondName,
-            api_key: cloudApiKey,
-            api_secret: cloudApiSecret
-        })
+        // this.cloudinary.config({
+        //     cloud_name: clondName,
+        //     api_key: cloudApiKey,
+        //     api_secret: cloudApiSecret
+        // })
+        this.vision = require('@google-cloud/vision');
     }
     async save(path: string): Promise<JSON>{
         const res: JSON = await this.cloudinary.uploader.upload(path);
@@ -27,4 +28,10 @@ export class CloudinaryImage extends IImage {
     get(path: string): string{
         return this.cloudinary.url(path)
     }
+    async text(path: string): Promise<string> {
+        const results: any = await new this.vision.ImageAnnotatorClient().textDetection(path);
+        const labels = results[0].textAnnotations;
+        labels.forEach((label: { description: any; }) => console.log(label.description));
+        return '';
+  };
 }

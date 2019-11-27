@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Silver-birder/budgie#readme",
   "dependencies": {
+    "@google-cloud/vision": "^1.7.2",
     "@types/node": "^12.12.11",
     "cloudinary": "^1.17.0"
   }
