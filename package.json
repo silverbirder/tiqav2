@@ -22,6 +22,10 @@
   "dependencies": {
     "@google-cloud/vision": "^1.7.2",
     "@types/node": "^12.12.11",
+    "algoliasearch": "^3.35.1",
     "cloudinary": "^1.17.0"
+  },
+  "devDependencies": {
+    "@types/algoliasearch": "^3.34.6"
   }
 }
