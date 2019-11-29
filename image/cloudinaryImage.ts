@@ -29,9 +29,9 @@ export class CloudinaryImage extends IImage {
         return this.cloudinary.url(path)
     }
     async text(path: string): Promise<string> {
-        const results: any = await new this.vision.ImageAnnotatorClient().textDetection(path);
-        const labels = results[0].textAnnotations;
-        labels.forEach((label: { description: any; }) => console.log(label.description));
-        return '';
+        const client = new this.vision.ImageAnnotatorClient();
+        const detectedTexts: Array<any> = await client.textDetection(path);
+        const fullTextAnnotation: string = detectedTexts[0].fullTextAnnotation.text;
+        return fullTextAnnotation;
   };
 }
