@@ -14,10 +14,6 @@ export class CloudinaryImage extends IImage {
         if (!clondName || !cloudApiKey || !cloudApiSecret) {
             throw new Error('Not set cloudinary environment');
         }
-        const googleAppCredentials: string = process.env.GOOGLE_APPLICATION_CREDENTIALS || '';
-        if (!googleAppCredentials) {
-            throw new Error('Not set google app credential enviroments');
-        }
         const algoliaAppId: string = process.env.ALGOLIA_APP_ID || '';
         const algoliaSearchKey: string = process.env.ALGOLIA_SEARCH_KEY || '';
         const algoliaAdminKey: string = process.env.ALGOLIA_ADMIN_KEY || '';

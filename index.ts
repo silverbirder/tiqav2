@@ -3,13 +3,13 @@ import {CloudinaryImage} from './image/cloudinaryImage'
 import express from 'express';
 
 const app = express();
-app.get('/save', (req, res) => {
+app.get('/save', async (req, res) => {
     if (!req.query.url) {
         res.send('not exit query parameter: url');
     }
     let image: IImage;
     image = new CloudinaryImage();
-    image.save(req.query.url);
+    await image.save(req.query.url);
     res.send('end');
 });
 app.get('/search', async (req, res) => {
@@ -21,4 +21,5 @@ app.get('/search', async (req, res) => {
     const result: any = await image.search(req.query.q);
     res.json(result.hits);
 });
-app.listen(8080, () => console.log('Listening on port 8080'));
+const port: string = process.env.PORT || '8080';
+app.listen(port, () => console.log(`Listening on port ${port}`));
