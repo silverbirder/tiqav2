@@ -1,6 +1,31 @@
-import {IImage} from './i_image';
+import {IImage, ISearchResults} from './i_image';
 interface IVisionClient {
-    annotateImage(args: any): any;
+    annotateImage(args: IAnnotateImageArgs): Array<IAnnotatedImage>;
+}
+interface IAnnotateImageArgs {
+  image: {
+    source: IImageSource
+  },
+  features: Array<IFeatures>
+}
+interface IUpload {
+    secure_url: string
+}
+interface IImageSource {
+    filename?: string,
+    imageUri?: string
+}
+interface IImageObject {
+    url: string,
+    text: string
+}
+interface IFeatures {
+    type: string
+}
+interface IAnnotatedImage {
+    fullTextAnnotation: {
+        text: string
+    }
 }
 const vision = require('@google-cloud/vision');
 import algoliasearch from "algoliasearch";
@@ -37,9 +62,9 @@ export class CloudinaryImage extends IImage {
         this.visionClient = new vision.ImageAnnotatorClient();
     }
     async save(path: string): Promise<void>{
-        const res: any = await v2.uploader.upload(path);
+        const res: IUpload = await v2.uploader.upload(path);
         const text: string = await this.text(path);
-        const objects: Array<object> = [
+        const objects: Array<IImageObject> = [
             {
                 "url":res.secure_url,
                 "text": text
@@ -49,11 +74,11 @@ export class CloudinaryImage extends IImage {
         return;
     }
     async text(path: string): Promise<string> {
-        const imageSource: any = path.startsWith("http") ? {"imageUri": path}: {"filename": path};
-        const features: Array<any> = [
+        const imageSource: IImageSource = path.startsWith("http") ? {"imageUri": path}: {"filename": path};
+        const features: Array<IFeatures> = [
             {type:"DOCUMENT_TEXT_DETECTION"}
         ];
-        const annotatedImages: any = await this.visionClient.annotateImage(
+        const annotatedImages: Array<IAnnotatedImage> = await this.visionClient.annotateImage(
             {
                 "image": {
                     "source": imageSource
@@ -61,14 +86,14 @@ export class CloudinaryImage extends IImage {
                 "features": features
             }
         );
-        const annotatedImage: any = annotatedImages[0];
+        const annotatedImage: IAnnotatedImage = annotatedImages[0];
         if(annotatedImage.fullTextAnnotation !== null) {
            return annotatedImage.fullTextAnnotation.text;
         }
         return '';
     };
-    async search(text: string): Promise<any> {
-      const response:algoliasearch.Response<any> = await this.alogoliaSearchIndex.search(text);
+    async search(text: string): Promise<ISearchResults> {
+      const response:algoliasearch.Response<ISearchResults> = await this.alogoliaSearchIndex.search(text);
       return response;
     }
 }
