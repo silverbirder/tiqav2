@@ -1,11 +1,15 @@
 import {IImage} from './i_image';
-import { ClientRequest } from 'http';
+interface IVisionClient {
+    annotateImage(args: any): any;
+}
+const vision = require('@google-cloud/vision');
+import algoliasearch from "algoliasearch";
+import {v2} from 'cloudinary';
 
 export class CloudinaryImage extends IImage {
-    private cloudinary: any;
-    private vision: any;
-    private alogoliaSearchIndex: any;
-    private alogoliaAdminIndex: any;
+    private alogoliaSearchIndex: algoliasearch.Index;
+    private alogoliaAdminIndex: algoliasearch.Index;
+    private visionClient: IVisionClient;
     constructor() {
         super();
         const clondName: string = process.env.CLOUDINARY_CLOUD_NAME || '';
@@ -21,53 +25,35 @@ export class CloudinaryImage extends IImage {
         if (!algoliaAppId || !algoliaSearchKey || !algoliaAdminKey || !algoliaIndexName) {
             throw new Error('Not set algolia enviroments');
         }
-        this.cloudinary = require('cloudinary').v2;
-        this.vision = require('@google-cloud/vision');
-        const algolia: any = require('algoliasearch');
-        this.cloudinary.config({
+        v2.config({
             cloud_name: clondName,
             api_key: cloudApiKey,
             api_secret: cloudApiSecret
-        })
-        const algoliaSearchClient:any = algolia(algoliaAppId, algoliaSearchKey);
-        const algoliaAdminClient: any = algolia(algoliaAppId, algoliaAdminKey);
+        });
+        const algoliaSearchClient: algoliasearch.Client = algoliasearch(algoliaAppId, algoliaSearchKey);
+        const algoliaAdminClient: algoliasearch.Client = algoliasearch(algoliaAppId, algoliaAdminKey);
         this.alogoliaSearchIndex = algoliaSearchClient.initIndex(algoliaIndexName);
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
+        this.visionClient = new vision.ImageAnnotatorClient();
     }
     async save(path: string): Promise<void>{
-        const res: any = await this.cloudinary.uploader.upload(path);
+        const res: any = await v2.uploader.upload(path);
         const text: string = await this.text(path);
         const objects: Array<object> = [
             {
                 "url":res.secure_url,
                 "text": text
             }
-        ]
-        this.alogoliaAdminIndex.addObjects(objects)
+        ];
+        await this.alogoliaAdminIndex.addObjects(objects);
         return;
     }
-    get(path: string): string{
-        return this.cloudinary.url(path)
-    }
     async text(path: string): Promise<string> {
-        const client = new this.vision.ImageAnnotatorClient();
         const imageSource: any = path.startsWith("http") ? {"imageUri": path}: {"filename": path};
         const features: Array<any> = [
-            // {type:"TYPE_UNSPECIFIED"},
-            // {type:"FACE_DETECTION"},
-            // {type:"LANDMARK_DETECTION"},
-            // {type:"LOGO_DETECTION"},
-            // {type:"LABEL_DETECTION"},
-            // {type:"TEXT_DETECTION"},
             {type:"DOCUMENT_TEXT_DETECTION"}
-            // {type:"SAFE_SEARCH_DETECTION"},
-            // {type:"IMAGE_PROPERTIES"},
-            // {type:"CROP_HINTS"},
-            // {type:"WEB_DETECTION"},
-            // {type:"PRODUCT_SEARCH"},
-            // {type:"OBJECT_LOCALIZATION"}
         ];
-        const annotatedImages: any = await client.annotateImage(
+        const annotatedImages: any = await this.visionClient.annotateImage(
             {
                 "image": {
                     "source": imageSource
@@ -81,8 +67,8 @@ export class CloudinaryImage extends IImage {
         }
         return '';
     };
-    async search(text: string): Promise<JSON> {
-      const response:any = await this.alogoliaSearchIndex.search(text);
+    async search(text: string): Promise<any> {
+      const response:algoliasearch.Response<any> = await this.alogoliaSearchIndex.search(text);
       return response;
     }
 }
