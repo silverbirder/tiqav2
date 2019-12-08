@@ -28,8 +28,8 @@ interface IAnnotatedImage {
     }
 }
 const vision = require('@google-cloud/vision');
+const v2 = require('cloudinary');
 import algoliasearch from "algoliasearch";
-import {v2} from 'cloudinary';
 
 export class CloudinaryImage extends IImage {
     private alogoliaSearchIndex: algoliasearch.Index;

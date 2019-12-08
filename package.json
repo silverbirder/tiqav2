@@ -2,11 +2,11 @@
   "name": "budgie",
   "version": "1.0.0",
   "description": "budgie is the platform that provide image search API",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "start": "node index.js"
+    "start:dev": "webpack -w --mode development & nodemon ./dist/index.js",
+    "start:prod": "webpack --mode production & nodemon ./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,13 +21,19 @@
   "homepage": "https://github.com/Silver-birder/budgie#readme",
   "dependencies": {
     "@google-cloud/vision": "^1.7.2",
-    "@types/express": "^4.17.2",
-    "@types/node": "^12.12.11",
     "algoliasearch": "^3.35.1",
     "cloudinary": "^1.17.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "@types/algoliasearch": "^3.34.6"
+    "@types/algoliasearch": "^3.34.6",
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.14",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-node-externals": "^1.7.2"
   }
 }

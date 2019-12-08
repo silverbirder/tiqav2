@@ -66,3 +66,6 @@ typings/
 
 credentials/*
 !credentials/.gitkeep
+
+dist
+!dist/.gitkeep
