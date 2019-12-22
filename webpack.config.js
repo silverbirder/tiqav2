@@ -6,7 +6,7 @@ module.exports = {
     target: 'node',
     externals: [nodeExternals()],
     mode: "development",
-    entry: './src/index.ts',
+    entry: './src/infrastructure/server.ts',
     devtool: 'inline-source-map',
     module: {
         rules: [
