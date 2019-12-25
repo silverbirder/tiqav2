@@ -1,4 +1,4 @@
-export default class searchPresenter {
+export default class SearchPresenterImpl {
     invoke(data: any): any {
         return data
     }

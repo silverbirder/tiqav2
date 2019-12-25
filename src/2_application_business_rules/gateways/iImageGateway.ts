@@ -1,3 +1,3 @@
-export abstract class IImage {
+export abstract class IImageGateway {
     abstract async save(path: string): Promise<string>;
 }

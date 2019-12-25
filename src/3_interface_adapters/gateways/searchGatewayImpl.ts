@@ -1,12 +1,10 @@
-import {ISearch, ISearchResults} from "../application/repository/iSearch";
+import {IImageObject, ISearchGateway, ISearchResults} from "../../2_application_business_rules/gateways/iSearchGateway";
 import algoliasearch from "algoliasearch";
-export interface IImageObject {
-    url: string,
-    text: string
-}
-export class Search extends ISearch {
+
+export class SearchGatewayImpl extends ISearchGateway {
     private alogoliaSearchIndex: algoliasearch.Index;
     private alogoliaAdminIndex: algoliasearch.Index;
+
     constructor() {
         super();
         const algoliaAppId: string = process.env.ALGOLIA_APP_ID || '';
@@ -21,10 +19,12 @@ export class Search extends ISearch {
         this.alogoliaSearchIndex = algoliaSearchClient.initIndex(algoliaIndexName);
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
+
     async search(text: string): Promise<ISearchResults> {
-        const response:algoliasearch.Response<ISearchResults> = await this.alogoliaSearchIndex.search(text);
+        const response: algoliasearch.Response<ISearchResults> = await this.alogoliaSearchIndex.search(text);
         return response;
     }
+
     async save(objects: Array<IImageObject>): Promise<any> {
         await this.alogoliaAdminIndex.addObjects(objects);
         return;

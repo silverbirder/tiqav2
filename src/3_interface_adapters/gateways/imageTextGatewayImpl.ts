@@ -1,4 +1,4 @@
-import {IImageText} from '../application/repository/iImageText';
+import {IImageTextGateway} from '../../2_application_business_rules/gateways/iImageTextGateway';
 interface IVisionClient {
     annotateImage(args: IAnnotateImageArgs): Array<IAnnotatedImage>;
 }
@@ -22,7 +22,7 @@ interface IAnnotatedImage {
 }
 const vision = require('@google-cloud/vision');
 
-export class ImageText extends IImageText {
+export class ImageTextGatewayImpl extends IImageTextGateway {
     private visionClient: IVisionClient;
     constructor() {
         super();

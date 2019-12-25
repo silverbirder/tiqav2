@@ -1,5 +1,5 @@
 # budgie
-budgie is the platform that provide image search API
+budgie is the platform that provide IImageGateway ISearchGateway API
 
 ```bash
 $ export CLOUDINARY_CLOUD_NAME=<YOUR_CLOUDINARY_CLOUD_NAME>

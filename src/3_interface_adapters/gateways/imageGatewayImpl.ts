@@ -1,10 +1,12 @@
-import {IImage} from '../application/repository/iImage';
+import {IImageGateway} from '../../2_application_business_rules/gateways/iImageGateway';
+
 interface IUpload {
     secure_url: string
 }
+
 const v2 = require('cloudinary');
 
-export class Image extends IImage {
+export class ImageGatewayImpl extends IImageGateway {
     constructor() {
         super();
         const clondName: string = process.env.CLOUDINARY_CLOUD_NAME || '';
@@ -19,7 +21,8 @@ export class Image extends IImage {
             api_secret: cloudApiSecret
         });
     }
-    async save(path: string): Promise<string>{
+
+    async save(path: string): Promise<string> {
         const res: IUpload = await v2.uploader.upload(path);
         return res.secure_url;
     }
