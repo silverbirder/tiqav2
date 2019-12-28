@@ -5,9 +5,10 @@ import {IImageGateway} from "../gateways/iImageGateway";
 import {ISearchGateway} from "../gateways/iSearchGateway";
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../types";
+import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
 
 @injectable()
-export default class SaveUseCaseImpl implements IUseCase {
+export default class SaveInteractorImpl implements IUseCase {
     private imageTextGateWay: IImageTextGateway;
     private imageGateWay: IImageGateway;
     private searchGateWay: ISearchGateway;
@@ -21,7 +22,8 @@ export default class SaveUseCaseImpl implements IUseCase {
         this.searchGateWay = searchGateWay;
     }
 
-    async invoke(url: string): Promise<any> {
+    async invoke(inputPort: IInputPort<string>): Promise<any> {
+        const url: string = inputPort.get();
         const text = await this.imageTextGateWay.text(url);
         const saved_url = await this.imageGateWay.save(url);
         const content: Array<IImageObject> = [{

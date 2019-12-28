@@ -1,3 +1,5 @@
+import {IInputPort} from "./port/iInputPort";
+
 export interface IUseCase {
-    invoke(i: any): any;
+    invoke(i: IInputPort<string>): any;
 }
