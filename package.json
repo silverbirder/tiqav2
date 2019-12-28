@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "webpack --mode development & ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpileOnly ./dist/index.js",
     "start:dev": "webpack -w --mode development & nodemon ./dist/index.js",
     "start:prod": "webpack --mode production & nodemon ./dist/index.js"
   },
@@ -33,6 +34,7 @@
     "@types/node": "^12.12.14",
     "nodemon": "^2.0.1",
     "ts-loader": "^6.2.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
