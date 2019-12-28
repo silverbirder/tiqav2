@@ -1,12 +1,13 @@
 import {IImageObject, ISearchGateway, ISearchResults} from "../../2_application_business_rules/gateways/iSearchGateway";
 import algoliasearch from "algoliasearch";
+import {injectable} from "inversify";
 
-export class SearchGatewayImpl extends ISearchGateway {
+@injectable()
+export class SearchGatewayImpl implements ISearchGateway {
     private alogoliaSearchIndex: algoliasearch.Index;
     private alogoliaAdminIndex: algoliasearch.Index;
 
     constructor() {
-        super();
         const algoliaAppId: string = process.env.ALGOLIA_APP_ID || '';
         const algoliaSearchKey: string = process.env.ALGOLIA_SEARCH_KEY || '';
         const algoliaAdminKey: string = process.env.ALGOLIA_ADMIN_KEY || '';

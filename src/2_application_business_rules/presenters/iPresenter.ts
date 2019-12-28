@@ -1,3 +1,3 @@
-export abstract class IPresenter {
-    abstract invoke(i: any): any;
+export interface IPresenter {
+    invoke(i: any): any;
 }

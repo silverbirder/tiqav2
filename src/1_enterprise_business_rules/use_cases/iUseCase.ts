@@ -1,3 +1,3 @@
-export abstract class IUseCase {
-    abstract invoke(i: any): any;
+export interface IUseCase {
+    invoke(i: any): any;
 }

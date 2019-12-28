@@ -2,12 +2,11 @@ import {ISearchGateway} from "../gateways/iSearchGateway";
 import {IUseCase} from "../../1_enterprise_business_rules/use_cases/iUseCase";
 import {IPresenter} from "../presenters/iPresenter";
 
-export default class SearchUseCaseImpl extends IUseCase {
+export default class SearchUseCaseImpl implements IUseCase {
     private searchGateWay: ISearchGateway;
     private presenter: IPresenter;
 
     constructor(searchGateWay: ISearchGateway, presenter: IPresenter) {
-        super();
         this.searchGateWay = searchGateWay;
         this.presenter = presenter;
     }

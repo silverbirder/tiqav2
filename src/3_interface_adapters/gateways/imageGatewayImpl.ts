@@ -1,4 +1,5 @@
 import {IImageGateway} from '../../2_application_business_rules/gateways/iImageGateway';
+import {injectable} from "inversify";
 
 interface IUpload {
     secure_url: string
@@ -6,9 +7,9 @@ interface IUpload {
 
 const v2 = require('cloudinary');
 
-export class ImageGatewayImpl extends IImageGateway {
+@injectable()
+export class ImageGatewayImpl implements IImageGateway {
     constructor() {
-        super();
         const clondName: string = process.env.CLOUDINARY_CLOUD_NAME || '';
         const cloudApiKey: string = process.env.CLOUDINARY_API_KEY || '';
         const cloudApiSecret: string = process.env.CLOUDINARY_API_SECRET || '';

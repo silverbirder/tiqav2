@@ -1,4 +1,5 @@
 import {IImageTextGateway} from '../../2_application_business_rules/gateways/iImageTextGateway';
+import {injectable} from "inversify";
 interface IVisionClient {
     annotateImage(args: IAnnotateImageArgs): Array<IAnnotatedImage>;
 }
@@ -22,10 +23,10 @@ interface IAnnotatedImage {
 }
 const vision = require('@google-cloud/vision');
 
-export class ImageTextGatewayImpl extends IImageTextGateway {
+@injectable()
+export class ImageTextGatewayImpl implements IImageTextGateway {
     private visionClient: IVisionClient;
     constructor() {
-        super();
         this.visionClient = new vision.ImageAnnotatorClient();
     }
 

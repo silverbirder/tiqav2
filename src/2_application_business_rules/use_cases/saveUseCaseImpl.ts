@@ -4,13 +4,15 @@ import {IImageTextGateway} from "../gateways/iImageTextGateway";
 import {IImageGateway} from "../gateways/iImageGateway";
 import {ISearchGateway} from "../gateways/iSearchGateway";
 
-export default class SaveUseCaseImpl extends IUseCase {
+export default class SaveUseCaseImpl implements IUseCase {
     private imageTextGateWay: IImageTextGateway;
     private imageGateWay: IImageGateway;
     private searchGateWay: ISearchGateway;
 
-    constructor(imageTextGateWay: IImageTextGateway, imageGateWay: IImageGateway, searchGateWay: ISearchGateway) {
-        super();
+    constructor(
+        imageTextGateWay: IImageTextGateway,
+        imageGateWay: IImageGateway,
+        searchGateWay: ISearchGateway) {
         this.imageTextGateWay = imageTextGateWay;
         this.imageGateWay = imageGateWay;
         this.searchGateWay =  searchGateWay;

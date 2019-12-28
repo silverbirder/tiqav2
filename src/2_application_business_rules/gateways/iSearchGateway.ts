@@ -7,8 +7,7 @@ export interface IImageObject {
     text: string
 }
 
-export abstract class ISearchGateway {
-    abstract async search(text: string): Promise<ISearchResults>;
-
-    abstract async save(objects: Array<IImageObject>): Promise<any>;
+export interface ISearchGateway {
+    search(text: string): Promise<ISearchResults>;
+    save(objects: Array<IImageObject>): Promise<any>;
 }

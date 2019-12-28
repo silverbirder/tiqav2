@@ -1,3 +1,3 @@
-export abstract class IController {
-    abstract invoke(i: any): any;
+export interface IController {
+    invoke(i: any): any;
 }
