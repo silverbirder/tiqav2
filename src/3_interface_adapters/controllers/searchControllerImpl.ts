@@ -15,7 +15,7 @@ export default class SearchControllerImpl implements IController {
         this.useCase = useCase;
     }
 
-    invoke(q: any): any {
+    invoke(q: string): any {
         const inputPort: IInputPort<string> = new SearchInputPortImpl(q);
         return this.useCase.invoke(inputPort);
     }

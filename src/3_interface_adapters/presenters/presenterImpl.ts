@@ -4,7 +4,7 @@ import {IOutputPort} from "../../1_enterprise_business_rules/use_cases/port/iOut
 
 @injectable()
 export default class PresenterImpl<T> implements IPresenter<T> {
-    invoke(outputPort: IOutputPort<T>): any {
+    invoke(outputPort: IOutputPort<T>): IOutputPort<T> {
         return outputPort;
     }
 }
