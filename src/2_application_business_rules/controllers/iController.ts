@@ -1,3 +1,3 @@
 export interface IController {
-    invoke(i: any): any;
+    invoke(i: string): any;
 }
