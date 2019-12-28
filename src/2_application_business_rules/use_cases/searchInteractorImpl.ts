@@ -5,7 +5,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../../types";
 import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
 import {IOutputPort} from "../../1_enterprise_business_rules/use_cases/port/iOutputPort";
-import SearchOutputPort from "./port/output/SearchInputPortImpl";
+import SearchOutputPort from "./port/output/SearchOutputPortImpl";
 
 @injectable()
 export default class SearchInteractorImpl implements IUseCase {
