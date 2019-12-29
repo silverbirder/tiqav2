@@ -1,5 +1,7 @@
-export interface ISearchResults {
-    hits: any
+export interface IHit {
+    url: string,
+    text: string,
+    objectID: string,
 }
 
 export interface IImageObject {
@@ -8,6 +10,7 @@ export interface IImageObject {
 }
 
 export interface ISearchGateway {
-    search(text: string): Promise<ISearchResults>;
+    search(text: string): Promise<Array<IHit>>;
+
     save(objects: Array<IImageObject>): Promise<any>;
 }

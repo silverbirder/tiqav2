@@ -7,16 +7,16 @@ import SearchInputPortImpl from "../../2_application_business_rules/use_cases/po
 
 @injectable()
 export default class SearchControllerImpl implements IController {
-    useCase: IUseCase;
+    private readonly _useCase: IUseCase;
 
     constructor(
         @inject(TYPES.SearchUseCase) useCase: IUseCase
     ) {
-        this.useCase = useCase;
+        this._useCase = useCase;
     }
 
     invoke(q: string): any {
         const inputPort: IInputPort<string> = new SearchInputPortImpl(q);
-        return this.useCase.invoke(inputPort);
+        return this._useCase.invoke(inputPort);
     }
 }

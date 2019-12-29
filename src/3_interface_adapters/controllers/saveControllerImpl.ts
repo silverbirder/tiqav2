@@ -7,16 +7,16 @@ import SaveInputPortImpl from "../../2_application_business_rules/use_cases/port
 
 @injectable()
 export default class SaveControllerImpl implements IController {
-    useCase: IUseCase;
+    private readonly _useCase: IUseCase;
 
     constructor(
         @inject(TYPES.SaveUseCase) useCase: IUseCase
     ) {
-        this.useCase = useCase;
+        this._useCase = useCase;
     }
 
     invoke(url: string): any {
         const inputPort: IInputPort<string> = new SaveInputPortImpl(url);
-        return this.useCase.invoke(inputPort);
+        return this._useCase.invoke(inputPort);
     }
 }

@@ -1,4 +1,8 @@
-import {IImageObject, ISearchGateway, ISearchResults} from "../../2_application_business_rules/gateways/iSearchGateway";
+import {
+    IHit,
+    IImageObject,
+    ISearchGateway,
+} from "../../2_application_business_rules/gateways/iSearchGateway";
 import algoliasearch from "algoliasearch";
 import {injectable} from "inversify";
 
@@ -21,9 +25,9 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(text: string): Promise<ISearchResults> {
-        const response: algoliasearch.Response<ISearchResults> = await this.alogoliaSearchIndex.search(text);
-        return response;
+    async search(text: string): Promise<Array<IHit>> {
+        const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search(text);
+        return response.hits;
     }
 
     async save(objects: Array<IImageObject>): Promise<any> {

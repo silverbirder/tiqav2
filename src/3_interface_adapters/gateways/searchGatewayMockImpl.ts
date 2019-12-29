@@ -1,16 +1,22 @@
 import {injectable} from "inversify";
-import {IImageObject, ISearchGateway, ISearchResults} from "../../2_application_business_rules/gateways/iSearchGateway";
+import {
+    IHit,
+    IImageObject,
+    ISearchGateway,
+} from "../../2_application_business_rules/gateways/iSearchGateway";
 
 @injectable()
 export class SearchGatewayMockImpl implements ISearchGateway {
     constructor() {
     }
-    async search(text: string): Promise<ISearchResults> {
+    async search(text: string): Promise<Array<IHit>> {
         return new Promise(function(resolve) {
-            const results: ISearchResults = {
-                "hits": 10
+            const hit: IHit = {
+                "url": "http://example.com",
+                "text": "example",
+                "objectID": "A"
             };
-            resolve(results);
+            resolve(Array(hit));
         });
     }
     async save(objects: Array<IImageObject>): Promise<any> {
