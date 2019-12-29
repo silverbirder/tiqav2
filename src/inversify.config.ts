@@ -8,13 +8,15 @@ import {ISearchGateway} from "./2_application_business_rules/gateways/iSearchGat
 import {SearchGatewayImpl} from "./3_interface_adapters/gateways/searchGatewayImpl";
 import {IPresenter} from "./2_application_business_rules/presenters/iPresenter";
 import PresenterImpl from "./3_interface_adapters/presenters/presenterImpl";
-import SearchInteractorImpl from "./2_application_business_rules/use_cases/searchInteractorImpl";
+import SearchNormalInteractorImpl from "./2_application_business_rules/use_cases/searchNormalInteractorImpl";
 import {IUseCase} from "./1_enterprise_business_rules/use_cases/iUseCase";
 import SaveInteractorImpl from "./2_application_business_rules/use_cases/saveInteractorImpl";
 import {IController} from "./2_application_business_rules/controllers/iController";
 import SearchControllerImpl from "./3_interface_adapters/controllers/searchControllerImpl";
 import SaveControllerImpl from "./3_interface_adapters/controllers/saveControllerImpl";
 import {IResults} from "./2_application_business_rules/use_cases/port/output/SearchOutputPortImpl";
+import SearchNewestInteractorImpl from "./2_application_business_rules/use_cases/searchNewestInteractorImpl";
+import SearchRandomInteractorImpl from "./2_application_business_rules/use_cases/searchRandomInteractorImpl";
 
 const container = new Container();
 
@@ -24,7 +26,9 @@ container.bind<ISearchGateway>(TYPES.SearchGateway).to(SearchGatewayImpl);
 
 container.bind<IPresenter<IResults>>(TYPES.Presenter).to(PresenterImpl);
 
-container.bind<IUseCase>(TYPES.SearchUseCase).to(SearchInteractorImpl);
+container.bind<IUseCase>(TYPES.SearchNormalUseCase).to(SearchNormalInteractorImpl);
+container.bind<IUseCase>(TYPES.SearchNewestUseCase).to(SearchNewestInteractorImpl);
+container.bind<IUseCase>(TYPES.SearchRandomUseCase).to(SearchRandomInteractorImpl);
 container.bind<IUseCase>(TYPES.SaveUseCase).to(SaveInteractorImpl);
 
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);

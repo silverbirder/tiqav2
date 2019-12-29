@@ -5,8 +5,13 @@ import {TYPES} from "../../types";
 import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
 import SaveInputPortImpl from "../../2_application_business_rules/use_cases/port/input/SaveInputPortImpl";
 
+export const SAVE_TYPES = {
+    NORMAL: Symbol.for("NORMAL"),
+};
+
 @injectable()
 export default class SaveControllerImpl implements IController {
+    type: Symbol = SAVE_TYPES.NORMAL;
     private readonly _useCase: IUseCase;
 
     constructor(

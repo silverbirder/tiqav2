@@ -12,5 +12,9 @@ export interface IImageObject {
 export interface ISearchGateway {
     search(text: string): Promise<Array<IHit>>;
 
+    newest(): Promise<Array<IHit>>;
+
+    random(): Promise<Array<IHit>>;
+
     save(objects: Array<IImageObject>): Promise<any>;
 }

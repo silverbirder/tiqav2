@@ -9,7 +9,7 @@ import SearchOutputPort from "./port/output/SearchOutputPortImpl";
 import {IResults} from "./port/output/SearchOutputPortImpl";
 
 @injectable()
-export default class SearchInteractorImpl implements IUseCase {
+export default class SearchNewestInteractorImpl implements IUseCase {
     private searchGateWay: ISearchGateway;
     private presenter: IPresenter<IResults>;
 
@@ -20,9 +20,8 @@ export default class SearchInteractorImpl implements IUseCase {
         this.presenter = presenter;
     }
 
-    async invoke(input: IInputPort<string>): Promise<any> {
-        const keyword: string = input.get();
-        const hits: Array<IHit> = await this.searchGateWay.search(keyword);
+    async invoke(_: IInputPort<string>): Promise<any> {
+        const hits: Array<IHit> = await this.searchGateWay.newest();
         const outPutPort: IOutputPort<IResults> = new SearchOutputPort();
         hits.forEach((value: IHit) => {
             outPutPort.add(value.objectID, value.url, value.text);
