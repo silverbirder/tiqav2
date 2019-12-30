@@ -1,14 +1,14 @@
-import {injectable} from "inversify";
+import {injectable} from 'inversify';
 import {
     IHit,
     IImageObject,
     ISearchGateway,
-} from "../../2_application_business_rules/gateways/iSearchGateway";
+} from '../../2_application_business_rules/gateways/iSearchGateway';
 
 const hit: IHit = {
-    "url": "http://example.com",
-    "text": "example",
-    "objectID": "A"
+    'url': 'http://example.com',
+    'text': 'example',
+    'objectID': 'A'
 };
 const hits: Array<IHit> = Array(hit);
 

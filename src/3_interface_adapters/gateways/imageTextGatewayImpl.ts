@@ -1,5 +1,5 @@
 import {IImageTextGateway} from '../../2_application_business_rules/gateways/iImageTextGateway';
-import {injectable} from "inversify";
+import {injectable} from 'inversify';
 
 interface IVisionClient {
     annotateImage(args: IAnnotateImageArgs): Array<IAnnotatedImage>;
@@ -38,16 +38,16 @@ export class ImageTextGatewayImpl implements IImageTextGateway {
     }
 
     async text(path: string): Promise<string> {
-        const imageSource: IImageSource = path.startsWith("http") ? {"imageUri": path} : {"filename": path};
+        const imageSource: IImageSource = path.startsWith('http') ? {imageUri: path} : {filename: path};
         const features: Array<IFeatures> = [
-            {type: "DOCUMENT_TEXT_DETECTION"}
+            {type: 'DOCUMENT_TEXT_DETECTION'}
         ];
         const annotatedImages: Array<IAnnotatedImage> = await this.visionClient.annotateImage(
             {
-                "image": {
-                    "source": imageSource
+                image: {
+                    source: imageSource
                 },
-                "features": features
+                features: features
             }
         );
         const annotatedImage: IAnnotatedImage = annotatedImages[0];

@@ -1,19 +1,19 @@
-import {IUseCase} from "../../1_enterprise_business_rules/use_cases/iUseCase";
-import {IController, IQuery} from "../../2_application_business_rules/controllers/iController";
-import {inject, injectable} from "inversify";
-import {TYPES} from "../../types";
-import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
-import SearchInputPortImpl from "../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl";
-import {IPortDataFormat} from "../../1_enterprise_business_rules/use_cases/port/iPort";
+import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
+import {IController, IQuery} from '../../2_application_business_rules/controllers/iController';
+import {inject, injectable} from 'inversify';
+import {TYPES} from '../../types';
+import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import SearchInputPortImpl from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 export const SEARCH_TYPES = {
-    NORMAL: Symbol.for("NORMAL"),
-    NEWEST: Symbol.for("NEWEST"),
-    RANDOM: Symbol.for("RANDOM"),
+    NORMAL: Symbol.for('NORMAL'),
+    NEWEST: Symbol.for('NEWEST'),
+    RANDOM: Symbol.for('RANDOM'),
 };
 
 export class SearchControllerQuery implements IQuery{
-    q: string = "";
+    q: string = '';
 }
 
 @injectable()

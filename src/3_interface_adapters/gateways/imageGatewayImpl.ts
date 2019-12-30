@@ -1,5 +1,5 @@
 import {IImageGateway} from '../../2_application_business_rules/gateways/iImageGateway';
-import {injectable} from "inversify";
+import {injectable} from 'inversify';
 
 interface IUpload {
     secure_url: string

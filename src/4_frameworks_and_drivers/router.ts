@@ -1,11 +1,11 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 
 import express, {Request, Response, Router} from 'express';
-import {IController} from "../2_application_business_rules/controllers/iController";
-import {container} from "../inversify.config";
-import {TYPES} from "../types";
-import {SEARCH_TYPES, SearchControllerQuery} from "../3_interface_adapters/controllers/searchControllerImpl";
-import {IMAGE_TYPES, ImageControllerQuery} from "../3_interface_adapters/controllers/imageControllerImpl";
+import {IController} from '../2_application_business_rules/controllers/iController';
+import {container} from '../inversify.config';
+import {TYPES} from '../types';
+import {SEARCH_TYPES, SearchControllerQuery} from '../3_interface_adapters/controllers/searchControllerImpl';
+import {IMAGE_TYPES, ImageControllerQuery} from '../3_interface_adapters/controllers/imageControllerImpl';
 
 const router: Router = express.Router();
 
@@ -24,6 +24,8 @@ router.get(/images(\/\d+)?\.json$/, async (req: Request, res: Response) => {
     if (req.path.match(saveMatch)) {
         controllerType = IMAGE_TYPES.SAVE;
         query.url = req.query.url;
+        query.quote = req.query.quote;
+        query.tags  = req.query.tags;
     } else if (matched = req.path.match(normalMatch) || [], matched.length > 0) {
         controllerType = IMAGE_TYPES.NORMAL;
         const id: string = matched[1];

@@ -2,11 +2,11 @@ import {
     IHit,
     IImageObject,
     ISearchGateway,
-} from "../../2_application_business_rules/gateways/iSearchGateway";
-import algoliasearch, {IndexSettings, QueryParameters} from "algoliasearch";
-import {injectable} from "inversify";
-import Random from "../../utils/random";
-import {SearchPortDataFormat} from "../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl";
+} from '../../2_application_business_rules/gateways/iSearchGateway';
+import algoliasearch, {IndexSettings, QueryParameters} from 'algoliasearch';
+import {injectable} from 'inversify';
+import Random from '../../utils/random';
+import {SearchPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
@@ -29,13 +29,13 @@ export class SearchGatewayImpl implements ISearchGateway {
 
     async search(input: SearchPortDataFormat): Promise<Array<IHit>> {
         let query: QueryParameters = {};
-        let id: string = "";
-        if (id = input.id, id != "") {
+        let id: string = '';
+        if (id = input.id, id != '') {
             const response: Partial<IHit> = await this.alogoliaSearchIndex.getObject(id);
             let hits: Array<IHit> = [{
-                url: response.url || "",
-                objectID: response.objectID || "",
-                text: response.text || ""
+                url: response.url || '',
+                objectID: response.objectID || '',
+                text: response.text || ''
             }];
             return hits;
         } else {

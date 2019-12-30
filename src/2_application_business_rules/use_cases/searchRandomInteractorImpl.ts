@@ -1,12 +1,12 @@
-import {IHit, ISearchGateway} from "../gateways/iSearchGateway";
-import {IUseCase} from "../../1_enterprise_business_rules/use_cases/iUseCase";
-import {IPresenter} from "../presenters/iPresenter";
-import {inject, injectable} from "inversify";
-import {TYPES} from "../../types";
-import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
-import {IOutputPort} from "../../1_enterprise_business_rules/use_cases/port/iOutputPort";
-import SearchOutputPort from "./port/output/SearchOutputPortImpl";
-import {IPortDataFormat} from "../../1_enterprise_business_rules/use_cases/port/iPort";
+import {IHit, ISearchGateway} from '../gateways/iSearchGateway';
+import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
+import {IPresenter} from '../presenters/iPresenter';
+import {inject, injectable} from 'inversify';
+import {TYPES} from '../../types';
+import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
+import SearchOutputPort from './port/output/SearchOutputPortImpl';
+import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 @injectable()
 export default class SearchRandomInteractorImpl implements IUseCase {

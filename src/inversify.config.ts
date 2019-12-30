@@ -1,23 +1,23 @@
-import {TYPES} from "./types";
-import {IImageGateway} from "./2_application_business_rules/gateways/iImageGateway";
-import {ImageGatewayImpl} from "./3_interface_adapters/gateways/imageGatewayImpl";
-import {Container} from "inversify";
-import {IImageTextGateway} from "./2_application_business_rules/gateways/iImageTextGateway";
-import {ImageTextGatewayImpl} from "./3_interface_adapters/gateways/imageTextGatewayImpl";
-import {ISearchGateway} from "./2_application_business_rules/gateways/iSearchGateway";
-import {SearchGatewayImpl} from "./3_interface_adapters/gateways/searchGatewayImpl";
-import {IPresenter} from "./2_application_business_rules/presenters/iPresenter";
-import PresenterImpl from "./3_interface_adapters/presenters/presenterImpl";
-import SearchNormalInteractorImpl from "./2_application_business_rules/use_cases/searchNormalInteractorImpl";
-import {IUseCase} from "./1_enterprise_business_rules/use_cases/iUseCase";
-import ImageInteractorImpl from "./2_application_business_rules/use_cases/imageInteractorImpl";
-import {IController} from "./2_application_business_rules/controllers/iController";
-import SearchControllerImpl from "./3_interface_adapters/controllers/searchControllerImpl";
-import ImageControllerImpl from "./3_interface_adapters/controllers/imageControllerImpl";
-import SearchNewestInteractorImpl from "./2_application_business_rules/use_cases/searchNewestInteractorImpl";
-import SearchRandomInteractorImpl from "./2_application_business_rules/use_cases/searchRandomInteractorImpl";
-import {IOutputPort} from "./1_enterprise_business_rules/use_cases/port/iOutputPort";
-import {IPortDataFormat} from "./1_enterprise_business_rules/use_cases/port/iPort";
+import {TYPES} from './types';
+import {IImageGateway} from './2_application_business_rules/gateways/iImageGateway';
+import {ImageGatewayImpl} from './3_interface_adapters/gateways/imageGatewayImpl';
+import {Container} from 'inversify';
+import {IImageTextGateway} from './2_application_business_rules/gateways/iImageTextGateway';
+import {ImageTextGatewayImpl} from './3_interface_adapters/gateways/imageTextGatewayImpl';
+import {ISearchGateway} from './2_application_business_rules/gateways/iSearchGateway';
+import {SearchGatewayImpl} from './3_interface_adapters/gateways/searchGatewayImpl';
+import {IPresenter} from './2_application_business_rules/presenters/iPresenter';
+import PresenterImpl from './3_interface_adapters/presenters/presenterImpl';
+import SearchNormalInteractorImpl from './2_application_business_rules/use_cases/searchNormalInteractorImpl';
+import {IUseCase} from './1_enterprise_business_rules/use_cases/iUseCase';
+import SaveImageInteractorImpl from './2_application_business_rules/use_cases/saveImageInteractorImpl';
+import {IController} from './2_application_business_rules/controllers/iController';
+import SearchControllerImpl from './3_interface_adapters/controllers/searchControllerImpl';
+import ImageControllerImpl from './3_interface_adapters/controllers/imageControllerImpl';
+import SearchNewestInteractorImpl from './2_application_business_rules/use_cases/searchNewestInteractorImpl';
+import SearchRandomInteractorImpl from './2_application_business_rules/use_cases/searchRandomInteractorImpl';
+import {IOutputPort} from './1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IPortDataFormat} from './1_enterprise_business_rules/use_cases/port/iPort';
 
 const container = new Container();
 
@@ -30,7 +30,7 @@ container.bind<IPresenter<IOutputPort<IPortDataFormat>>>(TYPES.Presenter).to(Pre
 container.bind<IUseCase>(TYPES.SearchNormalUseCase).to(SearchNormalInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchNewestUseCase).to(SearchNewestInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchRandomUseCase).to(SearchRandomInteractorImpl);
-container.bind<IUseCase>(TYPES.ImageUseCase).to(ImageInteractorImpl);
+container.bind<IUseCase>(TYPES.SaveImageUseCase).to(SaveImageInteractorImpl);
 
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
 container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
