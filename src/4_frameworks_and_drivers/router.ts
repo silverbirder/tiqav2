@@ -11,6 +11,7 @@ import {IMAGE_TYPES, ImageControllerQuery} from '../3_interface_adapters/control
 const router: Router = express.Router();
 const imageRouteMatch = new RegExp(/images(\/\d+)?\.json$/);
 const searchRouteMatch = new RegExp(/search(\/(newest|random))?\.json/);
+
 /*
 /images.json
 /images/[id].json

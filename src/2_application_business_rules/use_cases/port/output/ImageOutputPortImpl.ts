@@ -13,7 +13,7 @@ interface IResult {
 }
 
 export default class SaveOutputPort implements IOutputPort<IPortDataFormat> {
-    data: ImagePortDataFormat = {results: []};
+    private _data: ImagePortDataFormat = {results: []};
 
     set(params: { id: string, url: string, quote: string, updateDate: Date }) {
         const result: IResult = {
@@ -22,10 +22,10 @@ export default class SaveOutputPort implements IOutputPort<IPortDataFormat> {
             id: params.id,
             updateDate: params.updateDate,
         };
-        this.data.results.push(result)
+        this._data.results.push(result)
     }
 
     get(): IPortDataFormat {
-        return this.data;
+        return this._data.results;
     }
 }

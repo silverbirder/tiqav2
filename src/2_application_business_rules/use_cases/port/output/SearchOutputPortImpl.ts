@@ -15,7 +15,7 @@ interface IResult {
 }
 
 export default class SearchOutputPort implements IOutputPort<IPortDataFormat> {
-    data: SearchPortDataFormat = {results: []};
+    private _data: SearchPortDataFormat = {results: []};
 
     set(params: {id: string, url: string, quote: string, updateDate: Date}) {
         const ext: string = path.extname(params.url);
@@ -26,10 +26,10 @@ export default class SearchOutputPort implements IOutputPort<IPortDataFormat> {
             ext: ext.slice(1),
             updateDate: params.updateDate,
         };
-        this.data.results.push(result)
+        this._data.results.push(result)
     }
 
     get(): IPortDataFormat {
-        return this.data;
+        return this._data.results;
     }
 }

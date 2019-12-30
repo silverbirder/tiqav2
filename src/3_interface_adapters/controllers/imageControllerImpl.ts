@@ -4,7 +4,7 @@ import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import SearchInputPortImpl from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
-import {IPort, IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
+import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 import ImageInputPortImpl from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
 
 export const IMAGE_TYPES = {
