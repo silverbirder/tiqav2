@@ -1,13 +1,24 @@
 import {IInputPort} from "../../../../1_enterprise_business_rules/use_cases/port/iInputPort";
+import {IPortDataFormat} from "../../../../1_enterprise_business_rules/use_cases/port/iPort";
 
-export default class SearchInputPortImpl implements IInputPort<string> {
-    private readonly _keyword: string;
+export class SearchPortDataFormat implements IPortDataFormat {
+    keyword: string = "";
+    id: string = "";
+}
 
-    constructor(keyword: string) {
-        this._keyword = keyword;
+export default class SearchInputPortImpl implements IInputPort<IPortDataFormat> {
+    private _data: SearchPortDataFormat = {"keyword": "", "id": ""};
+
+    set(params: { q: string, id: string }) {
+        if (params.q) {
+            this._data.keyword = params.q;
+        }
+        if (params.id) {
+            this._data.id = params.id;
+        }
     }
 
-    get(): string {
-        return this._keyword;
+    get(): IPortDataFormat {
+        return this._data;
     }
 }

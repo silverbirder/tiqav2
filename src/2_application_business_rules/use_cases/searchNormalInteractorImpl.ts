@@ -6,26 +6,26 @@ import {TYPES} from "../../types";
 import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
 import {IOutputPort} from "../../1_enterprise_business_rules/use_cases/port/iOutputPort";
 import SearchOutputPort from "./port/output/SearchOutputPortImpl";
-import {IResults} from "./port/output/SearchOutputPortImpl";
+import {IPortDataFormat} from "../../1_enterprise_business_rules/use_cases/port/iPort";
 
 @injectable()
 export default class SearchNormalInteractorImpl implements IUseCase {
     private searchGateWay: ISearchGateway;
-    private presenter: IPresenter<IResults>;
+    private presenter: IPresenter<IPortDataFormat>;
 
     constructor(
         @inject(TYPES.SearchGateway) searchGateWay: ISearchGateway,
-        @inject(TYPES.Presenter) presenter: IPresenter<IResults>) {
+        @inject(TYPES.Presenter) presenter: IPresenter<IPortDataFormat>) {
         this.searchGateWay = searchGateWay;
         this.presenter = presenter;
     }
 
-    async invoke(input: IInputPort<string>): Promise<any> {
-        const keyword: string = input.get();
-        const hits: Array<IHit> = await this.searchGateWay.search(keyword);
-        const outPutPort: IOutputPort<IResults> = new SearchOutputPort();
-        hits.forEach((value: IHit) => {
-            outPutPort.add(value.objectID, value.url, value.text);
+    async invoke(inputPort: IInputPort<IPortDataFormat>): Promise<any> {
+        const input: IPortDataFormat = inputPort.get();
+        const hits: Array<IHit> = await this.searchGateWay.search(input);
+        const outPutPort: IOutputPort<IPortDataFormat> = new SearchOutputPort();
+        hits.forEach((hit: IHit) => {
+            outPutPort.set({id: hit.objectID, url: hit.url, text: hit.text});
         });
         return this.presenter.invoke(outPutPort);
     }

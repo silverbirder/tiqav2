@@ -6,9 +6,9 @@ const TYPES = {
     SearchNormalUseCase: Symbol.for("SearchNormalUseCase"),
     SearchNewestUseCase: Symbol.for("SearchNewestUseCase"),
     SearchRandomUseCase: Symbol.for("SearchRandomUseCase"),
-    SaveUseCase: Symbol.for("SaveUseCase"),
+    ImageUseCase: Symbol.for("ImageUseCase"),
     SearchController: Symbol.for("SearchController"),
-    SaveController: Symbol.for("SaveController"),
+    ImageController: Symbol.for("ImageController"),
 };
 
 export {TYPES};

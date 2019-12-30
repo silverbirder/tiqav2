@@ -1,3 +1,5 @@
+import {IPortDataFormat} from "../../1_enterprise_business_rules/use_cases/port/iPort";
+
 export interface IHit {
     url: string,
     text: string,
@@ -10,7 +12,7 @@ export interface IImageObject {
 }
 
 export interface ISearchGateway {
-    search(text: string): Promise<Array<IHit>>;
+    search(input: IPortDataFormat): Promise<Array<IHit>>;
 
     newest(): Promise<Array<IHit>>;
 

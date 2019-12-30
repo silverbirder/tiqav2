@@ -3,9 +3,10 @@ import {
     IImageObject,
     ISearchGateway,
 } from "../../2_application_business_rules/gateways/iSearchGateway";
-import algoliasearch, {IndexSettings} from "algoliasearch";
+import algoliasearch, {IndexSettings, QueryParameters} from "algoliasearch";
 import {injectable} from "inversify";
 import Random from "../../utils/random";
+import {SearchPortDataFormat} from "../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl";
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
@@ -26,9 +27,22 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(text: string): Promise<Array<IHit>> {
-        const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search(text);
-        return response.hits;
+    async search(input: SearchPortDataFormat): Promise<Array<IHit>> {
+        let query: QueryParameters = {};
+        let id: string = "";
+        if (id = input.id, id != "") {
+            const response: Partial<IHit> = await this.alogoliaSearchIndex.getObject(id);
+            let hits: Array<IHit> = [{
+                url: response.url || "",
+                objectID: response.objectID || "",
+                text: response.text || ""
+            }];
+            return hits;
+        } else {
+            query.query = input.keyword;
+            const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search(query);
+            return response.hits;
+        }
     }
 
     async newest(): Promise<Array<IHit>> {
@@ -41,7 +55,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         settings.ranking = copiedRanking;
         try {
             await this.alogoliaAdminIndex.setSettings(settings);
-            const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search('');
+            const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search({});
             hits = response.hits;
         } catch (e) {
             console.error(e);
@@ -57,7 +71,10 @@ export class SearchGatewayImpl implements ISearchGateway {
         const maxHits: number = response.nbHits;
         const now: number = Date.now();
         const offSet: number = new Random(now).nextInt(1, maxHits - 1);
-        response = await this.alogoliaSearchIndex.search({'offset': offSet, 'length': 1});
+        let query: QueryParameters = {};
+        query.offset = offSet;
+        query.length = 1;
+        response = await this.alogoliaSearchIndex.search(query);
         return response.hits;
     }
 

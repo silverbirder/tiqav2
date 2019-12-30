@@ -7,7 +7,7 @@ export default class SaveOutputPort implements IOutputPort<string> {
         this._result = result;
     }
 
-    add() {
+    set() {
         return
     }
 

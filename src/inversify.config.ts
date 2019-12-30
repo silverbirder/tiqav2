@@ -10,13 +10,14 @@ import {IPresenter} from "./2_application_business_rules/presenters/iPresenter";
 import PresenterImpl from "./3_interface_adapters/presenters/presenterImpl";
 import SearchNormalInteractorImpl from "./2_application_business_rules/use_cases/searchNormalInteractorImpl";
 import {IUseCase} from "./1_enterprise_business_rules/use_cases/iUseCase";
-import SaveInteractorImpl from "./2_application_business_rules/use_cases/saveInteractorImpl";
+import ImageInteractorImpl from "./2_application_business_rules/use_cases/imageInteractorImpl";
 import {IController} from "./2_application_business_rules/controllers/iController";
 import SearchControllerImpl from "./3_interface_adapters/controllers/searchControllerImpl";
-import SaveControllerImpl from "./3_interface_adapters/controllers/saveControllerImpl";
-import {IResults} from "./2_application_business_rules/use_cases/port/output/SearchOutputPortImpl";
+import ImageControllerImpl from "./3_interface_adapters/controllers/imageControllerImpl";
 import SearchNewestInteractorImpl from "./2_application_business_rules/use_cases/searchNewestInteractorImpl";
 import SearchRandomInteractorImpl from "./2_application_business_rules/use_cases/searchRandomInteractorImpl";
+import {IOutputPort} from "./1_enterprise_business_rules/use_cases/port/iOutputPort";
+import {IPortDataFormat} from "./1_enterprise_business_rules/use_cases/port/iPort";
 
 const container = new Container();
 
@@ -24,14 +25,14 @@ container.bind<IImageGateway>(TYPES.ImageGateway).to(ImageGatewayImpl);
 container.bind<IImageTextGateway>(TYPES.ImageTextGateway).to(ImageTextGatewayImpl);
 container.bind<ISearchGateway>(TYPES.SearchGateway).to(SearchGatewayImpl);
 
-container.bind<IPresenter<IResults>>(TYPES.Presenter).to(PresenterImpl);
+container.bind<IPresenter<IOutputPort<IPortDataFormat>>>(TYPES.Presenter).to(PresenterImpl);
 
 container.bind<IUseCase>(TYPES.SearchNormalUseCase).to(SearchNormalInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchNewestUseCase).to(SearchNewestInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchRandomUseCase).to(SearchRandomInteractorImpl);
-container.bind<IUseCase>(TYPES.SaveUseCase).to(SaveInteractorImpl);
+container.bind<IUseCase>(TYPES.ImageUseCase).to(ImageInteractorImpl);
 
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
-container.bind<IController>(TYPES.SaveController).to(SaveControllerImpl);
+container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
 
 export {container};

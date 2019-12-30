@@ -1,4 +1,7 @@
+export interface IQuery {
+}
 export interface IController {
-    type: Symbol;
-    invoke(i: string): any;
+    useCaseType: Symbol;
+    query: IQuery;
+    invoke(q: IQuery): any;
 }

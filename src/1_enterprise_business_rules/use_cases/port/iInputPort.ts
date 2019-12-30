@@ -1,4 +1,4 @@
 import {IPort} from "./iPort";
 
-export interface IInputPort<T> extends IPort<T>{
+export interface IInputPort<T> extends IPort<T> {
 }

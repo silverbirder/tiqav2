@@ -1,9 +1,10 @@
 import {IUseCase} from "../../1_enterprise_business_rules/use_cases/iUseCase";
-import {IController} from "../../2_application_business_rules/controllers/iController";
+import {IController, IQuery} from "../../2_application_business_rules/controllers/iController";
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../types";
 import {IInputPort} from "../../1_enterprise_business_rules/use_cases/port/iInputPort";
 import SearchInputPortImpl from "../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl";
+import {IPortDataFormat} from "../../1_enterprise_business_rules/use_cases/port/iPort";
 
 export const SEARCH_TYPES = {
     NORMAL: Symbol.for("NORMAL"),
@@ -11,9 +12,14 @@ export const SEARCH_TYPES = {
     RANDOM: Symbol.for("RANDOM"),
 };
 
+export class SearchControllerQuery implements IQuery{
+    q: string = "";
+}
+
 @injectable()
 export default class SearchControllerImpl implements IController {
-    type: Symbol = SEARCH_TYPES.NORMAL;
+    useCaseType: Symbol = SEARCH_TYPES.NORMAL;
+    query: IQuery = {};
     private readonly _normalUseCase: IUseCase;
     private readonly _newestUseCase: IUseCase;
     private readonly _randomUseCase: IUseCase;
@@ -28,10 +34,9 @@ export default class SearchControllerImpl implements IController {
         this._randomUseCase = randomUseCase;
     }
 
-    invoke(q: string): any {
-        const inputPort: IInputPort<string> = new SearchInputPortImpl(q);
+    invoke(query: SearchControllerQuery): any {
         let useCase: IUseCase = this._normalUseCase;
-        switch (this.type) {
+        switch (this.useCaseType) {
             case SEARCH_TYPES.NORMAL:
                 useCase = this._normalUseCase;
                 break;
@@ -42,6 +47,9 @@ export default class SearchControllerImpl implements IController {
                 useCase = this._randomUseCase;
                 break;
         }
+        const q: string = query.q;
+        const inputPort: IInputPort<IPortDataFormat> = new SearchInputPortImpl();
+        inputPort.set({q: q});
         return useCase.invoke(inputPort);
     }
 }
