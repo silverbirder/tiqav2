@@ -1,17 +1,31 @@
 import {IOutputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IPortDataFormat} from "../../../../1_enterprise_business_rules/use_cases/port/iPort";
 
-export default class SaveOutputPort implements IOutputPort<string> {
-    private readonly _result: string;
+export class ImagePortDataFormat implements IPortDataFormat {
+    results: Array<IResult> = [];
+}
 
-    constructor(result: string) {
-        this._result = result;
+interface IResult {
+    'source_url': string,
+    'quote': string,
+    'id': string,
+    'updateDate': Date,
+}
+
+export default class SaveOutputPort implements IOutputPort<IPortDataFormat> {
+    data: ImagePortDataFormat = {results: []};
+
+    set(params: { id: string, url: string, quote: string, updateDate: Date }) {
+        const result: IResult = {
+            source_url: params.url,
+            quote: params.quote,
+            id: params.id,
+            updateDate: params.updateDate,
+        };
+        this.data.results.push(result)
     }
 
-    set() {
-        return
-    }
-
-    get(): string {
-        return this._result;
+    get(): IPortDataFormat {
+        return this.data;
     }
 }

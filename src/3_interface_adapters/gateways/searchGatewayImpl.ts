@@ -1,29 +1,25 @@
 import {
     IHit,
-    IImageObject,
+    IndexObject,
     ISearchGateway,
 } from '../../2_application_business_rules/gateways/iSearchGateway';
-import algoliasearch, {IndexSettings, QueryParameters} from 'algoliasearch';
+import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
 import Random from '../../utils/random';
 import {SearchPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
-    private alogoliaSearchIndex: algoliasearch.Index;
     private alogoliaAdminIndex: algoliasearch.Index;
 
     constructor() {
         const algoliaAppId: string = process.env.ALGOLIA_APP_ID || '';
-        const algoliaSearchKey: string = process.env.ALGOLIA_SEARCH_KEY || '';
         const algoliaAdminKey: string = process.env.ALGOLIA_ADMIN_KEY || '';
         const algoliaIndexName: string = process.env.ALGOLIA_INDEX_NAME || '';
-        if (!algoliaAppId || !algoliaSearchKey || !algoliaAdminKey || !algoliaIndexName) {
+        if (!algoliaAppId || !algoliaAdminKey || !algoliaIndexName) {
             throw new Error('Not set algolia enviroments');
         }
-        const algoliaSearchClient: algoliasearch.Client = algoliasearch(algoliaAppId, algoliaSearchKey);
         const algoliaAdminClient: algoliasearch.Client = algoliasearch(algoliaAppId, algoliaAdminKey);
-        this.alogoliaSearchIndex = algoliaSearchClient.initIndex(algoliaIndexName);
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
@@ -31,16 +27,17 @@ export class SearchGatewayImpl implements ISearchGateway {
         let query: QueryParameters = {};
         let id: string = '';
         if (id = input.id, id != '') {
-            const response: Partial<IHit> = await this.alogoliaSearchIndex.getObject(id);
+            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id);
             let hits: Array<IHit> = [{
                 url: response.url || '',
                 objectID: response.objectID || '',
-                text: response.text || ''
+                quote: response.quote || '',
+                updateDate: response.updateDate,
             }];
             return hits;
         } else {
             query.query = input.keyword;
-            const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search(query);
+            const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
             return response.hits;
         }
     }
@@ -51,11 +48,11 @@ export class SearchGatewayImpl implements ISearchGateway {
         const settings: IndexSettings = await this.alogoliaAdminIndex.getSettings();
         const ranking: Array<string> = settings.ranking || [];
         let copiedRanking: Array<string> = [...ranking];
-        copiedRanking.unshift('desc(update_timestamp)');
+        copiedRanking.unshift('desc(updateDate)');
         settings.ranking = copiedRanking;
         try {
             await this.alogoliaAdminIndex.setSettings(settings);
-            const response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search({});
+            const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search({});
             hits = response.hits;
         } catch (e) {
             console.error(e);
@@ -67,19 +64,19 @@ export class SearchGatewayImpl implements ISearchGateway {
     }
 
     async random(): Promise<Array<IHit>> {
-        let response: algoliasearch.Response<IHit> = await this.alogoliaSearchIndex.search({});
+        let response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search({});
         const maxHits: number = response.nbHits;
         const now: number = Date.now();
         const offSet: number = new Random(now).nextInt(1, maxHits - 1);
         let query: QueryParameters = {};
         query.offset = offSet;
         query.length = 1;
-        response = await this.alogoliaSearchIndex.search(query);
+        response = await this.alogoliaAdminIndex.search(query);
         return response.hits;
     }
 
-    async save(objects: Array<IImageObject>): Promise<any> {
-        await this.alogoliaAdminIndex.addObjects(objects);
-        return;
+    async save(object: IndexObject): Promise<string> {
+        const task: Task = await this.alogoliaAdminIndex.addObject(object);
+        return task.objectID || '';
     }
 }

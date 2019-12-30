@@ -25,7 +25,7 @@ export default class SearchNewestInteractorImpl implements IUseCase {
         const hits: Array<IHit> = await this.searchGateWay.newest();
         const outPutPort: IOutputPort<IPortDataFormat> = new SearchOutputPort();
         hits.forEach((hit: IHit) => {
-            outPutPort.set({id: hit.objectID, url: hit.url, text: hit.text});
+            outPutPort.set({id: hit.objectID, url: hit.url, quote: hit.quote, updateDate: hit.updateDate});
         });
         return this.presenter.invoke(outPutPort);
     }

@@ -1,7 +1,7 @@
 {
   "name": "budgie",
   "version": "1.0.0",
-  "description": "budgie is the platform that provide image search API",
+  "description": "Budgie is the platform that provide Searching Image API",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

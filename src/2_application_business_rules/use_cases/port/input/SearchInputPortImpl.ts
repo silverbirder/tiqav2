@@ -7,18 +7,18 @@ export class SearchPortDataFormat implements IPortDataFormat {
 }
 
 export default class SearchInputPortImpl implements IInputPort<IPortDataFormat> {
-    private _data: SearchPortDataFormat = {keyword: '', id: ''};
+    data: SearchPortDataFormat = {keyword: '', id: ''};
 
     set(params: { q: string, id: string }) {
         if (params.q) {
-            this._data.keyword = params.q;
+            this.data.keyword = params.q;
         }
         if (params.id) {
-            this._data.id = params.id;
+            this.data.id = params.id;
         }
     }
 
     get(): IPortDataFormat {
-        return this._data;
+        return this.data;
     }
 }

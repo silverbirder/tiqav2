@@ -1,14 +1,15 @@
 import {injectable} from 'inversify';
 import {
     IHit,
-    IImageObject,
+    IndexObject,
     ISearchGateway,
 } from '../../2_application_business_rules/gateways/iSearchGateway';
 
 const hit: IHit = {
-    'url': 'http://example.com',
-    'text': 'example',
-    'objectID': 'A'
+    url: 'http://example.com',
+    quote: 'example',
+    objectID: 'A',
+    updateDate: new Date('1994-02-14'),
 };
 const hits: Array<IHit> = Array(hit);
 
@@ -35,9 +36,9 @@ export class SearchGatewayMockImpl implements ISearchGateway {
         });
     }
 
-    async save(objects: Array<IImageObject>): Promise<any> {
+    async save(object: IndexObject): Promise<string> {
         return new Promise(function (resolve) {
-            resolve(objects);
+            resolve(hit.objectID);
         });
     }
 }

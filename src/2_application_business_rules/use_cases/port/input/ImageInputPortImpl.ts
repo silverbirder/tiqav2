@@ -9,14 +9,21 @@ export class ImagePortDataFormat implements IPortDataFormat {
 }
 
 export default class ImageInputPortImpl implements IInputPort<IPortDataFormat> {
-    private _data: ImagePortDataFormat = {url: '', id: '', tags: [], quote: ''};
+    data: ImagePortDataFormat = {url: '', id: '', tags: [], quote: ''};
 
-    set(params: {url: string, id: string}) {
-        this._data.url = params.url;
-        this._data.id = params.id;
+    set(params: {url: string, id: string, tags: string, quote: string}) {
+        if (params.url != '') {
+            this.data.url = params.url;
+        }
+        if (params.tags != '') {
+            this.data.tags = params.tags.split(',');
+        }
+        if (params.quote != '') {
+            this.data.quote = params.quote;
+        }
     }
 
     get(): IPortDataFormat {
-        return this._data;
+        return this.data;
     }
 }

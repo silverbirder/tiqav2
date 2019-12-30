@@ -1,14 +1,15 @@
 import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
-export interface IHit {
-    url: string,
-    text: string,
-    objectID: string,
+export interface IHit extends IndexObject {
+    objectID: string
 }
 
-export interface IImageObject {
-    url: string,
-    text: string
+export interface IndexObject {
+    url?: string,
+    quote?: string,
+    tags?: Array<string>,
+    objectID?: string,
+    updateDate?: Date,
 }
 
 export interface ISearchGateway {
@@ -18,5 +19,5 @@ export interface ISearchGateway {
 
     random(): Promise<Array<IHit>>;
 
-    save(objects: Array<IImageObject>): Promise<any>;
+    save(object: IndexObject): Promise<string>;
 }

@@ -7,13 +7,15 @@ import {TYPES} from '../types';
 import {SEARCH_TYPES, SearchControllerQuery} from '../3_interface_adapters/controllers/searchControllerImpl';
 import {IMAGE_TYPES, ImageControllerQuery} from '../3_interface_adapters/controllers/imageControllerImpl';
 
+// TODO: validator
 const router: Router = express.Router();
-
+const imageRouteMatch = new RegExp(/images(\/\d+)?\.json$/);
+const searchRouteMatch = new RegExp(/search(\/(newest|random))?\.json/);
 /*
 /images.json
 /images/[id].json
  */
-router.get(/images(\/\d+)?\.json$/, async (req: Request, res: Response) => {
+router.get(imageRouteMatch, async (req: Request, res: Response) => {
     let controllerType: Symbol = IMAGE_TYPES.NORMAL;
     let query: ImageControllerQuery = new ImageControllerQuery();
 
@@ -23,9 +25,9 @@ router.get(/images(\/\d+)?\.json$/, async (req: Request, res: Response) => {
 
     if (req.path.match(saveMatch)) {
         controllerType = IMAGE_TYPES.SAVE;
-        query.url = req.query.url;
-        query.quote = req.query.quote;
-        query.tags  = req.query.tags;
+        query.url = req.query.url || '';
+        query.quote = req.query.quote || '';
+        query.tags  = req.query.tags || '';
     } else if (matched = req.path.match(normalMatch) || [], matched.length > 0) {
         controllerType = IMAGE_TYPES.NORMAL;
         const id: string = matched[1];
@@ -43,7 +45,7 @@ router.get(/images(\/\d+)?\.json$/, async (req: Request, res: Response) => {
 /search/newest.json
 /search/random.json
  */
-router.get(/search(\/(newest|random))?\.json/, async (req: Request, res: Response) => {
+router.get(searchRouteMatch, async (req: Request, res: Response) => {
     let controllerType: Symbol = SEARCH_TYPES.NORMAL;
     let query: SearchControllerQuery = new SearchControllerQuery();
     const normalMatch = new RegExp(/search\.json/);
@@ -51,7 +53,7 @@ router.get(/search(\/(newest|random))?\.json/, async (req: Request, res: Respons
     const randomMatch = new RegExp(/search\/random\.json$/);
     if (req.path.match(normalMatch)) {
         controllerType = SEARCH_TYPES.NORMAL;
-        query.q = req.query.q;
+        query.q = req.query.q || '';
     } else if (req.path.match(newestMatch)) {
         controllerType = SEARCH_TYPES.NEWEST;
     } else if (req.path.match(randomMatch)) {
