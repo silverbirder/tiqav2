@@ -25,7 +25,7 @@ export default class SearchNormalInteractorImpl implements IUseCase {
 
     async invoke(inputPort: IInputPort<SearchInputPortDataFormat>): Promise<void> {
         const input: SearchInputPortDataFormat = inputPort.get();
-        const hits: Array<IHit> = await this.searchGateWay.search(input);
+        const hits: Array<IHit> = await this.searchGateWay.search(input.id, input.keyword);
         const outPutPort: IOutputPort<IPortDataFormat> = new SearchOutputPort();
         hits.forEach((hit: IHit) => {
             const settable: SearchSettableOutputPortDataFormat = new SearchSettableOutputPortDataFormat();

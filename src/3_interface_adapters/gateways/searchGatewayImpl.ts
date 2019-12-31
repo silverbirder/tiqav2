@@ -6,7 +6,6 @@ import {
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
 import Random from '../../utils/random';
-import {SearchInputPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
@@ -23,9 +22,8 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(input: SearchInputPortDataFormat): Promise<Array<IHit>> {
+    async search(id: string, keyword: string): Promise<Array<IHit>> {
         let query: QueryParameters = {};
-        const id: string = input.id;
         if (id != '') {
             const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id);
             let hits: Array<IHit> = [{
@@ -37,7 +35,7 @@ export class SearchGatewayImpl implements ISearchGateway {
             }];
             return hits;
         } else {
-            query.query = input.keyword;
+            query.query = keyword;
             const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
             return response.hits;
         }
@@ -79,5 +77,31 @@ export class SearchGatewayImpl implements ISearchGateway {
     async save(object: IndexObject): Promise<string> {
         const task: Task = await this.alogoliaAdminIndex.addObject(object);
         return task.objectID || '';
+    }
+
+    async tags(id: string, keyword: string): Promise<Array<string>> {
+        if (id !== '') {
+            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id);
+            const tags: Array<string> = response.tags || [];
+            let uniqTags: Array<string> = Array.from(new Set(tags));
+            return uniqTags;
+        } else {
+            let query: QueryParameters = {};
+            query.query = keyword;
+            const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
+            const hits: Array<IHit> = response.hits;
+            let stackTags: Array<string> = [];
+            hits.forEach((hit: IHit) => {
+                if (typeof hit.tags === "undefined") {
+                    return;
+                }
+                if (hit.tags.length === 0) {
+                    return;
+                }
+                stackTags = stackTags.concat(hit.tags);
+            });
+            let uniqTags: Array<string> = Array.from(new Set(stackTags));
+            return uniqTags;
+        }
     }
 }

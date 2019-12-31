@@ -12,7 +12,8 @@ import {
     IMAGE_TYPES,
     ImageControllerQuery,
 } from '../3_interface_adapters/controllers/imageControllerImpl';
-import {IMAGE_URL_TYPES, ImageUrlControllerQuery} from "../3_interface_adapters/controllers/imageUrlControllerImpl";
+import {IMAGE_URL_TYPES, ImageUrlControllerQuery} from '../3_interface_adapters/controllers/imageUrlControllerImpl';
+import {TAGS_TYPES, TagsControllerQuery} from "../3_interface_adapters/controllers/tagsControllerImpl";
 
 // TODO: validator
 const router: Router = express.Router();
@@ -27,6 +28,9 @@ const searchRouteMatch = new RegExp(/search(\/(newest|random))?\.json/);
 const searchNormalMatch = new RegExp(/search\.json/);
 const searchNewestMatch = new RegExp(/search\/newest\.json$/);
 const searchRandomMatch = new RegExp(/search\/random\.json$/);
+
+const tagsRouteMatch = new RegExp(/(images\/\d+\/)?tags\.json/);
+const tagsIdMatch = new RegExp(/images\/(\d+)\//);
 
 /*
 /images.json
@@ -78,6 +82,9 @@ router.get(searchRouteMatch, async (req: Request, res: Response) => {
     res.send(controller.useCase.presenter.view);
 });
 
+/*
+/[id].[ext]
+ */
 router.get(imageUrlRouteMatch, async (req: Request, res: Response) => {
     const matched: RegExpMatchArray = req.path.match(imageUrlRouteMatch) || [];
     const id: string = matched[1];
@@ -90,6 +97,25 @@ router.get(imageUrlRouteMatch, async (req: Request, res: Response) => {
     await controller.invoke(query);
     res.writeHead(200, {'Content-Type': 'image/png' });
     res.end(controller.useCase.presenter.view.binary);
+});
+
+/*
+/images/[id]/tags.json
+/tags.json
+ */
+router.get(tagsRouteMatch, async (req: Request, res: Response) => {
+    const matched: RegExpMatchArray = req.path.match(tagsIdMatch) || [];
+    let id: string = '';
+    if(matched.length > 0) {
+        id = matched[1];
+    }
+    const query: TagsControllerQuery = new TagsControllerQuery();
+    query.id = id;
+    query.q = req.query.q || '';
+    const controller: IController = container.get<IController>(TYPES.TagsController);
+    controller.useCaseType = TAGS_TYPES.NORMAL;
+    await controller.invoke(query);
+    res.send(controller.useCase.presenter.view);
 });
 
 export default router

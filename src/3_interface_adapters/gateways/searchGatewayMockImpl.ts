@@ -42,4 +42,10 @@ export class SearchGatewayMockImpl implements ISearchGateway {
             resolve(hit.objectID);
         });
     }
+
+    tags(id: string, keyword: string): Promise<Array<string>> {
+        return new Promise(function (resolve) {
+            resolve(['A', 'B']);
+        });
+    }
 }

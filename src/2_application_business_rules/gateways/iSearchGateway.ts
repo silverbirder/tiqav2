@@ -13,11 +13,13 @@ export interface IndexObject {
 }
 
 export interface ISearchGateway {
-    search(input: IPortDataFormat): Promise<Array<IHit>>;
+    search(id: string, keyword: string): Promise<Array<IHit>>;
 
     newest(): Promise<Array<IHit>>;
 
     random(): Promise<Array<IHit>>;
+
+    tags(id: string, keyword: string): Promise<Array<string>>;
 
     save(object: IndexObject): Promise<string>;
 }
