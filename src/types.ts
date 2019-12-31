@@ -7,6 +7,7 @@ const TYPES = {
     SearchNewestUseCase: Symbol.for('SearchNewestUseCase'),
     SearchRandomUseCase: Symbol.for('SearchRandomUseCase'),
     SaveImageUseCase: Symbol.for('SaveImageUseCase'),
+    GetImageBinaryUseCase: Symbol.for('GetImageBinaryUseCase'),
     SearchController: Symbol.for('SearchController'),
     ImageController: Symbol.for('ImageController'),
     ImageUrlController: Symbol.for('ImageUrlController'),

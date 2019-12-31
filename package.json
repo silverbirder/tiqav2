@@ -26,12 +26,15 @@
     "cloudinary": "^1.17.0",
     "express": "^4.17.1",
     "inversify": "^5.0.1",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
   },
   "devDependencies": {
     "@types/algoliasearch": "^3.34.6",
     "@types/express": "^4.17.2",
     "@types/node": "^12.12.14",
+    "@types/request-promise": "^4.1.45",
     "nodemon": "^2.0.1",
     "ts-loader": "^6.2.1",
     "ts-node-dev": "^1.0.0-pre.44",

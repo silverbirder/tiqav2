@@ -16,6 +16,8 @@ import SearchControllerImpl from './3_interface_adapters/controllers/searchContr
 import ImageControllerImpl from './3_interface_adapters/controllers/imageControllerImpl';
 import SearchNewestInteractorImpl from './2_application_business_rules/use_cases/searchNewestInteractorImpl';
 import SearchRandomInteractorImpl from './2_application_business_rules/use_cases/searchRandomInteractorImpl';
+import ImageUrlControllerImpl from "./3_interface_adapters/controllers/imageUrlControllerImpl";
+import GetImageBinaryInteractorImpl from "./2_application_business_rules/use_cases/getImageBinaryInteractorImpl";
 
 const container = new Container();
 
@@ -29,8 +31,10 @@ container.bind<IUseCase>(TYPES.SearchNormalUseCase).to(SearchNormalInteractorImp
 container.bind<IUseCase>(TYPES.SearchNewestUseCase).to(SearchNewestInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchRandomUseCase).to(SearchRandomInteractorImpl);
 container.bind<IUseCase>(TYPES.SaveImageUseCase).to(SaveImageInteractorImpl);
+container.bind<IUseCase>(TYPES.GetImageBinaryUseCase).to(GetImageBinaryInteractorImpl);
 
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
 container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
+container.bind<IController>(TYPES.ImageUrlController).to(ImageUrlControllerImpl);
 
 export {container};

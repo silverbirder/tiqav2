@@ -12,6 +12,7 @@ import {
     IMAGE_TYPES,
     ImageControllerQuery,
 } from '../3_interface_adapters/controllers/imageControllerImpl';
+import {IMAGE_URL_TYPES, ImageUrlControllerQuery} from "../3_interface_adapters/controllers/imageUrlControllerImpl";
 
 // TODO: validator
 const router: Router = express.Router();
@@ -81,13 +82,14 @@ router.get(imageUrlRouteMatch, async (req: Request, res: Response) => {
     const matched: RegExpMatchArray = req.path.match(imageUrlRouteMatch) || [];
     const id: string = matched[1];
     const ext: string = matched[2];
-    const query: ImageControllerQuery = new ImageControllerQuery();
+    const query: ImageUrlControllerQuery = new ImageUrlControllerQuery();
     query.id = id;
-    const controller: IController = container.get<IController>(TYPES.ImageController);
-    controller.useCaseType = IMAGE_TYPES.NORMAL;
+    query.ext = ext;
+    const controller: IController = container.get<IController>(TYPES.ImageUrlController);
+    controller.useCaseType = IMAGE_URL_TYPES.NORMAL;
     await controller.invoke(query);
-    const view: {} = controller.useCase.presenter.view;
-    res.send(controller.useCase.presenter.view);
+    res.writeHead(200, {'Content-Type': 'image/png' });
+    res.end(controller.useCase.presenter.view.binary);
 });
 
 export default router

@@ -2,6 +2,8 @@ import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOut
 import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 export interface IPresenter {
-    view: {}
+    view: {
+        binary?: string;
+    }
     invoke(outPutPort: IOutputPort<IPortDataFormat>): void;
 }

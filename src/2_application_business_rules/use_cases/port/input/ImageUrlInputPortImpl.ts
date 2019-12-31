@@ -6,6 +6,11 @@ export class ImageUrlInputPortDataFormat implements IPortDataFormat {
     ext: string = '';
 }
 
+export class ImageUrlSettableInputPortDataFormat implements IPortDataFormat {
+    id: string = '';
+    ext: string = '';
+}
+
 export default class ImageUrlInputPortImpl implements IInputPort<IPortDataFormat> {
     private _data: ImageUrlInputPortDataFormat = {id: '', ext: ''};
 
