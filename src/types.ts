@@ -9,6 +9,7 @@ const TYPES = {
     SaveImageUseCase: Symbol.for('SaveImageUseCase'),
     SearchController: Symbol.for('SearchController'),
     ImageController: Symbol.for('ImageController'),
+    ImageUrlController: Symbol.for('ImageUrlController'),
 };
 
 export {TYPES};

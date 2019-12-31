@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "webpack --mode development & ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpileOnly ./dist/index.js",
+    "debug": "webpack -w --mode development & ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpileOnly ./dist/index.js",
     "start:dev": "webpack -w --mode development & nodemon ./dist/index.js",
     "start:prod": "webpack --mode production & nodemon ./dist/index.js"
   },

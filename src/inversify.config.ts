@@ -16,8 +16,6 @@ import SearchControllerImpl from './3_interface_adapters/controllers/searchContr
 import ImageControllerImpl from './3_interface_adapters/controllers/imageControllerImpl';
 import SearchNewestInteractorImpl from './2_application_business_rules/use_cases/searchNewestInteractorImpl';
 import SearchRandomInteractorImpl from './2_application_business_rules/use_cases/searchRandomInteractorImpl';
-import {IOutputPort} from './1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {IPortDataFormat} from './1_enterprise_business_rules/use_cases/port/iPort';
 
 const container = new Container();
 
@@ -25,7 +23,7 @@ container.bind<IImageGateway>(TYPES.ImageGateway).to(ImageGatewayImpl);
 container.bind<IImageTextGateway>(TYPES.ImageTextGateway).to(ImageTextGatewayImpl);
 container.bind<ISearchGateway>(TYPES.SearchGateway).to(SearchGatewayImpl);
 
-container.bind<IPresenter<IOutputPort<IPortDataFormat>>>(TYPES.Presenter).to(PresenterImpl);
+container.bind<IPresenter>(TYPES.Presenter).to(PresenterImpl);
 
 container.bind<IUseCase>(TYPES.SearchNormalUseCase).to(SearchNormalInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchNewestUseCase).to(SearchNewestInteractorImpl);

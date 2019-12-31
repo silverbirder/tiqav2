@@ -3,9 +3,10 @@ import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import SearchInputPortImpl from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import ImageInputPortImpl, {
+    ImageSettableInputPortDataFormat
+} from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
 import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import ImageInputPortImpl from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
 
 export const IMAGE_TYPES = {
     NORMAL: Symbol.for('NORMAL'),
@@ -21,6 +22,7 @@ export class ImageControllerQuery implements IQuery {
 
 @injectable()
 export default class ImageControllerImpl implements IController {
+    useCase: IUseCase;
     useCaseType: Symbol = IMAGE_TYPES.NORMAL;
     query: IQuery = {};
     private readonly _normalUseCase: IUseCase;
@@ -32,21 +34,28 @@ export default class ImageControllerImpl implements IController {
     ) {
         this._normalUseCase = normalUseCase;
         this._saveUseCase = saveUseCase;
+        this.useCase = normalUseCase;
     }
 
-    invoke(query: ImageControllerQuery): any {
+    async invoke(query: ImageControllerQuery): Promise<void> {
         let useCase: IUseCase = this._normalUseCase;
-        let inputPort: IInputPort<IPortDataFormat> = new SearchInputPortImpl();
+        let inputPort: IInputPort<IPortDataFormat> = new ImageInputPortImpl();
+        let settable: ImageSettableInputPortDataFormat = new ImageSettableInputPortDataFormat();
         switch (this.useCaseType) {
             case IMAGE_TYPES.NORMAL:
-                inputPort.set({id: query.id});
+                settable.id = query.id;
+                inputPort.set(settable);
                 break;
             case IMAGE_TYPES.SAVE:
                 useCase = this._saveUseCase;
-                inputPort = new ImageInputPortImpl();
-                inputPort.set({url: query.url, tags: query.tags, quote: query.quote});
+                settable.url = query.url;
+                settable.tags = query.tags;
+                settable.quote = query.quote;
+                inputPort.set(settable);
                 break;
         }
-        return useCase.invoke(inputPort);
+        this.useCase = useCase;
+        await useCase.invoke(inputPort);
+        return;
     }
 }

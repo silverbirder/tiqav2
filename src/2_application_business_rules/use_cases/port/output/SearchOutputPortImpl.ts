@@ -2,8 +2,15 @@ import {IOutputPort} from '../../../../1_enterprise_business_rules/use_cases/por
 import path from 'path';
 import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
 
-export class SearchPortDataFormat implements IPortDataFormat {
+export class SearchOutputPortDataFormat implements IPortDataFormat {
     results: Array<IResult> = [];
+}
+
+export class SearchSettableOutputPortDataFormat implements IPortDataFormat {
+    id: string = '';
+    url: string = '';
+    quote: string = '';
+    updateDate!: Date;
 }
 
 interface IResult {
@@ -15,9 +22,9 @@ interface IResult {
 }
 
 export default class SearchOutputPort implements IOutputPort<IPortDataFormat> {
-    private _data: SearchPortDataFormat = {results: []};
+    private _data: SearchOutputPortDataFormat = {results: []};
 
-    set(params: {id: string, url: string, quote: string, updateDate: Date}) {
+    set(params: SearchSettableOutputPortDataFormat) {
         const ext: string = path.extname(params.url);
         const result: IResult = {
             source_url: params.url,
@@ -29,7 +36,7 @@ export default class SearchOutputPort implements IOutputPort<IPortDataFormat> {
         this._data.results.push(result)
     }
 
-    get(): IPortDataFormat {
-        return this._data.results;
+    get(): SearchOutputPortDataFormat {
+        return this._data;
     }
 }

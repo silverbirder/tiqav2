@@ -3,8 +3,9 @@ import {injectable} from 'inversify';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 
 @injectable()
-export default class PresenterImpl<T> implements IPresenter<T> {
-    invoke(outputPort: IOutputPort<T>): any {
-        return outputPort.get();
+export default class PresenterImpl<T> implements IPresenter {
+    view: {} = {};
+    invoke(outputPort: IOutputPort<T>): void {
+        this.view = outputPort.get();
     }
 }

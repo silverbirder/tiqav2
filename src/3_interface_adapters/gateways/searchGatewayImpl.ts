@@ -6,7 +6,7 @@ import {
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
 import Random from '../../utils/random';
-import {SearchPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import {SearchInputPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
@@ -23,10 +23,10 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(input: SearchPortDataFormat): Promise<Array<IHit>> {
+    async search(input: SearchInputPortDataFormat): Promise<Array<IHit>> {
         let query: QueryParameters = {};
-        let id: string = '';
-        if (id = input.id, id != '') {
+        const id: string = input.id;
+        if (id != '') {
             const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id);
             let hits: Array<IHit> = [{
                 url: response.url || '',

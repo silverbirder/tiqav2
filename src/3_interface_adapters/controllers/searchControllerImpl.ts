@@ -3,7 +3,7 @@ import {IController, IQuery} from '../../2_application_business_rules/controller
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import SearchInputPortImpl from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import SearchInputPortImpl, {SearchSettableInputPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 export const SEARCH_TYPES = {
@@ -12,12 +12,13 @@ export const SEARCH_TYPES = {
     RANDOM: Symbol.for('RANDOM'),
 };
 
-export class SearchControllerQuery implements IQuery{
+export class SearchControllerQuery implements IQuery {
     q: string = '';
 }
 
 @injectable()
 export default class SearchControllerImpl implements IController {
+    useCase: IUseCase;
     useCaseType: Symbol = SEARCH_TYPES.NORMAL;
     query: IQuery = {};
     private readonly _normalUseCase: IUseCase;
@@ -32,9 +33,10 @@ export default class SearchControllerImpl implements IController {
         this._normalUseCase = normalUseCase;
         this._newestUseCase = newestUseCase;
         this._randomUseCase = randomUseCase;
+        this.useCase = normalUseCase;
     }
 
-    invoke(query: SearchControllerQuery): any {
+    async invoke(query: SearchControllerQuery): Promise<void> {
         let useCase: IUseCase = this._normalUseCase;
         switch (this.useCaseType) {
             case SEARCH_TYPES.NORMAL:
@@ -47,9 +49,12 @@ export default class SearchControllerImpl implements IController {
                 useCase = this._randomUseCase;
                 break;
         }
-        const q: string = query.q;
         const inputPort: IInputPort<IPortDataFormat> = new SearchInputPortImpl();
-        inputPort.set({q: q});
-        return useCase.invoke(inputPort);
+        const settable: SearchSettableInputPortDataFormat = new SearchSettableInputPortDataFormat();
+        settable.q = query.q;
+        inputPort.set(settable);
+        this.useCase = useCase;
+        await  useCase.invoke(inputPort);
+        return;
     }
 }
