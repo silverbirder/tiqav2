@@ -1,12 +1,11 @@
-import {IOutputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 import path from 'path';
-import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
 
-export class SearchOutputPortDataFormat implements IPortDataFormat {
+export class SearchOutputPortFormat implements IOutputPortFormat {
     results: Array<IResult> = [];
 }
 
-export class SearchSettableOutputPortDataFormat implements IPortDataFormat {
+export class SearchSettableOutputPortFormat implements IOutputPortFormat {
     id: string = '';
     url: string = '';
     quote: string = '';
@@ -21,10 +20,10 @@ interface IResult {
     'updateDate': Date,
 }
 
-export default class SearchOutputPort implements IOutputPort<IPortDataFormat> {
-    private _data: SearchOutputPortDataFormat = {results: []};
+export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> {
+    private _data: SearchOutputPortFormat = {results: []};
 
-    set(params: SearchSettableOutputPortDataFormat) {
+    set(params: SearchSettableOutputPortFormat) {
         const ext: string = path.extname(params.url);
         const result: IResult = {
             source_url: params.url,
@@ -36,7 +35,7 @@ export default class SearchOutputPort implements IOutputPort<IPortDataFormat> {
         this._data.results.push(result)
     }
 
-    get(): SearchOutputPortDataFormat {
+    get(): SearchOutputPortFormat {
         return this._data;
     }
 }

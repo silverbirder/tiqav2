@@ -1,8 +1,7 @@
-import {IInputPort} from './port/iInputPort';
-import {IPortDataFormat} from './port/iPort';
-import {IPresenter} from '../../2_application_business_rules/presenters/iPresenter';
+import {IInputPort, IInputPortFormat} from './port/iInputPort';
+import {IPresenter} from '../presenters/iPresenter';
 
 export interface IUseCase{
     presenter: IPresenter;
-    invoke(i: IInputPort<IPortDataFormat>): Promise<void>;
+    invoke(i: IInputPort<IInputPortFormat>): Promise<void>;
 }

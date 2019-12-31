@@ -1,20 +1,19 @@
-import {IInputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
+import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
 
-export class TagsInputPortDataFormat implements IPortDataFormat {
+export class TagsInputPortFormat implements IInputPortFormat {
     id: string = '';
     keyword: string = '';
 }
 
-export class TagsSettableInputPortDataFormat implements IPortDataFormat {
+export class TagsSettableInputPortFormat implements IInputPortFormat {
     id: string = '';
     q: string = '';
 }
 
-export default class TagsInputPortImpl implements IInputPort<IPortDataFormat> {
-    private _data: TagsInputPortDataFormat = {id: '', keyword: ''};
+export default class TagsInputPortImpl implements IInputPort<IInputPortFormat> {
+    private _data: TagsInputPortFormat = {id: '', keyword: ''};
 
-    set(params: TagsSettableInputPortDataFormat) {
+    set(params: TagsSettableInputPortFormat) {
         if (params.q !== '') {
             this._data.keyword = params.q;
         }
@@ -23,7 +22,7 @@ export default class TagsInputPortImpl implements IInputPort<IPortDataFormat> {
         }
     }
 
-    get(): TagsInputPortDataFormat {
+    get(): TagsInputPortFormat {
         return this._data;
     }
 }

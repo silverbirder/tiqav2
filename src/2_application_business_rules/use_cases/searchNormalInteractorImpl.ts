@@ -4,10 +4,10 @@ import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import SearchOutputPort, {SearchSettableOutputPortDataFormat} from './port/output/SearchOutputPortImpl';
-import {SearchInputPortDataFormat} from './port/input/SearchInputPortImpl';
-import {IPresenter} from '../presenters/iPresenter';
-import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
+import SearchOutputPort, {SearchSettableOutputPortFormat} from './port/output/SearchOutputPortImpl';
+import {SearchInputPortFormat} from './port/input/SearchInputPortImpl';
+import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
+import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 
 @injectable()
@@ -23,18 +23,19 @@ export default class SearchNormalInteractorImpl implements IUseCase {
         this.presenter = presenter;
     }
 
-    async invoke(inputPort: IInputPort<SearchInputPortDataFormat>): Promise<void> {
-        const input: SearchInputPortDataFormat = inputPort.get();
+    async invoke(inputPort: IInputPort<SearchInputPortFormat>): Promise<void> {
+        const input: SearchInputPortFormat = inputPort.get();
         const hits: Array<IHit> = await this.searchGateWay.search(input.id, input.keyword);
-        const outPutPort: IOutputPort<IPortDataFormat> = new SearchOutputPort();
+        const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
         hits.forEach((hit: IHit) => {
-            const settable: SearchSettableOutputPortDataFormat = new SearchSettableOutputPortDataFormat();
+            const settable: SearchSettableOutputPortFormat = new SearchSettableOutputPortFormat();
             settable.id = hit.objectID;
             settable.url = hit.url;
             settable.quote = hit.quote;
             settable.updateDate = hit.updateDate;
             outPutPort.set(settable);
         });
-        this.presenter.invoke(outPutPort);
+        this.presenter.render(outPutPort);
+        return;
     }
 }

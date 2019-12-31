@@ -1,11 +1,10 @@
-import {IOutputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
+import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 
-export class ImageOutputPortDataFormat implements IPortDataFormat {
+export class ImageOutputPortFormat implements IOutputPortFormat {
     results: Array<IResult> = [];
 }
 
-export class ImageSettableOutputPortDataFormat implements IPortDataFormat {
+export class ImageSettableOutputPortFormat implements IOutputPortFormat {
     id: string = '';
     url: string = '';
     quote: string = '';
@@ -20,10 +19,10 @@ interface IResult {
     'updateDate': Date,
 }
 
-export default class SaveOutputPort implements IOutputPort<IPortDataFormat> {
-    private _data: ImageOutputPortDataFormat = {results: []};
+export default class SaveOutputPort implements IOutputPort<IOutputPortFormat> {
+    private _data: ImageOutputPortFormat = {results: []};
 
-    set(params: ImageSettableOutputPortDataFormat) {
+    set(params: ImageSettableOutputPortFormat) {
         const result: IResult = {
             source_url: params.url,
             quote: params.quote,
@@ -33,7 +32,7 @@ export default class SaveOutputPort implements IOutputPort<IPortDataFormat> {
         this._data.results.push(result)
     }
 
-    get(): ImageOutputPortDataFormat {
+    get(): ImageOutputPortFormat {
         return this._data;
     }
 }

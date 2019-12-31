@@ -13,7 +13,7 @@ import {
     ImageControllerQuery,
 } from '../3_interface_adapters/controllers/imageControllerImpl';
 import {IMAGE_URL_TYPES, ImageUrlControllerQuery} from '../3_interface_adapters/controllers/imageUrlControllerImpl';
-import {TAGS_TYPES, TagsControllerQuery} from "../3_interface_adapters/controllers/tagsControllerImpl";
+import {TAGS_TYPES, TagsControllerQuery} from '../3_interface_adapters/controllers/tagsControllerImpl';
 
 // TODO: validator
 const router: Router = express.Router();
@@ -53,7 +53,7 @@ router.get(imageRouteMatch, async (req: Request, res: Response) => {
     }
     const controller: IController = container.get<IController>(TYPES.ImageController);
     controller.useCaseType = controllerType;
-    await controller.invoke(query);
+    await controller.run(query);
     res.send(controller.useCase.presenter.view);
 });
 
@@ -78,7 +78,7 @@ router.get(searchRouteMatch, async (req: Request, res: Response) => {
     }
     const controller: IController = container.get<IController>(TYPES.SearchController);
     controller.useCaseType = controllerType;
-    await controller.invoke(query);
+    await controller.run(query);
     res.send(controller.useCase.presenter.view);
 });
 
@@ -94,8 +94,8 @@ router.get(imageUrlRouteMatch, async (req: Request, res: Response) => {
     query.ext = ext;
     const controller: IController = container.get<IController>(TYPES.ImageUrlController);
     controller.useCaseType = IMAGE_URL_TYPES.NORMAL;
-    await controller.invoke(query);
-    res.writeHead(200, {'Content-Type': 'image/png' });
+    await controller.run(query);
+    res.writeHead(200, {'Content-Type': 'image/png'});
     res.end(controller.useCase.presenter.view.binary);
 });
 
@@ -106,7 +106,7 @@ router.get(imageUrlRouteMatch, async (req: Request, res: Response) => {
 router.get(tagsRouteMatch, async (req: Request, res: Response) => {
     const matched: RegExpMatchArray = req.path.match(tagsIdMatch) || [];
     let id: string = '';
-    if(matched.length > 0) {
+    if (matched.length > 0) {
         id = matched[1];
     }
     const query: TagsControllerQuery = new TagsControllerQuery();
@@ -114,7 +114,7 @@ router.get(tagsRouteMatch, async (req: Request, res: Response) => {
     query.q = req.query.q || '';
     const controller: IController = container.get<IController>(TYPES.TagsController);
     controller.useCaseType = TAGS_TYPES.NORMAL;
-    await controller.invoke(query);
+    await controller.run(query);
     res.send(controller.useCase.presenter.view);
 });
 

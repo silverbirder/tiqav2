@@ -2,9 +2,8 @@ import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
 import {IController, IQuery} from '../../2_application_business_rules/controllers/iController';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
-import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import TagsInputPortImpl, {TagsSettableInputPortDataFormat} from '../../2_application_business_rules/use_cases/port/input/TagsInputPortImpl';
+import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import TagsInputPortImpl, {TagsSettableInputPortFormat} from '../../2_application_business_rules/use_cases/port/input/TagsInputPortImpl';
 
 export const TAGS_TYPES = {
     NORMAL: Symbol.for('NORMAL'),
@@ -29,10 +28,10 @@ export default class TagsControllerImpl implements IController {
         this.useCase = normalUseCase;
     }
 
-    async invoke(query: TagsControllerQuery): Promise<void> {
+    async run(query: TagsControllerQuery): Promise<void> {
         const useCase: IUseCase = this._normalUseCase;
-        const inputPort: IInputPort<IPortDataFormat> = new TagsInputPortImpl();
-        const settable: TagsSettableInputPortDataFormat = new TagsSettableInputPortDataFormat();
+        const inputPort: IInputPort<IInputPortFormat> = new TagsInputPortImpl();
+        const settable: TagsSettableInputPortFormat = new TagsSettableInputPortFormat();
         settable.id = query.id;
         settable.q = query.q;
         inputPort.set(settable);

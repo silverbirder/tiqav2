@@ -12,7 +12,7 @@ const TYPES = {
     SearchController: Symbol.for('SearchController'),
     ImageController: Symbol.for('ImageController'),
     ImageUrlController: Symbol.for('ImageUrlController'),
-1    TagsController: Symbol.for('TagsController'),
+    TagsController: Symbol.for('TagsController'),
 };
 
 export {TYPES};

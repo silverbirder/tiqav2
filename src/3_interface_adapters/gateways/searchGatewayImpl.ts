@@ -92,7 +92,7 @@ export class SearchGatewayImpl implements ISearchGateway {
             const hits: Array<IHit> = response.hits;
             let stackTags: Array<string> = [];
             hits.forEach((hit: IHit) => {
-                if (typeof hit.tags === "undefined") {
+                if (typeof hit.tags === 'undefined') {
                     return;
                 }
                 if (hit.tags.length === 0) {

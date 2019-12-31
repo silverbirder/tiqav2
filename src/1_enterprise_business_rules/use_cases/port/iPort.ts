@@ -1,4 +1,4 @@
-export interface IPortDataFormat {
+export interface IPortFormat {
 }
 
 export interface IPort<T> {

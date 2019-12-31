@@ -2,11 +2,10 @@ import {IController, IQuery} from '../../2_application_business_rules/controller
 import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
-import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import ImageInputPortImpl, {
-    ImageSettableInputPortDataFormat
+    ImageSettableInputPortFormat
 } from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
-import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 export const IMAGE_TYPES = {
     NORMAL: Symbol.for('NORMAL'),
@@ -37,10 +36,10 @@ export default class ImageControllerImpl implements IController {
         this.useCase = normalUseCase;
     }
 
-    async invoke(query: ImageControllerQuery): Promise<void> {
+    async run(query: ImageControllerQuery): Promise<void> {
         let useCase: IUseCase = this._normalUseCase;
-        let inputPort: IInputPort<IPortDataFormat> = new ImageInputPortImpl();
-        let settable: ImageSettableInputPortDataFormat = new ImageSettableInputPortDataFormat();
+        let inputPort: IInputPort<IInputPortFormat> = new ImageInputPortImpl();
+        let settable: ImageSettableInputPortFormat = new ImageSettableInputPortFormat();
         switch (this.useCaseType) {
             case IMAGE_TYPES.NORMAL:
                 settable.id = query.id;

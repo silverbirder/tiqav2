@@ -6,7 +6,7 @@ import {IImageTextGateway} from './2_application_business_rules/gateways/iImageT
 import {ImageTextGatewayImpl} from './3_interface_adapters/gateways/imageTextGatewayImpl';
 import {ISearchGateway} from './2_application_business_rules/gateways/iSearchGateway';
 import {SearchGatewayImpl} from './3_interface_adapters/gateways/searchGatewayImpl';
-import {IPresenter} from './2_application_business_rules/presenters/iPresenter';
+import {IPresenter} from './1_enterprise_business_rules/presenters/iPresenter';
 import PresenterImpl from './3_interface_adapters/presenters/presenterImpl';
 import SearchNormalInteractorImpl from './2_application_business_rules/use_cases/searchNormalInteractorImpl';
 import {IUseCase} from './1_enterprise_business_rules/use_cases/iUseCase';
@@ -16,10 +16,10 @@ import SearchControllerImpl from './3_interface_adapters/controllers/searchContr
 import ImageControllerImpl from './3_interface_adapters/controllers/imageControllerImpl';
 import SearchNewestInteractorImpl from './2_application_business_rules/use_cases/searchNewestInteractorImpl';
 import SearchRandomInteractorImpl from './2_application_business_rules/use_cases/searchRandomInteractorImpl';
-import ImageUrlControllerImpl from "./3_interface_adapters/controllers/imageUrlControllerImpl";
-import GetImageBinaryInteractorImpl from "./2_application_business_rules/use_cases/getImageBinaryInteractorImpl";
-import TagsControllerImpl from "./3_interface_adapters/controllers/tagsControllerImpl";
-import SearchTagsInteractorImpl from "./2_application_business_rules/use_cases/searchTagsInteractorImpl";
+import ImageUrlControllerImpl from './3_interface_adapters/controllers/imageUrlControllerImpl';
+import GetImageBinaryInteractorImpl from './2_application_business_rules/use_cases/getImageBinaryInteractorImpl';
+import TagsControllerImpl from './3_interface_adapters/controllers/tagsControllerImpl';
+import SearchTagsInteractorImpl from './2_application_business_rules/use_cases/searchTagsInteractorImpl';
 
 const container = new Container();
 

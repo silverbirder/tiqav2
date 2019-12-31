@@ -1,21 +1,20 @@
-import {IOutputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
+import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 
-export class TagsOutputPortDataFormat implements IPortDataFormat {
+export class TagsOutputPortFormat implements IOutputPortFormat {
 }
 
-export class TagsSettableOutputPortDataFormat implements IPortDataFormat {
+export class TagsSettableOutputPortFormat implements IOutputPortFormat {
     tags: Array<string> = [];
 }
 
-export default class TagsOutputPort implements IOutputPort<IPortDataFormat> {
-    private _data: TagsOutputPortDataFormat = {};
+export default class TagsOutputPort implements IOutputPort<IOutputPortFormat> {
+    private _data: TagsOutputPortFormat = {};
 
-    set(params: TagsSettableOutputPortDataFormat) {
+    set(params: TagsSettableOutputPortFormat) {
         this._data = params.tags;
     }
 
-    get(): TagsOutputPortDataFormat {
+    get(): TagsOutputPortFormat {
         return this._data;
     }
 }

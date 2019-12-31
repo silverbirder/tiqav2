@@ -8,5 +8,5 @@ export interface IController {
     useCaseType: Symbol;
     query: IQuery;
 
-    invoke(q: IQuery): Promise<void>;
+    run(q: IQuery): Promise<void>;
 }

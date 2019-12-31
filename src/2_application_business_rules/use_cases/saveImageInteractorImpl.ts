@@ -6,11 +6,11 @@ import {ISearchGateway} from '../gateways/iSearchGateway';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {ImageInputPortDataFormat} from './port/input/ImageInputPortImpl';
+import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import ImageOutputPortImpl, {ImageSettableOutputPortDataFormat} from './port/output/ImageOutputPortImpl';
-import {IPresenter} from '../presenters/iPresenter';
-import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
+import ImageOutputPortImpl, {ImageSettableOutputPortFormat} from './port/output/ImageOutputPortImpl';
+import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
+import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
 @injectable()
 export default class SaveImageInteractorImpl implements IUseCase {
@@ -31,8 +31,8 @@ export default class SaveImageInteractorImpl implements IUseCase {
         this.presenter = presenter;
     }
 
-    async invoke(inputPort: IInputPort<ImageInputPortDataFormat>): Promise<void> {
-        const input: ImageInputPortDataFormat = inputPort.get();
+    async invoke(inputPort: IInputPort<ImageInputPortFormat>): Promise<void> {
+        const input: ImageInputPortFormat = inputPort.get();
         const quote: string = input.quote != '' ? input.quote : await this.imageTextGateWay.text(input.url);
         const saved_url = await this.imageGateWay.save(input.url);
         let index: IndexObject = {
@@ -42,15 +42,15 @@ export default class SaveImageInteractorImpl implements IUseCase {
             updateDate: new Date(),
         };
         const objectID = await this.searchGateWay.save(index);
-        const outPutPort: IOutputPort<IPortDataFormat> = new ImageOutputPortImpl();
-        const settable: ImageSettableOutputPortDataFormat = new ImageSettableOutputPortDataFormat();
+        const outPutPort: IOutputPort<IPortFormat> = new ImageOutputPortImpl();
+        const settable: ImageSettableOutputPortFormat = new ImageSettableOutputPortFormat();
         settable.id = objectID;
         settable.url = index.url;
         settable.quote = index.quote;
         settable.tags = index.tags;
         settable.updateDate = index.updateDate;
         outPutPort.set(settable);
-        this.presenter.invoke(outPutPort);
+        this.presenter.render(outPutPort);
         return;
     }
 }

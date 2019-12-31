@@ -1,20 +1,19 @@
-import {IInputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
+import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
 
-export class SearchInputPortDataFormat implements IPortDataFormat {
+export class SearchInputPortFormat implements IInputPortFormat {
     keyword: string = '';
     id: string = '';
 }
 
-export class SearchSettableInputPortDataFormat implements IPortDataFormat {
+export class SearchSettableInputPortFormat implements IInputPortFormat {
     q: string = '';
     id: string = '';
 }
 
-export default class SearchInputPortImpl implements IInputPort<IPortDataFormat> {
-    private _data: SearchInputPortDataFormat = {keyword: '', id: ''};
+export default class SearchInputPortImpl implements IInputPort<IInputPortFormat> {
+    private _data: SearchInputPortFormat = {keyword: '', id: ''};
 
-    set(params: SearchSettableInputPortDataFormat) {
+    set(params: SearchSettableInputPortFormat) {
         if (params.q !== '') {
             this._data.keyword = params.q;
         }
@@ -23,7 +22,7 @@ export default class SearchInputPortImpl implements IInputPort<IPortDataFormat> 
         }
     }
 
-    get(): SearchInputPortDataFormat {
+    get(): SearchInputPortFormat {
         return this._data;
     }
 }

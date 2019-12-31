@@ -17,8 +17,8 @@ export class ImageGatewayImpl implements IImageGateway {
             throw new Error('Not set cloudinary environment');
         }
         v2.config({
-            cloud_name: clondName,
             api_key: cloudApiKey,
+            cloud_name: clondName,
             api_secret: cloudApiSecret
         });
     }

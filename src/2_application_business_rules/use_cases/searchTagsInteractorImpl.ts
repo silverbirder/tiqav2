@@ -4,10 +4,10 @@ import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {IPresenter} from '../presenters/iPresenter';
-import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import {TagsInputPortDataFormat} from "./port/input/TagsInputPortImpl";
-import TagsOutputPort, {TagsSettableOutputPortDataFormat} from "./port/output/TagsOutputPortImpl";
+import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
+import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
+import {TagsInputPortFormat} from './port/input/TagsInputPortImpl';
+import TagsOutputPort, {TagsSettableOutputPortFormat} from './port/output/TagsOutputPortImpl';
 
 
 @injectable()
@@ -23,13 +23,14 @@ export default class SearchTagsInteractorImpl implements IUseCase {
         this.presenter = presenter;
     }
 
-    async invoke(inputPort: IInputPort<TagsInputPortDataFormat>): Promise<void> {
-        const input: TagsInputPortDataFormat = inputPort.get();
+    async invoke(inputPort: IInputPort<TagsInputPortFormat>): Promise<void> {
+        const input: TagsInputPortFormat = inputPort.get();
         const tags: Array<string> = await this.searchGateWay.tags(input.id, input.keyword);
-        const outPutPort: IOutputPort<IPortDataFormat> = new TagsOutputPort();
-        const settable: TagsSettableOutputPortDataFormat = new TagsSettableOutputPortDataFormat();
+        const outPutPort: IOutputPort<IPortFormat> = new TagsOutputPort();
+        const settable: TagsSettableOutputPortFormat = new TagsSettableOutputPortFormat();
         settable.tags = tags;
         outPutPort.set(settable);
-        this.presenter.invoke(outPutPort);
+        this.presenter.render(outPutPort);
+        return;
     }
 }

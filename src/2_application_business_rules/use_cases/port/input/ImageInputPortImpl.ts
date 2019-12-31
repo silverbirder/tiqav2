@@ -1,24 +1,23 @@
-import {IInputPort} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IPortDataFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iPort';
+import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
 
-export class ImageInputPortDataFormat implements IPortDataFormat {
+export class ImageInputPortFormat implements IInputPortFormat {
     url: string = '';
     id: string = '';
     tags: Array<string> = [];
     quote: string = '';
 }
 
-export class ImageSettableInputPortDataFormat implements IPortDataFormat {
+export class ImageSettableInputPortFormat implements IInputPortFormat {
     url: string = '';
     id: string = '';
     tags: string = '';
     quote: string = '';
 }
 
-export default class ImageInputPortImpl implements IInputPort<IPortDataFormat> {
-    private _data: ImageInputPortDataFormat = {url: '', id: '', tags: [], quote: ''};
+export default class ImageInputPortImpl implements IInputPort<IInputPortFormat> {
+    private _data: ImageInputPortFormat = {url: '', id: '', tags: [], quote: ''};
 
-    set(params: ImageSettableInputPortDataFormat) {
+    set(params: ImageSettableInputPortFormat) {
         if (params.id !== '') {
             this._data.id = params.id;
         }
@@ -33,7 +32,7 @@ export default class ImageInputPortImpl implements IInputPort<IPortDataFormat> {
         }
     }
 
-    get(): ImageInputPortDataFormat {
+    get(): ImageInputPortFormat {
         return this._data;
     }
 }
