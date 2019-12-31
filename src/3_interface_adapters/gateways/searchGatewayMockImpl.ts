@@ -9,6 +9,7 @@ const hit: IHit = {
     url: 'http://example.com',
     quote: 'example',
     objectID: 'A',
+    tags: ['tag'],
     updateDate: new Date('1994-02-14'),
 };
 const hits: Array<IHit> = Array(hit);

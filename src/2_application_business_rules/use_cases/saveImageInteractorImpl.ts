@@ -8,7 +8,7 @@ import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import {ImageInputPortDataFormat} from './port/input/ImageInputPortImpl';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import ImageOutputPortImpl from './port/output/ImageOutputPortImpl';
+import ImageOutputPortImpl, {ImageSettableOutputPortDataFormat} from './port/output/ImageOutputPortImpl';
 import {IPresenter} from '../presenters/iPresenter';
 import {IPortDataFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 
@@ -38,14 +38,18 @@ export default class SaveImageInteractorImpl implements IUseCase {
         let index: IndexObject = {
             url: saved_url,
             quote: quote,
+            tags: input.tags,
             updateDate: new Date(),
         };
-        if (input.tags.length > 0) {
-            index.tags = input.tags;
-        }
         const objectID = await this.searchGateWay.save(index);
         const outPutPort: IOutputPort<IPortDataFormat> = new ImageOutputPortImpl();
-        outPutPort.set({id: objectID, url: index.url, quote: index.quote, updateDate: index.updateDate});
+        const settable: ImageSettableOutputPortDataFormat = new ImageSettableOutputPortDataFormat();
+        settable.id = objectID;
+        settable.url = index.url;
+        settable.quote = index.quote;
+        settable.tags = index.tags;
+        settable.updateDate = index.updateDate;
+        outPutPort.set(settable);
         this.presenter.invoke(outPutPort);
         return;
     }

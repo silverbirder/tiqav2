@@ -5,11 +5,11 @@ export interface IHit extends IndexObject {
 }
 
 export interface IndexObject {
-    url?: string,
-    quote?: string,
-    tags?: Array<string>,
+    url: string,
+    quote: string,
+    tags: Array<string>,
     objectID?: string,
-    updateDate?: Date,
+    updateDate: Date,
 }
 
 export interface ISearchGateway {

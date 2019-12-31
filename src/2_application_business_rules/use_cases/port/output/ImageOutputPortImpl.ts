@@ -9,6 +9,7 @@ export class ImageSettableOutputPortDataFormat implements IPortDataFormat {
     id: string = '';
     url: string = '';
     quote: string = '';
+    tags: Array<string> = [];
     updateDate!: Date;
 }
 

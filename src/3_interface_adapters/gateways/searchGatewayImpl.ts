@@ -32,7 +32,8 @@ export class SearchGatewayImpl implements ISearchGateway {
                 url: response.url || '',
                 objectID: response.objectID || '',
                 quote: response.quote || '',
-                updateDate: response.updateDate,
+                tags: response.tags || [],
+                updateDate: response!.updateDate || new Date(),
             }];
             return hits;
         } else {
