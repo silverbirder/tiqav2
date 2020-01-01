@@ -1,11 +1,11 @@
 import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import {IRequest} from '../../../controllers/iController';
 
-export class ImageInputPortFormat implements IInputPortFormat {
-    url: string = '';
-    id: number = 0;
-    tags: Array<string> = [];
-    quote: string = '';
+export interface ImageInputPortFormat extends IInputPortFormat {
+    url: string;
+    id: number;
+    tags: Array<string>;
+    quote: string;
 }
 
 

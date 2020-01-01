@@ -26,11 +26,12 @@ export default class SearchNewestInteractorImpl implements IUseCase {
         const hits: Array<IHit> = await this.searchGateWay.newest();
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
         hits.forEach((hit: IHit) => {
-            const settable: SearchSettableOutputPortFormat = new SearchSettableOutputPortFormat();
-            settable.id = hit.objectID;
-            settable.url = hit.url;
-            settable.quote = hit.quote;
-            settable.updateDate = hit.updateDate;
+            const settable: SearchSettableOutputPortFormat = {
+                id: hit.objectID,
+                url: hit.url,
+                quote: hit.quote,
+                updateDate: hit.updateDate,
+            }
             outPutPort.set(settable);
         });
         this.presenter.render(outPutPort);

@@ -34,8 +34,7 @@ export default class GetImageBinaryInteractorImpl implements IUseCase {
         const updateUrl: string = `${hitUrl.split(splitExt)[0]}.${input.extension}`;
         const binary: ArrayBuffer = await requestPromise.get(updateUrl, {encoding: null});
         const outPutPort: IOutputPort<IPortFormat> = new ImageUrlOutputPortImpl();
-        const settable: ImageUrlSettableOutputPortFormat = new ImageUrlSettableOutputPortFormat();
-        settable.binary = binary;
+        const settable: ImageUrlSettableOutputPortFormat = {binary: binary};
         outPutPort.set(settable);
         this.presenter.render(outPutPort);
         return;

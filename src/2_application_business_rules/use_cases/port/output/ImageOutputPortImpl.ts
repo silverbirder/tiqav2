@@ -1,15 +1,15 @@
 import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 
-export class ImageOutputPortFormat implements IOutputPortFormat {
-    results: Array<IResult> = [];
+export interface ImageOutputPortFormat extends IOutputPortFormat {
+    results: Array<IResult>;
 }
 
-export class ImageSettableOutputPortFormat implements IOutputPortFormat {
-    id: number = 0;
-    url: string = '';
-    quote: string = '';
-    tags: Array<string> = [];
-    updateDate!: Date;
+export interface ImageSettableOutputPortFormat extends IOutputPortFormat {
+    id: number;
+    url: string;
+    quote: string;
+    tags: Array<string>;
+    updateDate: Date;
 }
 
 interface IResult {

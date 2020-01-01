@@ -1,10 +1,10 @@
 import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 
-export class TagsOutputPortFormat implements IOutputPortFormat {
+export interface TagsOutputPortFormat extends IOutputPortFormat {
 }
 
-export class TagsSettableOutputPortFormat implements IOutputPortFormat {
-    tags: Array<string> = [];
+export interface TagsSettableOutputPortFormat extends IOutputPortFormat {
+    tags: Array<string>;
 }
 
 export default class TagsOutputPort implements IOutputPort<IOutputPortFormat> {

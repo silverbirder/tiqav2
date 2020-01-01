@@ -28,11 +28,12 @@ export default class SearchNormalInteractorImpl implements IUseCase {
         const hits: Array<IHit> = await this.searchGateWay.search(input.id, input.keyword);
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
         hits.forEach((hit: IHit) => {
-            const settable: SearchSettableOutputPortFormat = new SearchSettableOutputPortFormat();
-            settable.id = hit.objectID;
-            settable.url = hit.url;
-            settable.quote = hit.quote;
-            settable.updateDate = hit.updateDate;
+            const settable: SearchSettableOutputPortFormat = {
+                id: hit.objectID,
+                url: hit.url,
+                quote: hit.quote,
+                updateDate: hit.updateDate,
+            };
             outPutPort.set(settable);
         });
         this.presenter.render(outPutPort);

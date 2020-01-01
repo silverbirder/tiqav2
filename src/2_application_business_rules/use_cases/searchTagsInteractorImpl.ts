@@ -27,8 +27,9 @@ export default class SearchTagsInteractorImpl implements IUseCase {
         const input: TagsInputPortFormat = inputPort.get();
         const tags: Array<string> = await this.searchGateWay.tags(input.id, input.keyword);
         const outPutPort: IOutputPort<IPortFormat> = new TagsOutputPort();
-        const settable: TagsSettableOutputPortFormat = new TagsSettableOutputPortFormat();
-        settable.tags = tags;
+        const settable: TagsSettableOutputPortFormat = {
+            tags: tags,
+        };
         outPutPort.set(settable);
         this.presenter.render(outPutPort);
         return;

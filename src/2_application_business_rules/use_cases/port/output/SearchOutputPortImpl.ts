@@ -1,15 +1,15 @@
 import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 import path from 'path';
 
-export class SearchOutputPortFormat implements IOutputPortFormat {
-    results: Array<IResult> = [];
+export interface SearchOutputPortFormat extends IOutputPortFormat {
+    results: Array<IResult>;
 }
 
-export class SearchSettableOutputPortFormat implements IOutputPortFormat {
-    id: number = 0;
-    url: string = '';
-    quote: string = '';
-    updateDate!: Date;
+export interface SearchSettableOutputPortFormat extends IOutputPortFormat {
+    id: number;
+    url: string;
+    quote: string;
+    updateDate: Date;
 }
 
 interface IResult {

@@ -43,12 +43,13 @@ export default class SaveImageInteractorImpl implements IUseCase {
         };
         const objectID = await this.searchGateWay.save(index);
         const outPutPort: IOutputPort<IPortFormat> = new ImageOutputPortImpl();
-        const settable: ImageSettableOutputPortFormat = new ImageSettableOutputPortFormat();
-        settable.id = objectID;
-        settable.url = index.url;
-        settable.quote = index.quote;
-        settable.tags = index.tags;
-        settable.updateDate = index.updateDate;
+        const settable: ImageSettableOutputPortFormat = {
+            id: objectID,
+            url: index.url,
+            quote: index.quote,
+            tags: index.tags,
+            updateDate: index.updateDate
+        };
         outPutPort.set(settable);
         this.presenter.render(outPutPort);
         return;
