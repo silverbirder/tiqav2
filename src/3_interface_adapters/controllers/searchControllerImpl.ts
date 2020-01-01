@@ -1,9 +1,9 @@
 import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
-import {IController, IQuery} from '../../2_application_business_rules/controllers/iController';
+import {IController, IRequest} from '../../2_application_business_rules/controllers/iController';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import SearchInputPortImpl, {SearchSettableInputPortFormat} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import SearchInputPortImpl from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 
 export const SEARCH_TYPES = {
     NORMAL: Symbol.for('NORMAL'),
@@ -11,15 +11,11 @@ export const SEARCH_TYPES = {
     RANDOM: Symbol.for('RANDOM'),
 };
 
-export class SearchControllerQuery implements IQuery {
-    q: string = '';
-}
 
 @injectable()
 export default class SearchControllerImpl implements IController {
     useCase: IUseCase;
     useCaseType: Symbol = SEARCH_TYPES.NORMAL;
-    query: IQuery = {};
     private readonly _normalUseCase: IUseCase;
     private readonly _newestUseCase: IUseCase;
     private readonly _randomUseCase: IUseCase;
@@ -35,7 +31,7 @@ export default class SearchControllerImpl implements IController {
         this.useCase = normalUseCase;
     }
 
-    async run(query: SearchControllerQuery): Promise<void> {
+    async run(request: IRequest): Promise<void> {
         let useCase: IUseCase = this._normalUseCase;
         switch (this.useCaseType) {
             case SEARCH_TYPES.NORMAL:
@@ -49,11 +45,9 @@ export default class SearchControllerImpl implements IController {
                 break;
         }
         const inputPort: IInputPort<IInputPortFormat> = new SearchInputPortImpl();
-        const settable: SearchSettableInputPortFormat = new SearchSettableInputPortFormat();
-        settable.q = query.q;
-        inputPort.set(settable);
+        inputPort.set(request);
         this.useCase = useCase;
-        await useCase.invoke(inputPort);
+        await this.useCase.invoke(inputPort);
         return;
     }
 }

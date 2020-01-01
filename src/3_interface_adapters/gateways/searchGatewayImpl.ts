@@ -22,13 +22,13 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(id: string, keyword: string): Promise<Array<IHit>> {
+    async search(id: number, keyword: string): Promise<Array<IHit>> {
         let query: QueryParameters = {};
-        if (id != '') {
-            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id);
+        if (id != 0) {
+            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id.toString());
             let hits: Array<IHit> = [{
                 url: response.url || '',
-                objectID: response.objectID || '',
+                objectID: response.objectID || 0,
                 quote: response.quote || '',
                 tags: response.tags || [],
                 updateDate: response!.updateDate || new Date(),
@@ -74,14 +74,14 @@ export class SearchGatewayImpl implements ISearchGateway {
         return response.hits;
     }
 
-    async save(object: IndexObject): Promise<string> {
+    async save(object: IndexObject): Promise<number> {
         const task: Task = await this.alogoliaAdminIndex.addObject(object);
-        return task.objectID || '';
+        return parseInt(task.objectID || '0');
     }
 
-    async tags(id: string, keyword: string): Promise<Array<string>> {
-        if (id !== '') {
-            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id);
+    async tags(id: number, keyword: string): Promise<Array<string>> {
+        if (id !== 0) {
+            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id.toString());
             const tags: Array<string> = response.tags || [];
             let uniqTags: Array<string> = Array.from(new Set(tags));
             return uniqTags;

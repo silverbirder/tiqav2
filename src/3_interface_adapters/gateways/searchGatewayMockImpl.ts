@@ -8,7 +8,7 @@ import {
 const hit: IHit = {
     url: 'http://example.com',
     quote: 'example',
-    objectID: 'A',
+    objectID: 1,
     tags: ['tag'],
     updateDate: new Date('1994-02-14'),
 };
@@ -31,19 +31,19 @@ export class SearchGatewayMockImpl implements ISearchGateway {
     constructor() {
     }
 
-    async search(text: string): Promise<Array<IHit>> {
+    async search(id: number, text: string): Promise<Array<IHit>> {
         return new Promise(function (resolve) {
             resolve(hits);
         });
     }
 
-    async save(object: IndexObject): Promise<string> {
+    async save(object: IndexObject): Promise<number> {
         return new Promise(function (resolve) {
             resolve(hit.objectID);
         });
     }
 
-    tags(id: string, keyword: string): Promise<Array<string>> {
+    tags(id: number, keyword: string): Promise<Array<string>> {
         return new Promise(function (resolve) {
             resolve(['A', 'B']);
         });

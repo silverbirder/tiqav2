@@ -1,22 +1,18 @@
 import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IRequest} from "../../../controllers/iController";
 
 export class ImageUrlInputPortFormat implements IInputPortFormat {
-    id: string = '';
-    ext: string = '';
+    id: number = 0;
+    extension: string = '';
 }
 
-export class ImageUrlSettableInputPortFormat implements IInputPortFormat {
-    id: string = '';
-    ext: string = '';
-}
 
 export default class ImageUrlInputPortImpl implements IInputPort<IInputPortFormat> {
-    private _data: ImageUrlInputPortFormat = {id: '', ext: ''};
+    private _data: ImageUrlInputPortFormat = {id: 0, extension: ''};
 
-    set(params: { id: string, ext: string }) {
-
-        this._data.id = params.id;
-        this._data.ext = params.ext;
+    set(request: IRequest) {
+        this._data.id = request.id;
+        this._data.extension = request.extension;
     }
 
     get(): ImageUrlInputPortFormat {

@@ -5,7 +5,7 @@ export class ImageOutputPortFormat implements IOutputPortFormat {
 }
 
 export class ImageSettableOutputPortFormat implements IOutputPortFormat {
-    id: string = '';
+    id: number = 0;
     url: string = '';
     quote: string = '';
     tags: Array<string> = [];
@@ -15,7 +15,7 @@ export class ImageSettableOutputPortFormat implements IOutputPortFormat {
 interface IResult {
     'source_url': string,
     'quote': string,
-    'id': string,
+    'id': number,
     'updateDate': Date,
 }
 

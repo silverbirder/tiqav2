@@ -1,23 +1,23 @@
 export interface IHit extends IndexObject {
-    objectID: string
+    objectID: number
 }
 
 export interface IndexObject {
     url: string,
     quote: string,
     tags: Array<string>,
-    objectID?: string,
+    objectID?: number,
     updateDate: Date,
 }
 
 export interface ISearchGateway {
-    search(id: string, keyword: string): Promise<Array<IHit>>;
+    search(id: number, keyword: string): Promise<Array<IHit>>;
 
     newest(): Promise<Array<IHit>>;
 
     random(): Promise<Array<IHit>>;
 
-    tags(id: string, keyword: string): Promise<Array<string>>;
+    tags(id: number, keyword: string): Promise<Array<string>>;
 
-    save(object: IndexObject): Promise<string>;
+    save(object: IndexObject): Promise<number>;
 }

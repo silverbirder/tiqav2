@@ -1,25 +1,18 @@
 import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IRequest} from "../../../controllers/iController";
 
 export class TagsInputPortFormat implements IInputPortFormat {
-    id: string = '';
+    id: number = 0;
     keyword: string = '';
 }
 
-export class TagsSettableInputPortFormat implements IInputPortFormat {
-    id: string = '';
-    q: string = '';
-}
 
 export default class TagsInputPortImpl implements IInputPort<IInputPortFormat> {
-    private _data: TagsInputPortFormat = {id: '', keyword: ''};
+    private _data: TagsInputPortFormat = {id: 0, keyword: ''};
 
-    set(params: TagsSettableInputPortFormat) {
-        if (params.q !== '') {
-            this._data.keyword = params.q;
-        }
-        if (params.id !== '') {
-            this._data.id = params.id;
-        }
+    set(request: IRequest) {
+        this._data.keyword = request.keyword;
+        this._data.id = request.id;
     }
 
     get(): TagsInputPortFormat {

@@ -6,7 +6,7 @@ export class SearchOutputPortFormat implements IOutputPortFormat {
 }
 
 export class SearchSettableOutputPortFormat implements IOutputPortFormat {
-    id: string = '';
+    id: number = 0;
     url: string = '';
     quote: string = '';
     updateDate!: Date;
@@ -15,7 +15,7 @@ export class SearchSettableOutputPortFormat implements IOutputPortFormat {
 interface IResult {
     'source_url': string,
     'quote': string,
-    'id': string,
+    'id': number,
     'ext': string,
     'updateDate': Date,
 }

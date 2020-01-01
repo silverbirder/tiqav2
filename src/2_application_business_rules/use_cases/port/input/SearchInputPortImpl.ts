@@ -1,25 +1,18 @@
 import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IRequest} from "../../../controllers/iController";
 
 export class SearchInputPortFormat implements IInputPortFormat {
     keyword: string = '';
-    id: string = '';
+    id: number = 0;
 }
 
-export class SearchSettableInputPortFormat implements IInputPortFormat {
-    q: string = '';
-    id: string = '';
-}
 
 export default class SearchInputPortImpl implements IInputPort<IInputPortFormat> {
-    private _data: SearchInputPortFormat = {keyword: '', id: ''};
+    private _data: SearchInputPortFormat = {keyword: '', id: 0};
 
-    set(params: SearchSettableInputPortFormat) {
-        if (params.q !== '') {
-            this._data.keyword = params.q;
-        }
-        if (params.id !== '') {
-            this._data.id = params.id;
-        }
+    set(request: IRequest) {
+        this._data.keyword = request.keyword;
+        this._data.id = request.id;
     }
 
     get(): SearchInputPortFormat {
