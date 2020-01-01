@@ -16,8 +16,7 @@ import SearchControllerImpl from './3_interface_adapters/controllers/searchContr
 import ImageControllerImpl from './3_interface_adapters/controllers/imageControllerImpl';
 import SearchNewestInteractorImpl from './2_application_business_rules/use_cases/searchNewestInteractorImpl';
 import SearchRandomInteractorImpl from './2_application_business_rules/use_cases/searchRandomInteractorImpl';
-import ImageUrlControllerImpl from './3_interface_adapters/controllers/imageUrlControllerImpl';
-import GetImageBinaryInteractorImpl from './2_application_business_rules/use_cases/getImageBinaryInteractorImpl';
+import GetImageInteractorImpl from './2_application_business_rules/use_cases/getImageInteractorImpl';
 import TagsControllerImpl from './3_interface_adapters/controllers/tagsControllerImpl';
 import SearchTagsInteractorImpl from './2_application_business_rules/use_cases/searchTagsInteractorImpl';
 
@@ -34,11 +33,10 @@ container.bind<IUseCase>(TYPES.SearchNewestUseCase).to(SearchNewestInteractorImp
 container.bind<IUseCase>(TYPES.SearchRandomUseCase).to(SearchRandomInteractorImpl);
 container.bind<IUseCase>(TYPES.SearchTagUseCase).to(SearchTagsInteractorImpl);
 container.bind<IUseCase>(TYPES.SaveImageUseCase).to(SaveImageInteractorImpl);
-container.bind<IUseCase>(TYPES.GetImageBinaryUseCase).to(GetImageBinaryInteractorImpl);
+container.bind<IUseCase>(TYPES.GetImageUseCase).to(GetImageInteractorImpl);
 
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
 container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
-container.bind<IController>(TYPES.ImageUrlController).to(ImageUrlControllerImpl);
 container.bind<IController>(TYPES.TagsController).to(TagsControllerImpl);
 
 export {container};

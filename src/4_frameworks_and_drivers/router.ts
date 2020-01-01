@@ -11,14 +11,12 @@ import {IRequest} from '../2_application_business_rules/controllers/iController'
 import ImageRouterImpl from './routers/imageRouterImpl';
 import {IMAGE_TYPES} from '../3_interface_adapters/controllers/imageControllerImpl';
 import TagsRouterImpl from './routers/tagsRouterImpl';
-import ImageUrlRouterImpl from './routers/imageUrlRouterImpl';
 import IRouter from '../3_interface_adapters/routers/iRouter';
 
 
 router.get('/images.json', async (req: Request, res: Response) => {
     const customRequest: IRequest = new CustomRequest(req.params, req.query);
     const customRouter: IRouter = new ImageRouterImpl(customRequest, res);
-    customRouter.controllerType = IMAGE_TYPES.SAVE;
     await customRouter.go();
 });
 router.get('/images/:id.json', async (req: Request, res: Response) => {
@@ -55,7 +53,8 @@ router.get('/tags.json', async (req: Request, res: Response) => {
 });
 router.get('/:id.:ext', async (req: Request, res: Response) => {
     const customRequest: IRequest = new CustomRequest(req.params, req.query);
-    const customRouter: IRouter = new ImageUrlRouterImpl(customRequest, res);
+    const customRouter: IRouter = new ImageRouterImpl(customRequest, res);
+    customRouter.controllerType = IMAGE_TYPES.VIEW;
     await customRouter.go();
 });
 

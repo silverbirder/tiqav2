@@ -8,10 +8,9 @@ const TYPES = {
     SearchRandomUseCase: Symbol.for('SearchRandomUseCase'),
     SearchTagUseCase: Symbol.for('SearchTagUseCase'),
     SaveImageUseCase: Symbol.for('SaveImageUseCase'),
-    GetImageBinaryUseCase: Symbol.for('GetImageBinaryUseCase'),
+    GetImageUseCase: Symbol.for('GetImageUseCase'),
     SearchController: Symbol.for('SearchController'),
     ImageController: Symbol.for('ImageController'),
-    ImageUrlController: Symbol.for('ImageUrlController'),
     TagsController: Symbol.for('TagsController'),
 };
 

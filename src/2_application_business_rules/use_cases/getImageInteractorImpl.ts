@@ -6,16 +6,16 @@ import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInpu
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import {ImageUrlInputPortFormat} from './port/input/ImageUrlInputPortImpl';
 import ImageUrlOutputPortImpl, {
     ImageUrlSettableOutputPortFormat
-} from './port/output/ImageUrlOutputPortImpl';
+} from './port/output/ImageOutputPortImpl';
 import requestPromise from 'request-promise';
+import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
 
 const splitExt = RegExp(/\.(?=[^.]+$)/);
 
 @injectable()
-export default class GetImageBinaryInteractorImpl implements IUseCase {
+export default class GetImageInteractorImpl implements IUseCase {
     private searchGateWay: ISearchGateway;
     presenter: IPresenter;
 
@@ -27,8 +27,8 @@ export default class GetImageBinaryInteractorImpl implements IUseCase {
         this.presenter = presenter;
     }
 
-    async invoke(inputPort: IInputPort<ImageUrlInputPortFormat>): Promise<void> {
-        const input: ImageUrlInputPortFormat = inputPort.get();
+    async invoke(inputPort: IInputPort<ImageInputPortFormat>): Promise<void> {
+        const input: ImageInputPortFormat = inputPort.get();
         const hits: Array<IHit> = await this.searchGateWay.search(input.id, '', []);
         const hitUrl: string = hits[0].url;
         const updateUrl: string = `${hitUrl.split(splitExt)[0]}.${input.extension}`;

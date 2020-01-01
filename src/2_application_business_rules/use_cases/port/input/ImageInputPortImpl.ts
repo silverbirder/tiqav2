@@ -6,17 +6,19 @@ export interface ImageInputPortFormat extends IInputPortFormat {
     id: number;
     tags: Array<string>;
     quote: string;
+    extension: string;
 }
 
 
 export default class ImageInputPortImpl implements IInputPort<IInputPortFormat> {
-    private _data: ImageInputPortFormat = {url: '', id: 0, tags: [], quote: ''};
+    private _data: ImageInputPortFormat = {url: '', id: 0, tags: [], quote: '', extension: ''};
 
     set(request: IRequest) {
         this._data.id = request.id;
         this._data.url = request.url;
         this._data.tags = request.tags;
         this._data.quote = request.quote;
+        this._data.extension = request.extension;
     }
 
     get(): ImageInputPortFormat {
