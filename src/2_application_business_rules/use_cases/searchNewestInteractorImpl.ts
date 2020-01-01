@@ -30,8 +30,9 @@ export default class SearchNewestInteractorImpl implements IUseCase {
                 id: hit.objectID,
                 url: hit.url,
                 quote: hit.quote,
+                tags: hit.tags,
                 updateDate: hit.updateDate,
-            }
+            };
             outPutPort.set(settable);
         });
         this.presenter.render(outPutPort);

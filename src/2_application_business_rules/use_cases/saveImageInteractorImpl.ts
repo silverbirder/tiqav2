@@ -8,9 +8,9 @@ import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import ImageOutputPortImpl, {ImageSettableOutputPortFormat} from './port/output/ImageOutputPortImpl';
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
+import SearchOutputPortImpl, {SearchSettableOutputPortFormat} from './port/output/SearchOutputPortImpl';
 
 @injectable()
 export default class SaveImageInteractorImpl implements IUseCase {
@@ -42,8 +42,8 @@ export default class SaveImageInteractorImpl implements IUseCase {
             updateDate: new Date(),
         };
         const objectID = await this.searchGateWay.save(index);
-        const outPutPort: IOutputPort<IPortFormat> = new ImageOutputPortImpl();
-        const settable: ImageSettableOutputPortFormat = {
+        const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPortImpl();
+        const settable: SearchSettableOutputPortFormat = {
             id: objectID,
             url: index.url,
             quote: index.quote,

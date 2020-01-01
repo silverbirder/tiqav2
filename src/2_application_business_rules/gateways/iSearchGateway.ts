@@ -11,7 +11,7 @@ export interface IndexObject {
 }
 
 export interface ISearchGateway {
-    search(id: number, keyword: string): Promise<Array<IHit>>;
+    search(id: number, keyword: string, tags: Array<string>): Promise<Array<IHit>>;
 
     newest(): Promise<Array<IHit>>;
 

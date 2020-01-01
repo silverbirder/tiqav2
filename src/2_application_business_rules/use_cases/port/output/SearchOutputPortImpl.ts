@@ -9,15 +9,17 @@ export interface SearchSettableOutputPortFormat extends IOutputPortFormat {
     id: number;
     url: string;
     quote: string;
+    tags: Array<string>;
     updateDate: Date;
 }
 
 interface IResult {
-    'source_url': string,
-    'quote': string,
-    'id': number,
-    'ext': string,
-    'updateDate': Date,
+    source_url: string,
+    quote: string,
+    id: number,
+    ext: string,
+    tags: Array<string>;
+    updateDate: Date,
 }
 
 export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> {
@@ -30,6 +32,7 @@ export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> 
             quote: params.quote,
             id: params.id,
             ext: ext.slice(1),
+            tags: params.tags,
             updateDate: params.updateDate,
         };
         this._data.results.push(result)

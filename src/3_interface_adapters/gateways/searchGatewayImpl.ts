@@ -22,7 +22,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(id: number, keyword: string): Promise<Array<IHit>> {
+    async search(id: number, keyword: string, tags: Array<string>): Promise<Array<IHit>> {
         let query: QueryParameters = {};
         if (id != 0) {
             const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id.toString());
@@ -36,6 +36,9 @@ export class SearchGatewayImpl implements ISearchGateway {
             return hits;
         } else {
             query.query = keyword;
+            query.facetFilters = tags.map((tag: string) => {
+                return `tags:${tag}`;
+            });
             const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
             return response.hits;
         }
