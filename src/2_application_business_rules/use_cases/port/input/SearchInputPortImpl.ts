@@ -1,5 +1,5 @@
 import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IRequest} from "../../../controllers/iController";
+import {IRequest} from '../../../controllers/iController';
 
 export class SearchInputPortFormat implements IInputPortFormat {
     keyword: string = '';

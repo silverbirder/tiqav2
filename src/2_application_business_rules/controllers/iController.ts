@@ -1,5 +1,5 @@
 import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
-import * as http from "http";
+import * as http from 'http';
 
 export interface IRequest {
     keyword: string;

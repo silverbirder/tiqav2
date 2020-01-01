@@ -1,8 +1,8 @@
-import {IController, IRequest, IResponse} from "../../2_application_business_rules/controllers/iController";
-import {container} from "../../inversify.config";
-import {TYPES} from "../../types";
-import {TAGS_TYPES} from "../../3_interface_adapters/controllers/tagsControllerImpl";
-import IRouter from "../../3_interface_adapters/routers/iRouter";
+import {IController, IRequest, IResponse} from '../../2_application_business_rules/controllers/iController';
+import {container} from '../../inversify.config';
+import {TYPES} from '../../types';
+import {TAGS_TYPES} from '../../3_interface_adapters/controllers/tagsControllerImpl';
+import IRouter from '../../3_interface_adapters/routers/iRouter';
 
 export default class TagsRouterImpl implements IRouter{
     controllerType: Symbol;
