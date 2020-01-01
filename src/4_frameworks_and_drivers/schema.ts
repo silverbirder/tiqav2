@@ -2,7 +2,7 @@ import {check, param, query, sanitizeQuery} from 'express-validator';
 import {IRequest} from '../2_application_business_rules/controllers/iController';
 
 const querySchema = [
-    query(['q', 'quote', 'tags', 'url']).trim().escape(),
+    query(['q', 'quote', 'tags', 'url']).trim(),
     sanitizeQuery('tags').customSanitizer((value: string) => {
         if (typeof value !== 'string' || value.length === 0) {
             return [];

@@ -10,12 +10,12 @@ export default class ImageRouterImpl implements IRouter {
     response: IResponse;
 
     constructor(request: IRequest, response: IResponse) {
-        this.controllerType = IMAGE_TYPES.NORMAL;
+        this.controllerType = IMAGE_TYPES.SAVE;
         this.request = request;
         this.response = response;
     }
 
-    async go() {
+    async go(): Promise<void> {
         const controller: IController = container.get<IController>(TYPES.ImageController);
         controller.useCaseType = this.controllerType;
         await controller.run(this.request);

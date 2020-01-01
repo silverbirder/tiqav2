@@ -6,7 +6,6 @@ import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/us
 import ImageInputPortImpl from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
 
 export const IMAGE_TYPES = {
-    NORMAL: Symbol.for('NORMAL'),
     SAVE: Symbol.for('SAVE'),
 };
 
@@ -14,23 +13,17 @@ export const IMAGE_TYPES = {
 @injectable()
 export default class ImageControllerImpl implements IController {
     useCase: IUseCase;
-    useCaseType: Symbol = IMAGE_TYPES.NORMAL;
-    private readonly _normalUseCase: IUseCase;
+    useCaseType: Symbol = IMAGE_TYPES.SAVE;
     private readonly _saveUseCase: IUseCase;
 
     constructor(
-        @inject(TYPES.SearchNormalUseCase) normalUseCase: IUseCase,
         @inject(TYPES.SaveImageUseCase) saveUseCase: IUseCase,
     ) {
-        this._normalUseCase = normalUseCase;
         this._saveUseCase = saveUseCase;
-        this.useCase = normalUseCase;
+        this.useCase = saveUseCase;
     }
 
     async run(request: IRequest): Promise<void> {
-        if(this.useCaseType === IMAGE_TYPES.SAVE) {
-            this.useCase = this._saveUseCase;
-        }
         const inputPort: IInputPort<IInputPortFormat> = new ImageInputPortImpl();
         inputPort.set(request);
         await this.useCase.invoke(inputPort);

@@ -1,8 +1,8 @@
 import {IController, IRequest, IResponse} from '../../2_application_business_rules/controllers/iController';
 import {TYPES} from '../../types';
 import {container} from '../../inversify.config';
-import {IMAGE_TYPES} from '../../3_interface_adapters/controllers/imageControllerImpl';
 import IRouter from '../../3_interface_adapters/routers/iRouter';
+import {IMAGE_URL_TYPES} from '../../3_interface_adapters/controllers/imageUrlControllerImpl';
 
 export default class ImageUrlRouterImpl implements IRouter{
     controllerType: Symbol;
@@ -10,7 +10,7 @@ export default class ImageUrlRouterImpl implements IRouter{
     response: IResponse;
 
     constructor(request: IRequest, response: IResponse) {
-        this.controllerType = IMAGE_TYPES.NORMAL;
+        this.controllerType = IMAGE_URL_TYPES.NORMAL;
         this.request = request;
         this.response = response;
     }

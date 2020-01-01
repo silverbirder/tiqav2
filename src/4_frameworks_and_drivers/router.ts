@@ -23,7 +23,7 @@ router.get('/images.json', async (req: Request, res: Response) => {
 });
 router.get('/images/:id.json', async (req: Request, res: Response) => {
     const customRequest: IRequest = new CustomRequest(req.params, req.query);
-    const customRouter: IRouter = new ImageRouterImpl(customRequest, res);
+    const customRouter: IRouter = new SearchRouterImpl(customRequest, res);
     await customRouter.go();
 });
 router.get('/images/:id/tags.json', async (req: Request, res: Response) => {
