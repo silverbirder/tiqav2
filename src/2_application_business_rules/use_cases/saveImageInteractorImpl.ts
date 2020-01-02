@@ -10,7 +10,8 @@ import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import SearchOutputPortImpl, {SearchSettableOutputPortFormat} from './port/output/SearchOutputPortImpl';
+import SearchOutputPortImpl from './port/output/SearchOutputPortImpl';
+import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
 
 @injectable()
 export default class SaveImageInteractorImpl implements IUseCase {
@@ -42,15 +43,10 @@ export default class SaveImageInteractorImpl implements IUseCase {
             updateDate: new Date(),
         };
         const objectID = await this.searchGateWay.save(index);
+        index.objectID = objectID;
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPortImpl();
-        const settable: SearchSettableOutputPortFormat = {
-            id: objectID,
-            url: index.url,
-            quote: index.quote,
-            tags: index.tags,
-            updateDate: index.updateDate
-        };
-        outPutPort.set(settable);
+        const entity: ImageEntityImpl = new ImageEntityImpl(index);
+        outPutPort.set([entity]);
         this.presenter.render(outPutPort);
         return;
     }

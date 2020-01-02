@@ -1,11 +1,11 @@
 import {
-    IHit,
-    IndexObject,
+    IHit, IndexObject,
     ISearchGateway,
 } from '../../2_application_business_rules/gateways/iSearchGateway';
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
 import Random from '../../utils/random';
+import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
@@ -22,35 +22,31 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
     }
 
-    async search(id: number, keyword: string, tags: Array<string>): Promise<Array<IHit>> {
+    async search(id: number, keyword: string, tags: Array<string>): Promise<Array<ImageEntityImpl>> {
         let query: QueryParameters = {};
         if (id != 0) {
-            const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id.toString());
-            let hits: Array<IHit> = [{
-                url: response.url || '',
-                objectID: response.objectID || 0,
-                quote: response.quote || '',
-                tags: response.tags || [],
-                updateDate: response!.updateDate || new Date(),
-            }];
-            return hits;
+            const response: any = await this.alogoliaAdminIndex.getObject(id.toString());
+            const entity: ImageEntityImpl = new ImageEntityImpl(response);
+            return [entity];
         } else {
             query.query = keyword;
             query.facetFilters = tags.map((tag: string) => {
-                return `tags:${tag}`;
+                return `${ImageEntityImpl.FILTER_KEY}:${tag}`;
             });
             const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
-            return response.hits;
+            return response.hits.map((hit: IHit) => {
+                return new ImageEntityImpl(hit);
+            });
         }
     }
 
-    async newest(): Promise<Array<IHit>> {
+    async newest(): Promise<Array<ImageEntityImpl>> {
         let hits: Array<IHit> = [];
 
         const settings: IndexSettings = await this.alogoliaAdminIndex.getSettings();
         const ranking: Array<string> = settings.ranking || [];
         let copiedRanking: Array<string> = [...ranking];
-        copiedRanking.unshift('desc(updateDate)');
+        copiedRanking.unshift(`desc(${ImageEntityImpl.SORT_KRY})`);
         settings.ranking = copiedRanking;
         try {
             await this.alogoliaAdminIndex.setSettings(settings);
@@ -62,10 +58,12 @@ export class SearchGatewayImpl implements ISearchGateway {
             settings.ranking = ranking;
             await this.alogoliaAdminIndex.setSettings(settings);
         }
-        return hits;
+        return hits.map((hit: IHit) => {
+            return new ImageEntityImpl(hit);
+        });
     }
 
-    async random(): Promise<Array<IHit>> {
+    async random(): Promise<Array<ImageEntityImpl>> {
         let response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search({});
         const maxHits: number = response.nbHits;
         const now: number = Date.now();
@@ -74,7 +72,9 @@ export class SearchGatewayImpl implements ISearchGateway {
         query.offset = offSet;
         query.length = 1;
         response = await this.alogoliaAdminIndex.search(query);
-        return response.hits;
+        return response.hits.map((hit: IHit) => {
+            return new ImageEntityImpl(hit);
+        });
     }
 
     async save(object: IndexObject): Promise<number> {

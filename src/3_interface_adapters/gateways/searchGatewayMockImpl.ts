@@ -1,45 +1,45 @@
 import {injectable} from 'inversify';
 import {
-    IHit,
     IndexObject,
     ISearchGateway,
 } from '../../2_application_business_rules/gateways/iSearchGateway';
+import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
 
-const hit: IHit = {
+const entity: ImageEntityImpl = {
     url: 'http://example.com',
     quote: 'example',
-    objectID: 1,
+    id: 1,
     tags: ['tag'],
     updateDate: new Date('1994-02-14'),
 };
-const hits: Array<IHit> = Array(hit);
+const entities: Array<ImageEntityImpl> = Array(entity);
 
 @injectable()
 export class SearchGatewayMockImpl implements ISearchGateway {
-    random(): Promise<Array<IHit>> {
+    random(): Promise<Array<ImageEntityImpl>> {
         return new Promise(function (resolve) {
-            resolve(hits);
+            resolve(entities);
         });
     }
 
-    newest(): Promise<Array<IHit>> {
+    newest(): Promise<Array<ImageEntityImpl>> {
         return new Promise(function (resolve) {
-            resolve(hits);
+            resolve(entities);
         });
     }
 
     constructor() {
     }
 
-    async search(id: number, text: string): Promise<Array<IHit>> {
+    async search(id: number, text: string): Promise<Array<ImageEntityImpl>> {
         return new Promise(function (resolve) {
-            resolve(hits);
+            resolve(entities);
         });
     }
 
     async save(object: IndexObject): Promise<number> {
         return new Promise(function (resolve) {
-            resolve(hit.objectID);
+            resolve(entity.id);
         });
     }
 

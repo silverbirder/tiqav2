@@ -1,4 +1,4 @@
-import {IHit, ISearchGateway} from '../gateways/iSearchGateway';
+import {ISearchGateway} from '../gateways/iSearchGateway';
 import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
@@ -11,6 +11,7 @@ import ImageUrlOutputPortImpl, {
 } from './port/output/ImageOutputPortImpl';
 import requestPromise from 'request-promise';
 import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
+import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
 
 const splitExt = RegExp(/\.(?=[^.]+$)/);
 
@@ -29,8 +30,8 @@ export default class GetImageInteractorImpl implements IUseCase {
 
     async invoke(inputPort: IInputPort<ImageInputPortFormat>): Promise<void> {
         const input: ImageInputPortFormat = inputPort.get();
-        const hits: Array<IHit> = await this.searchGateWay.search(input.id, '', []);
-        const hitUrl: string = hits[0].url;
+        const entities: Array<ImageEntityImpl> = await this.searchGateWay.search(input.id, '', []);
+        const hitUrl: string = entities[0].url;
         const updateUrl: string = `${hitUrl.split(splitExt)[0]}.${input.extension}`;
         const binary: ArrayBuffer = await requestPromise.get(updateUrl, {encoding: null});
         const outPutPort: IOutputPort<IPortFormat> = new ImageUrlOutputPortImpl();
