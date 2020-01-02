@@ -9,7 +9,6 @@ const querySchema = [
         }
         return value.split(',');
     }),
-    check('url').isURL(),
 ];
 
 const paramSchema = [
