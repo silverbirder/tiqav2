@@ -12,6 +12,7 @@ import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresente
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 import SearchOutputPortImpl from './port/output/SearchOutputPortImpl';
 import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import path from 'path';
 
 @injectable()
 export default class SaveImageInteractorImpl implements IUseCase {
@@ -35,11 +36,20 @@ export default class SaveImageInteractorImpl implements IUseCase {
     async invoke(inputPort: IInputPort<ImageInputPortFormat>): Promise<void> {
         const input: ImageInputPortFormat = inputPort.get();
         const quote: string = input.quote != '' ? input.quote : await this.imageTextGateWay.text(input.url);
-        const saved_url = await this.imageGateWay.save(input.url);
+        let url: string = '';
+        let ext: Array<string> = [];
+        if (input.savedImage) {
+            url = await this.imageGateWay.save(input.url);
+            ext = this.imageGateWay.supportExtension;
+        } else {
+            url = input.url;
+            ext = [path.extname(url).slice(1)];
+        }
         let index: IndexObject = {
-            url: saved_url,
+            url: url,
             quote: quote,
             tags: input.tags,
+            extension: ext,
             updateDate: new Date(),
         };
         const objectID = await this.searchGateWay.save(index);

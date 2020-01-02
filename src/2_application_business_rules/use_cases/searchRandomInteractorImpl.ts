@@ -30,7 +30,7 @@ export default class SearchRandomInteractorImpl implements IUseCase {
     async invoke(inputPort: IInputPort<SearchInputPortFormat>): Promise<void> {
         const entities: Array<ImageEntityImpl> = await this.searchGateWay.random();
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
-        outPutPort.set({entities: entities, extension: this.imageGateWay.supportExtension});
+        outPutPort.set(entities);
         this.presenter.render(outPutPort);
         return;
     }

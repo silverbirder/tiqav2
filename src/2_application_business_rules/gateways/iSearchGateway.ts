@@ -11,6 +11,7 @@ export interface IndexObject {
     url: string,
     quote: string,
     tags: Array<string>,
+    extension: Array<string>,
     updateDate: Date,
 }
 

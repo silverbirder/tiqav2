@@ -32,7 +32,7 @@ export default class SearchNormalInteractorImpl implements IUseCase {
         const input: SearchInputPortFormat = inputPort.get();
         const entities: Array<ImageEntityImpl> = await this.searchGateWay.search(input.id, input.keyword, input.tags);
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
-        outPutPort.set({entities: entities, extension: this.imageGateWay.supportExtension});
+        outPutPort.set(entities);
         this.presenter.render(outPutPort);
         return;
     }

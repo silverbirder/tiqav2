@@ -10,6 +10,7 @@ const entity: ImageEntityImpl = {
     quote: 'example',
     id: 1,
     tags: ['tag'],
+    extension: [],
     updateDate: new Date('1994-02-14'),
 };
 const entities: Array<ImageEntityImpl> = Array(entity);

@@ -5,13 +5,12 @@ interface IUpload {
     secure_url: string
 }
 
-import {ImageFormat} from 'cloudinary';
 
 const v2 = require('cloudinary');
 
 @injectable()
 export class ImageGatewayImpl implements IImageGateway {
-    supportExtension: Array<ImageFormat> = ['gif', 'png', 'jpg', 'bmp', 'ico', 'pdf', 'tiff', 'eps', 'jpc', 'jp2', 'psd', 'webp', 'zip', 'svg', 'mp4', 'webm', 'wdp', 'hpx', 'djvu', 'ai', 'flif', 'bpg', 'miff', 'tga', 'heic'];
+    supportExtension: Array<string> = ['gif', 'png', 'jpg', 'bmp', 'ico', 'pdf', 'tiff', 'eps', 'jpc', 'jp2', 'psd', 'webp', 'zip', 'svg', 'mp4', 'webm', 'wdp', 'hpx', 'djvu', 'ai', 'flif', 'bpg', 'miff', 'tga', 'heic'];
 
     constructor() {
         const clondName: string = process.env.CLOUDINARY_CLOUD_NAME || '';

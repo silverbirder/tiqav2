@@ -30,7 +30,7 @@ export default class SearchNewestInteractorImpl implements IUseCase {
     async invoke(_: IInputPort<SearchInputPortFormat>): Promise<void> {
         const entities: Array<ImageEntityImpl> = await this.searchGateWay.newest();
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
-        outPutPort.set({entities: entities, extension: this.imageGateWay.supportExtension});
+        outPutPort.set(entities);
         this.presenter.render(outPutPort);
         return;
     }

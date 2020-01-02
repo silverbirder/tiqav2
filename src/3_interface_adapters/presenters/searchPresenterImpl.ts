@@ -8,9 +8,6 @@ export default class SearchPresenterImpl implements IPresenter {
 
     render(outputPort: SearchOutputPortImpl): void {
         const output: SearchOutputPortFormat = outputPort.get();
-        this.view = {
-            'results': output.results,
-            'extension': output.extension,
-        }
+        this.view = output.results;
     }
 }

@@ -5,6 +5,7 @@ export default class ImageEntityImpl implements IEntity {
     url: string;
     quote: string;
     tags: Array<string>;
+    extension: Array<string>;
     updateDate: Date;
 
     constructor(params: any) {
@@ -12,6 +13,7 @@ export default class ImageEntityImpl implements IEntity {
         this.url = params.url || '';
         this.quote = params.quote || '';
         this.tags = params.tags || [];
+        this.extension = params.extension || [];
         this.updateDate = new Date(params.updateDate) || new Date();
     }
 

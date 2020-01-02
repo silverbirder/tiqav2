@@ -7,6 +7,7 @@ export interface IRequest {
     tags: Array<string>;
     url: string;
     id: number;
+    savedImage: boolean;
     extension: string;
 }
 

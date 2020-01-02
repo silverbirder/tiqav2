@@ -11,14 +11,15 @@ export interface ViewableImageEntity {
     sourceURL: string;
     tags: Array<string>;
     quote: string;
+    ext: Array<string>
     updateDate: string;
 }
 
 export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> {
     private _data: SearchOutputPortFormat = {results: [], extension: []};
 
-    set(params: { entities: Array<ImageEntityImpl>, extension: Array<string> }) {
-        const viewableEntities: Array<ViewableImageEntity> = params.entities.map((entity: ImageEntityImpl) => {
+    set( entities: Array<ImageEntityImpl>) {
+        const viewableEntities: Array<ViewableImageEntity> = entities.map((entity: ImageEntityImpl) => {
             const d: Date = entity.updateDate;
             const vd: string = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} ${d.toLocaleTimeString()}`;
             const q: string = entity.quote;
@@ -28,12 +29,12 @@ export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> 
                 sourceURL: entity.url,
                 tags: entity.tags,
                 quote: vq,
+                ext: entity.extension,
                 updateDate: vd
             };
             return v;
         });
         this._data.results = viewableEntities;
-        this._data.extension = params.extension;
     }
 
     get(): SearchOutputPortFormat {
