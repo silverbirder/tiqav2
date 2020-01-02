@@ -1,7 +1,7 @@
 {
-  "name": "budgie",
+  "name": "tiqav2",
   "version": "1.0.0",
-  "description": "Budgie is the platform that provide Searching Image API",
+  "description": "Tiqav2 is the platform that provide Searching Image API",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Silver-birder/budgie.git"
+    "url": "git+https://github.com/Silver-birder/tiqav2.git"
   },
   "keywords": [],
   "author": "silverbirder <silverbirder@gmail.com> (https://silver-birder.github.io)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Silver-birder/budgie/issues"
+    "url": "https://github.com/Silver-birder/tiqav2/issues"
   },
-  "homepage": "https://github.com/Silver-birder/budgie#readme",
+  "homepage": "https://github.com/Silver-birder/tiqav2#readme",
   "dependencies": {
     "@google-cloud/vision": "^1.7.2",
     "algoliasearch": "^3.35.1",
