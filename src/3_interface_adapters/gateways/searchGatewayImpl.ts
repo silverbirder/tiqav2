@@ -5,7 +5,7 @@ import {
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
 import Random from '../../utils/random';
-import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
+import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {

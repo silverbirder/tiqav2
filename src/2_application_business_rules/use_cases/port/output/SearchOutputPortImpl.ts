@@ -1,33 +1,38 @@
 import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import ImageEntityImpl from "../../../../1_enterprise_business_rules/entities/imageEntityImpl";
+import ImageEntityImpl from '../../../../1_enterprise_business_rules/entities/imageEntityImpl';
 
 export interface SearchOutputPortFormat extends IOutputPortFormat {
-    results: Array<IResult>;
+    results: Array<ViewableImageEntity>;
     extension: Array<string>;
 }
 
-interface IResult {
-    source_url: string,
-    quote: string,
-    id: number,
+export interface ViewableImageEntity {
+    id: number;
+    sourceURL: string;
     tags: Array<string>;
-    updateDate: Date,
+    quote: string;
+    updateDate: string;
 }
 
 export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> {
     private _data: SearchOutputPortFormat = {results: [], extension: []};
 
-    set(params: {entities: Array<ImageEntityImpl>, extension: Array<string>}) {
-        params.entities.forEach((entity: ImageEntityImpl) => {
-            const result: IResult = {
-                source_url: entity.url,
-                quote: entity.quote,
+    set(params: { entities: Array<ImageEntityImpl>, extension: Array<string> }) {
+        const viewableEntities: Array<ViewableImageEntity> = params.entities.map((entity: ImageEntityImpl) => {
+            const d: Date = entity.updateDate;
+            const vd: string = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} ${d.toLocaleTimeString()}`;
+            const q: string = entity.quote;
+            const vq: string = q.length > 20 ? `${q.slice(0, 20)}...` : q;
+            const v: ViewableImageEntity = {
                 id: entity.id,
+                sourceURL: entity.url,
                 tags: entity.tags,
-                updateDate: entity.updateDate,
+                quote: vq,
+                updateDate: vd
             };
-            this._data.results.push(result)
+            return v;
         });
+        this._data.results = viewableEntities;
         this._data.extension = params.extension;
     }
 

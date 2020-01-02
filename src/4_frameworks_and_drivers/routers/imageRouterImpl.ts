@@ -19,9 +19,9 @@ export default class ImageRouterImpl implements IRouter {
         const controller: IController = container.get<IController>(TYPES.ImageController);
         controller.useCaseType = this.controllerType;
         await controller.run(this.request);
-        if(this.controllerType == IMAGE_TYPES.VIEW) {
+        if (this.controllerType == IMAGE_TYPES.VIEW) {
             this.response.writeHead(200, {'Content-Type': 'image/png'});
-            this.response.end(controller.useCase.presenter.view.binary);
+            this.response.end(controller.useCase.presenter.view);
         } else {
             this.response.send(controller.useCase.presenter.view);
         }

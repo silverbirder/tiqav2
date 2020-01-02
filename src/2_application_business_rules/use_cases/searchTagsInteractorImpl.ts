@@ -17,7 +17,7 @@ export default class SearchTagsInteractorImpl implements IUseCase {
 
     constructor(
         @inject(TYPES.SearchGateway) searchGateWay: ISearchGateway,
-        @inject(TYPES.Presenter) presenter: IPresenter,
+        @inject(TYPES.TagsPresenter) presenter: IPresenter,
     ) {
         this.searchGateWay = searchGateWay;
         this.presenter = presenter;

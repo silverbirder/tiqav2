@@ -7,11 +7,11 @@ import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOut
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 import ImageUrlOutputPortImpl, {
-    ImageUrlSettableOutputPortFormat
+    ImageSettableOutputPortFormat
 } from './port/output/ImageOutputPortImpl';
 import requestPromise from 'request-promise';
 import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
-import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
+import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 
 const splitExt = RegExp(/\.(?=[^.]+$)/);
 
@@ -22,7 +22,7 @@ export default class GetImageInteractorImpl implements IUseCase {
 
     constructor(
         @inject(TYPES.SearchGateway) searchGateWay: ISearchGateway,
-        @inject(TYPES.Presenter) presenter: IPresenter,
+        @inject(TYPES.ImagePresenter) presenter: IPresenter,
     ) {
         this.searchGateWay = searchGateWay;
         this.presenter = presenter;
@@ -35,7 +35,7 @@ export default class GetImageInteractorImpl implements IUseCase {
         const updateUrl: string = `${hitUrl.split(splitExt)[0]}.${input.extension}`;
         const binary: ArrayBuffer = await requestPromise.get(updateUrl, {encoding: null});
         const outPutPort: IOutputPort<IPortFormat> = new ImageUrlOutputPortImpl();
-        const settable: ImageUrlSettableOutputPortFormat = {binary: binary};
+        const settable: ImageSettableOutputPortFormat = {binary: binary};
         outPutPort.set(settable);
         this.presenter.render(outPutPort);
         return;

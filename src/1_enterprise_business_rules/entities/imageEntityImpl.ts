@@ -1,4 +1,4 @@
-import IEntity from "./iEntity";
+import IEntity from './iEntity';
 
 export default class ImageEntityImpl implements IEntity {
     id: number;
@@ -8,11 +8,11 @@ export default class ImageEntityImpl implements IEntity {
     updateDate: Date;
 
     constructor(params: any) {
-        this.id = params.objectID || 0;
+        this.id = parseInt(params.objectID) || 0;
         this.url = params.url || '';
         this.quote = params.quote || '';
         this.tags = params.tags || [];
-        this.updateDate = params.updateDate || new Date();
+        this.updateDate = new Date(params.updateDate) || new Date();
     }
 
     static SORT_KRY: string = 'updateDate';

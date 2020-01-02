@@ -11,7 +11,7 @@ import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOut
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 import SearchOutputPortImpl from './port/output/SearchOutputPortImpl';
-import ImageEntityImpl from "../../1_enterprise_business_rules/entities/imageEntityImpl";
+import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 
 @injectable()
 export default class SaveImageInteractorImpl implements IUseCase {
@@ -24,7 +24,7 @@ export default class SaveImageInteractorImpl implements IUseCase {
         @inject(TYPES.ImageTextGateway) imageTextGateWay: IImageTextGateway,
         @inject(TYPES.ImageGateway) imageGateWay: IImageGateway,
         @inject(TYPES.SearchGateway) searchGateWay: ISearchGateway,
-        @inject(TYPES.Presenter) presenter: IPresenter,
+        @inject(TYPES.SearchPresenter) presenter: IPresenter,
     ) {
         this.imageTextGateWay = imageTextGateWay;
         this.imageGateWay = imageGateWay;
