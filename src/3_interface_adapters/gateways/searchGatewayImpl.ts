@@ -7,6 +7,34 @@ import {injectable} from 'inversify';
 import Random from '../../utils/random';
 import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 
+const settings: IndexSettings = {
+    minWordSizefor1Typo: 4,
+    minWordSizefor2Typos: 8,
+    hitsPerPage: 20,
+    maxValuesPerFacet: 100,
+    attributesToIndex: [ 'unordered(quote)' ],
+    attributesForFaceting: [ 'tags' ],
+    paginationLimitedTo: 1000,
+    exactOnSingleWordQuery: 'attribute',
+    ranking: [
+        'typo',
+        'geo',
+        'words',
+        'filters',
+        'proximity',
+        'attribute',
+        'exact',
+        'custom'
+    ],
+    separatorsToIndex: '',
+    removeWordsIfNoResults: 'none',
+    queryType: 'prefixLast',
+    highlightPreTag: '<em>',
+    highlightPostTag: '</em>',
+    snippetEllipsisText: '',
+    alternativesAsExact: [ 'ignorePlurals', 'singleWordSynonym' ]
+};
+
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
     private alogoliaAdminIndex: algoliasearch.Index;
@@ -20,6 +48,12 @@ export class SearchGatewayImpl implements ISearchGateway {
         }
         const algoliaAdminClient: algoliasearch.Client = algoliasearch(algoliaAppId, algoliaAdminKey);
         this.alogoliaAdminIndex = algoliaAdminClient.initIndex(algoliaIndexName);
+        this.algoliaSettings();
+    }
+
+    private async algoliaSettings(): Promise<void>{
+        const task: Task = await this.alogoliaAdminIndex.setSettings(settings);
+        await this.alogoliaAdminIndex.waitTask(task.taskID);
     }
 
     async search(id: number, keyword: string, tags: Array<string>): Promise<Array<ImageEntityImpl>> {
@@ -44,19 +78,16 @@ export class SearchGatewayImpl implements ISearchGateway {
         let hits: Array<IHit> = [];
 
         const settings: IndexSettings = await this.alogoliaAdminIndex.getSettings();
-        const ranking: Array<string> = settings.ranking || [];
-        let copiedRanking: Array<string> = [...ranking];
-        copiedRanking.unshift(`desc(${ImageEntityImpl.SORT_KRY})`);
-        settings.ranking = copiedRanking;
         try {
-            await this.alogoliaAdminIndex.setSettings(settings);
+            const task: Task = await this.alogoliaAdminIndex.setSettings({'customRanking': [`desc(${ImageEntityImpl.SORT_KRY})`]});
+            await this.alogoliaAdminIndex.waitTask(task.taskID);
             const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search({});
             hits = response.hits;
         } catch (e) {
             console.error(e);
         } finally {
-            settings.ranking = ranking;
-            await this.alogoliaAdminIndex.setSettings(settings);
+            const task: Task = await this.alogoliaAdminIndex.setSettings(settings);
+            await this.alogoliaAdminIndex.waitTask(task.taskID);
         }
         return hits.map((hit: IHit) => {
             return new ImageEntityImpl(hit);
