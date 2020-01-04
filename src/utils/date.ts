@@ -18,6 +18,10 @@ export class DateImpl implements IDate {
 @injectable()
 export class DateMock implements IDate {
     create(value?: any): Date {
-        return new Date('1994-02-14');
+        if (typeof value === 'string') {
+            return new Date(value);
+        } else {
+            return new Date('1994-02-14');
+        }
     }
 }
