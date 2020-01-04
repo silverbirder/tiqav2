@@ -3,7 +3,7 @@ import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import ImageInputPortImpl from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
+import {ImageInputPortImpl} from '../../2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
 
 export const IMAGE_TYPES = {
     SAVE: Symbol.for('SAVE'),
@@ -12,7 +12,7 @@ export const IMAGE_TYPES = {
 
 
 @injectable()
-export default class ImageControllerImpl implements IController {
+export class ImageControllerImpl implements IController {
     useCase: IUseCase;
     useCaseType: Symbol = IMAGE_TYPES.SAVE;
     private readonly _saveUseCase: IUseCase;

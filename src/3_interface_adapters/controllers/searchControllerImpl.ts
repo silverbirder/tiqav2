@@ -3,7 +3,7 @@ import {IController, IRequest} from '../../2_application_business_rules/controll
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import SearchInputPortImpl from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import {SearchInputPortImpl} from '../../2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
 
 export const SEARCH_TYPES = {
     NORMAL: Symbol.for('NORMAL'),
@@ -13,7 +13,7 @@ export const SEARCH_TYPES = {
 
 
 @injectable()
-export default class SearchControllerImpl implements IController {
+export class SearchControllerImpl implements IController {
     useCase: IUseCase;
     useCaseType: Symbol = SEARCH_TYPES.NORMAL;
     private readonly _normalUseCase: IUseCase;

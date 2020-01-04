@@ -3,7 +3,7 @@ import {IController, IRequest} from '../../2_application_business_rules/controll
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import TagsInputPortImpl from '../../2_application_business_rules/use_cases/port/input/TagsInputPortImpl';
+import {TagsInputPortImpl} from '../../2_application_business_rules/use_cases/port/input/TagsInputPortImpl';
 
 export const TAGS_TYPES = {
     NORMAL: Symbol.for('NORMAL'),
@@ -11,7 +11,7 @@ export const TAGS_TYPES = {
 
 
 @injectable()
-export default class TagsControllerImpl implements IController {
+export class TagsControllerImpl implements IController {
     useCase: IUseCase;
     useCaseType: Symbol = TAGS_TYPES.NORMAL;
     private readonly _normalUseCase: IUseCase;

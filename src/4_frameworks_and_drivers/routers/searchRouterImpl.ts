@@ -2,9 +2,9 @@ import {SEARCH_TYPES} from '../../3_interface_adapters/controllers/searchControl
 import {IController, IRequest, IResponse} from '../../2_application_business_rules/controllers/iController';
 import {container} from '../../inversify.config';
 import {TYPES} from '../../types';
-import IRouter from '../../3_interface_adapters/routers/iRouter';
+import {IRouter} from '../../3_interface_adapters/routers/iRouter';
 
-export default class SearchRouterImpl implements IRouter {
+export class SearchRouterImpl implements IRouter {
     controllerType: Symbol;
     request: IRequest;
     response: IResponse;

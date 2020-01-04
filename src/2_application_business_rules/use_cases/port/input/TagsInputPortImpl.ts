@@ -7,7 +7,7 @@ export interface TagsInputPortFormat extends IInputPortFormat {
 }
 
 
-export default class TagsInputPortImpl implements IInputPort<IInputPortFormat> {
+export class TagsInputPortImpl implements IInputPort<IInputPortFormat> {
     private _data: TagsInputPortFormat = {id: 0, keyword: ''};
 
     set(request: IRequest) {

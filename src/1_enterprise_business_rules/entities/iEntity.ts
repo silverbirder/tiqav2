@@ -1,1 +1,1 @@
-export default interface IEntity {}
+export interface IEntity {}

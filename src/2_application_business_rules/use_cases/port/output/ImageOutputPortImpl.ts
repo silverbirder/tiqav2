@@ -8,7 +8,7 @@ export interface ImageSettableOutputPortFormat extends IOutputPortFormat {
     binary: ArrayBuffer;
 }
 
-export default class ImageOutputPort implements IOutputPort<ImageOutputPortFormat> {
+export class ImageOutputPortImpl implements IOutputPort<ImageOutputPortFormat> {
     private _data: ImageOutputPortFormat = {binary: Buffer.alloc(0)};
 
     set(params: ImageSettableOutputPortFormat) {

@@ -1,10 +1,10 @@
-import IEntity from './iEntity';
+import {IEntity} from './iEntity';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IDate} from '../../utils/date';
 
 @injectable()
-export default class ImageEntityImpl implements IEntity {
+export class ImageEntityImpl implements IEntity {
     id: number;
     url: string;
     quote: string;

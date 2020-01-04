@@ -1,4 +1,4 @@
-export default class Random {
+export class Random {
     x: number;
     y: number;
     z: number;

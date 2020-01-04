@@ -4,8 +4,8 @@ import {
 } from '../../2_application_business_rules/gateways/iSearchGateway';
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
-import Random from '../../utils/random';
-import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {Random} from '../../utils/random';
+import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 import {IDate} from '../../utils/date';
 import {TYPES} from '../../types';
 import {container} from '../../inversify.config';

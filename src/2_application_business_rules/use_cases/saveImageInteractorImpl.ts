@@ -10,14 +10,14 @@ import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import SearchOutputPortImpl from './port/output/SearchOutputPortImpl';
-import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {SearchOutputPortImpl} from './port/output/SearchOutputPortImpl';
+import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 import path from 'path';
 import {IDate} from '../../utils/date';
 import {container} from '../../inversify.config';
 
 @injectable()
-export default class SaveImageInteractorImpl implements IUseCase {
+export class SaveImageInteractorImpl implements IUseCase {
     private imageTextGateWay: IImageTextGateway;
     private imageGateWay: IImageGateway;
     private searchGateWay: ISearchGateway;

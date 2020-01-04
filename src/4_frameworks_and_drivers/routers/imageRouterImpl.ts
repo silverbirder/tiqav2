@@ -2,9 +2,9 @@ import {IController, IRequest, IResponse} from '../../2_application_business_rul
 import {container} from '../../inversify.config';
 import {TYPES} from '../../types';
 import {IMAGE_TYPES} from '../../3_interface_adapters/controllers/imageControllerImpl';
-import IRouter from '../../3_interface_adapters/routers/iRouter';
+import {IRouter} from '../../3_interface_adapters/routers/iRouter';
 
-export default class ImageRouterImpl implements IRouter {
+export class ImageRouterImpl implements IRouter {
     controllerType: Symbol;
     request: IRequest;
     response: IResponse;

@@ -1,4 +1,4 @@
-import ImageEntityImpl from '../../../../src/1_enterprise_business_rules/entities/imageEntityImpl';
+import {ImageEntityImpl} from '../../../../src/1_enterprise_business_rules/entities/imageEntityImpl';
 import {TYPES} from '../../../../src/types';
 import {IDate} from '../../../../src/utils/date';
 import {container} from '../../../../src/inversify.config';

@@ -8,7 +8,7 @@ export interface SearchInputPortFormat extends IInputPortFormat {
 }
 
 
-export default class SearchInputPortImpl implements IInputPort<IInputPortFormat> {
+export class SearchInputPortImpl implements IInputPort<IInputPortFormat> {
     private _data: SearchInputPortFormat = {keyword: '', id: 0, tags: []};
 
     set(request: IRequest) {

@@ -4,15 +4,15 @@ import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
 import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import SearchOutputPort from './port/output/SearchOutputPortImpl';
+import {SearchOutputPortImpl} from './port/output/SearchOutputPortImpl';
 import {SearchInputPortFormat} from './port/input/SearchInputPortImpl';
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 import {IImageGateway} from '../gateways/iImageGateway';
 
 @injectable()
-export default class SearchRandomInteractorImpl implements IUseCase {
+export class SearchRandomInteractorImpl implements IUseCase {
     private searchGateWay: ISearchGateway;
     private imageGateWay: IImageGateway;
     presenter: IPresenter;
@@ -29,7 +29,7 @@ export default class SearchRandomInteractorImpl implements IUseCase {
 
     async invoke(inputPort: IInputPort<SearchInputPortFormat>): Promise<void> {
         const entities: Array<ImageEntityImpl> = await this.searchGateWay.random();
-        const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPort();
+        const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPortImpl();
         outPutPort.set(entities);
         this.presenter.render(outPutPort);
         return;

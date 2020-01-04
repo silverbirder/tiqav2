@@ -11,7 +11,7 @@ export interface ImageInputPortFormat extends IInputPortFormat {
 }
 
 
-export default class ImageInputPortImpl implements IInputPort<IInputPortFormat> {
+export class ImageInputPortImpl implements IInputPort<IInputPortFormat> {
     private _data: ImageInputPortFormat = {url: '', id: 0, tags: [], quote: '', extension: '', savedImage: false};
 
     set(request: IRequest) {

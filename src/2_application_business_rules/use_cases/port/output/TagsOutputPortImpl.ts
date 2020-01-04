@@ -7,7 +7,7 @@ export interface TagsSettableOutputPortFormat extends IOutputPortFormat {
     tags: Array<string>;
 }
 
-export default class TagsOutputPort implements IOutputPort<IOutputPortFormat> {
+export class TagsOutputPortImpl implements IOutputPort<IOutputPortFormat> {
     private _data: TagsOutputPortFormat = {};
 
     set(params: TagsSettableOutputPortFormat) {

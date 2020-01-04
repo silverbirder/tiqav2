@@ -7,11 +7,11 @@ import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOut
 import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
 import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
 import {TagsInputPortFormat} from './port/input/TagsInputPortImpl';
-import TagsOutputPort, {TagsSettableOutputPortFormat} from './port/output/TagsOutputPortImpl';
+import {TagsSettableOutputPortFormat, TagsOutputPortImpl} from './port/output/TagsOutputPortImpl';
 
 
 @injectable()
-export default class SearchTagsInteractorImpl implements IUseCase {
+export class SearchTagsInteractorImpl implements IUseCase {
     private searchGateWay: ISearchGateway;
     presenter: IPresenter;
 
@@ -26,7 +26,7 @@ export default class SearchTagsInteractorImpl implements IUseCase {
     async invoke(inputPort: IInputPort<TagsInputPortFormat>): Promise<void> {
         const input: TagsInputPortFormat = inputPort.get();
         const tags: Array<string> = await this.searchGateWay.tags(input.id, input.keyword);
-        const outPutPort: IOutputPort<IPortFormat> = new TagsOutputPort();
+        const outPutPort: IOutputPort<IPortFormat> = new TagsOutputPortImpl();
         const settable: TagsSettableOutputPortFormat = {
             tags: tags,
         };

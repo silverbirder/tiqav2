@@ -3,7 +3,7 @@ import {
     IndexObject,
     ISearchGateway,
 } from '../../2_application_business_rules/gateways/iSearchGateway';
-import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 import {container} from '../../inversify.config';
 import {TYPES} from '../../types';
 import {IDate} from '../../utils/date';

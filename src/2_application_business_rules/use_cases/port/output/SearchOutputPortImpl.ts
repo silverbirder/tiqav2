@@ -1,5 +1,5 @@
 import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import ImageEntityImpl from '../../../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {ImageEntityImpl} from '../../../../1_enterprise_business_rules/entities/imageEntityImpl';
 
 export interface SearchOutputPortFormat extends IOutputPortFormat {
     results: Array<ViewableImageEntity>;
@@ -15,7 +15,7 @@ export interface ViewableImageEntity {
     updateDate: string;
 }
 
-export default class SearchOutputPort implements IOutputPort<IOutputPortFormat> {
+export class SearchOutputPortImpl implements IOutputPort<IOutputPortFormat> {
     private _data: SearchOutputPortFormat = {results: [], extension: []};
 
     set( entities: Array<ImageEntityImpl>) {
