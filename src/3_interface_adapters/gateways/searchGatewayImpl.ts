@@ -1,14 +1,14 @@
-import {
-    IHit, IndexObject,
-    ISearchGateway,
-} from '../../2_application_business_rules/gateways/iSearchGateway';
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
-import {Random} from '../../utils/random';
-import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
-import {IDate} from '../../utils/date';
-import {TYPES} from '../../types';
-import {container} from '../../inversify.config';
+
+import {TYPES} from '@src/types';
+import {container} from '@src/inversify.config';
+import {IDate} from '@src/utils/date';
+import {Random} from '@src/utils/random';
+
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
+
+import {IHit, IndexObject, ISearchGateway,} from '@src/2_application_business_rules/gateways/iSearchGateway';
 
 const settings: IndexSettings = {
     minWordSizefor1Typo: 4,

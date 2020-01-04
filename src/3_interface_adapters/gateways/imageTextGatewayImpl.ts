@@ -1,5 +1,6 @@
-import {IImageTextGateway} from '../../2_application_business_rules/gateways/iImageTextGateway';
 import {injectable} from 'inversify';
+
+import {IImageTextGateway} from '@src/2_application_business_rules/gateways/iImageTextGateway';
 
 interface IVisionClient {
     annotateImage(args: IAnnotateImageArgs): Array<IAnnotatedImage>;

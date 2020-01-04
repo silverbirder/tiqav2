@@ -1,7 +1,9 @@
 import express, {Express} from 'express'
-import router from './router'
 import bodyParser from 'body-parser'
-import {paramSchema, querySchema} from './schema';
+
+import router from '@src/4_frameworks_and_drivers/router'
+import {paramSchema, querySchema} from '@src/4_frameworks_and_drivers/schema';
+
 
 const app: Express = express();
 

@@ -1,7 +1,8 @@
-import {ImageEntityImpl} from '../../../../src/1_enterprise_business_rules/entities/imageEntityImpl';
-import {TYPES} from '../../../../src/types';
-import {IDate} from '../../../../src/utils/date';
-import {container} from '../../../../src/inversify.config';
+import {TYPES} from '@src/types';
+import {container} from '@src/inversify.config';
+import {IDate} from '@src/utils/date';
+
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
 it('UnitTest/ImageEntityImpl.constructor:EmptyObject/DefaultValue', () => {
     // Arrange

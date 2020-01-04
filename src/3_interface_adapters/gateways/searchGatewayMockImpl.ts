@@ -1,12 +1,12 @@
 import {injectable} from 'inversify';
-import {
-    IndexObject,
-    ISearchGateway,
-} from '../../2_application_business_rules/gateways/iSearchGateway';
-import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
-import {container} from '../../inversify.config';
-import {TYPES} from '../../types';
-import {IDate} from '../../utils/date';
+
+import {container} from '@src/inversify.config';
+import {TYPES} from '@src/types';
+import {IDate} from '@src/utils/date';
+
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
+
+import {IndexObject, ISearchGateway,} from '@src/2_application_business_rules/gateways/iSearchGateway';
 
 const entity: ImageEntityImpl = new ImageEntityImpl({
     url: 'http://example.com',

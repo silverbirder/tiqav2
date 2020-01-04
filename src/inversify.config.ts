@@ -1,27 +1,31 @@
-import {TYPES} from './types';
-import {IImageGateway} from './2_application_business_rules/gateways/iImageGateway';
-import {ImageGatewayImpl} from './3_interface_adapters/gateways/imageGatewayImpl';
+import {TYPES} from '@src/types';
+import {DateImpl, DateMock, IDate} from '@src/utils/date';
+
 import {Container} from 'inversify';
-import {IImageTextGateway} from './2_application_business_rules/gateways/iImageTextGateway';
-import {ImageTextGatewayImpl} from './3_interface_adapters/gateways/imageTextGatewayImpl';
-import {ISearchGateway} from './2_application_business_rules/gateways/iSearchGateway';
-import {SearchGatewayImpl} from './3_interface_adapters/gateways/searchGatewayImpl';
-import {IPresenter} from './1_enterprise_business_rules/presenters/iPresenter';
-import {TagsPresenterImpl} from './3_interface_adapters/presenters/tagsPresenterImpl';
-import {SearchNormalInteractorImpl} from './2_application_business_rules/use_cases/searchNormalInteractorImpl';
-import {IUseCase} from './1_enterprise_business_rules/use_cases/iUseCase';
-import {SaveImageInteractorImpl} from './2_application_business_rules/use_cases/saveImageInteractorImpl';
-import {IController} from './2_application_business_rules/controllers/iController';
-import {SearchControllerImpl} from './3_interface_adapters/controllers/searchControllerImpl';
-import {ImageControllerImpl} from './3_interface_adapters/controllers/imageControllerImpl';
-import {SearchNewestInteractorImpl} from './2_application_business_rules/use_cases/searchNewestInteractorImpl';
-import {SearchRandomInteractorImpl} from './2_application_business_rules/use_cases/searchRandomInteractorImpl';
-import {GetImageInteractorImpl} from './2_application_business_rules/use_cases/getImageInteractorImpl';
-import {TagsControllerImpl} from './3_interface_adapters/controllers/tagsControllerImpl';
-import {SearchTagsInteractorImpl} from './2_application_business_rules/use_cases/searchTagsInteractorImpl';
-import {ImagePresenterImpl} from './3_interface_adapters/presenters/imagePresenterImpl';
-import {SearchPresenterImpl} from './3_interface_adapters/presenters/searchPresenterImpl';
-import {DateImpl, DateMock, IDate} from './utils/date';
+
+import {IPresenter} from '@src/1_enterprise_business_rules/presenters/iPresenter';
+import {IUseCase} from '@src/1_enterprise_business_rules/use_cases/iUseCase';
+
+import {IImageGateway} from '@src/2_application_business_rules/gateways/iImageGateway';
+import {IImageTextGateway} from '@src/2_application_business_rules/gateways/iImageTextGateway';
+import {IController} from '@src/2_application_business_rules/controllers/iController';
+import {ISearchGateway} from '@src/2_application_business_rules/gateways/iSearchGateway';
+import {SearchNormalInteractorImpl} from '@src/2_application_business_rules/use_cases/searchNormalInteractorImpl';
+import {SaveImageInteractorImpl} from '@src/2_application_business_rules/use_cases/saveImageInteractorImpl';
+import {SearchNewestInteractorImpl} from '@src/2_application_business_rules/use_cases/searchNewestInteractorImpl';
+import {SearchRandomInteractorImpl} from '@src/2_application_business_rules/use_cases/searchRandomInteractorImpl';
+import {SearchTagsInteractorImpl} from '@src/2_application_business_rules/use_cases/searchTagsInteractorImpl';
+import {GetImageInteractorImpl} from '@src/2_application_business_rules/use_cases/getImageInteractorImpl';
+
+import {ImageGatewayImpl} from '@src/3_interface_adapters/gateways/imageGatewayImpl';
+import {ImageTextGatewayImpl} from '@src/3_interface_adapters/gateways/imageTextGatewayImpl';
+import {SearchGatewayImpl} from '@src/3_interface_adapters/gateways/searchGatewayImpl';
+import {TagsPresenterImpl} from '@src/3_interface_adapters/presenters/tagsPresenterImpl';
+import {SearchControllerImpl} from '@src/3_interface_adapters/controllers/searchControllerImpl';
+import {ImageControllerImpl} from '@src/3_interface_adapters/controllers/imageControllerImpl';
+import {TagsControllerImpl} from '@src/3_interface_adapters/controllers/tagsControllerImpl';
+import {ImagePresenterImpl} from '@src/3_interface_adapters/presenters/imagePresenterImpl';
+import {SearchPresenterImpl} from '@src/3_interface_adapters/presenters/searchPresenterImpl';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const container = new Container();

@@ -1,5 +1,6 @@
 import {injectable} from 'inversify';
-import {IImageGateway} from '../../2_application_business_rules/gateways/iImageGateway';
+
+import {IImageGateway} from '@src/2_application_business_rules/gateways/iImageGateway';
 
 @injectable()
 export class ImageGatewayMockImpl implements IImageGateway {

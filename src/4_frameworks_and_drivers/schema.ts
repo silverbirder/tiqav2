@@ -1,5 +1,6 @@
 import {param, query, sanitizeQuery} from 'express-validator';
-import {IRequest} from '../2_application_business_rules/controllers/iController';
+
+import {IRequest} from '@src/2_application_business_rules/controllers/iController';
 
 const querySchema = [
     query(['q', 'quote', 'tags', 'url', 'si']).trim(),

@@ -1,7 +1,9 @@
-import {IEntity} from './iEntity';
 import {inject, injectable} from 'inversify';
-import {TYPES} from '../../types';
-import {IDate} from '../../utils/date';
+
+import {IDate} from '@src/utils/date';
+import {TYPES} from '@src/types';
+
+import {IEntity} from '@src/1_enterprise_business_rules/entities/iEntity';
 
 @injectable()
 export class ImageEntityImpl implements IEntity {

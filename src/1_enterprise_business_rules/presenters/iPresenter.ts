@@ -1,5 +1,5 @@
-import {IOutputPort} from '../use_cases/port/iOutputPort';
-import {IPortFormat} from '../use_cases/port/iPort';
+import {IOutputPort} from '@src/1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iPort';
 
 export interface IPresenter {
     view: {}

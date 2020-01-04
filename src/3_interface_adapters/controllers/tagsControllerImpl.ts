@@ -1,9 +1,12 @@
-import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
-import {IController, IRequest} from '../../2_application_business_rules/controllers/iController';
 import {inject, injectable} from 'inversify';
-import {TYPES} from '../../types';
-import {IInputPort, IInputPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {TagsInputPortImpl} from '../../2_application_business_rules/use_cases/port/input/TagsInputPortImpl';
+
+import {TYPES} from '@src/types';
+
+import {IInputPort, IInputPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IUseCase} from '@src/1_enterprise_business_rules/use_cases/iUseCase';
+
+import {IController, IRequest} from '@src/2_application_business_rules/controllers/iController';
+import {TagsInputPortImpl} from '@src/2_application_business_rules/use_cases/port/input/TagsInputPortImpl';
 
 export const TAGS_TYPES = {
     NORMAL: Symbol.for('NORMAL'),

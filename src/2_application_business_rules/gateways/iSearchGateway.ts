@@ -1,4 +1,4 @@
-import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
 // api response data.
 export interface IHit extends IndexObject {

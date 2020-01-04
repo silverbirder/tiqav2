@@ -1,5 +1,5 @@
-import {IInputPort, IInputPortFormat} from './port/iInputPort';
-import {IPresenter} from '../presenters/iPresenter';
+import {IInputPort, IInputPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IPresenter} from '@src/1_enterprise_business_rules/presenters/iPresenter';
 
 export interface IUseCase{
     presenter: IPresenter;
