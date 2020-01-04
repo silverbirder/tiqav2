@@ -14,6 +14,7 @@ const TYPES = {
     SearchController: Symbol.for('SearchController'),
     ImageController: Symbol.for('ImageController'),
     TagsController: Symbol.for('TagsController'),
+    DATE: Symbol.for('DATE'),
 };
 
 export {TYPES};

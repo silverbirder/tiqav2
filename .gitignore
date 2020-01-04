@@ -64,6 +64,7 @@ typings/
 
 *.js
 !webpack.config.js
+!jest.*
 
 credentials/*
 !credentials/.gitkeep

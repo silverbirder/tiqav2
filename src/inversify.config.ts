@@ -21,7 +21,9 @@ import TagsControllerImpl from './3_interface_adapters/controllers/tagsControlle
 import SearchTagsInteractorImpl from './2_application_business_rules/use_cases/searchTagsInteractorImpl';
 import ImagePresenterImpl from './3_interface_adapters/presenters/imagePresenterImpl';
 import SearchPresenterImpl from './3_interface_adapters/presenters/searchPresenterImpl';
+import {DateImpl, DateMock, IDate} from './utils/date';
 
+const NODE_ENV = process.env.NODE_ENV || 'development';
 const container = new Container();
 
 container.bind<IImageGateway>(TYPES.ImageGateway).to(ImageGatewayImpl);
@@ -42,5 +44,12 @@ container.bind<IUseCase>(TYPES.GetImageUseCase).to(GetImageInteractorImpl);
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
 container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
 container.bind<IController>(TYPES.TagsController).to(TagsControllerImpl);
+
+if (NODE_ENV === 'test') {
+    container.bind<IDate>(TYPES.DATE).to(DateMock);
+} else {
+    container.bind<IDate>(TYPES.DATE).to(DateImpl);
+}
+
 
 export {container};

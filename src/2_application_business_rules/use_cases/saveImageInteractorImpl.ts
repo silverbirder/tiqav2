@@ -13,6 +13,8 @@ import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPor
 import SearchOutputPortImpl from './port/output/SearchOutputPortImpl';
 import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
 import path from 'path';
+import {IDate} from '../../utils/date';
+import {container} from '../../inversify.config';
 
 @injectable()
 export default class SaveImageInteractorImpl implements IUseCase {
@@ -55,7 +57,7 @@ export default class SaveImageInteractorImpl implements IUseCase {
         const objectID = await this.searchGateWay.save(index);
         index.objectID = objectID;
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPortImpl();
-        const entity: ImageEntityImpl = new ImageEntityImpl(index);
+        const entity: ImageEntityImpl = new ImageEntityImpl(index, container.get<IDate>(TYPES.DATE));
         outPutPort.set([entity]);
         this.presenter.render(outPutPort);
         return;

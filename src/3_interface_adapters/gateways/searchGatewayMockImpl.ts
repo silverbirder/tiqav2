@@ -4,15 +4,18 @@ import {
     ISearchGateway,
 } from '../../2_application_business_rules/gateways/iSearchGateway';
 import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {container} from '../../inversify.config';
+import {TYPES} from '../../types';
+import {IDate} from '../../utils/date';
 
-const entity: ImageEntityImpl = {
+const entity: ImageEntityImpl = new ImageEntityImpl({
     url: 'http://example.com',
     quote: 'example',
     id: 1,
     tags: ['tag'],
     extension: [],
     updateDate: new Date('1994-02-14'),
-};
+}, container.get<IDate>(TYPES.DATE));
 const entities: Array<ImageEntityImpl> = Array(entity);
 
 @injectable()

@@ -6,6 +6,9 @@ import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch
 import {injectable} from 'inversify';
 import Random from '../../utils/random';
 import ImageEntityImpl from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {IDate} from '../../utils/date';
+import {TYPES} from '../../types';
+import {container} from '../../inversify.config';
 
 const settings: IndexSettings = {
     minWordSizefor1Typo: 4,
@@ -38,6 +41,7 @@ const settings: IndexSettings = {
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
     private alogoliaAdminIndex: algoliasearch.Index;
+    private dateImpl: IDate = container.get<IDate>(TYPES.DATE);
 
     constructor() {
         const algoliaAppId: string = process.env.ALGOLIA_APP_ID || '';
@@ -60,7 +64,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         let query: QueryParameters = {};
         if (id != 0) {
             const response: any = await this.alogoliaAdminIndex.getObject(id.toString());
-            const entity: ImageEntityImpl = new ImageEntityImpl(response);
+            const entity: ImageEntityImpl = new ImageEntityImpl(response, this.dateImpl);
             return [entity];
         } else {
             query.query = keyword;
@@ -69,7 +73,7 @@ export class SearchGatewayImpl implements ISearchGateway {
             });
             const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
             return response.hits.map((hit: IHit) => {
-                return new ImageEntityImpl(hit);
+                return new ImageEntityImpl(hit, this.dateImpl);
             });
         }
     }
@@ -90,7 +94,7 @@ export class SearchGatewayImpl implements ISearchGateway {
             await this.alogoliaAdminIndex.waitTask(task.taskID);
         }
         return hits.map((hit: IHit) => {
-            return new ImageEntityImpl(hit);
+            return new ImageEntityImpl(hit, this.dateImpl);
         });
     }
 
@@ -104,7 +108,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         query.length = 1;
         response = await this.alogoliaAdminIndex.search(query);
         return response.hits.map((hit: IHit) => {
-            return new ImageEntityImpl(hit);
+            return new ImageEntityImpl(hit, this.dateImpl);
         });
     }
 
