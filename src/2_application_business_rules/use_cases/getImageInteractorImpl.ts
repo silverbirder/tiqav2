@@ -1,18 +1,22 @@
-import {ISearchGateway} from '../gateways/iSearchGateway';
-import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
+import requestPromise from 'request-promise';
+
 import {inject, injectable} from 'inversify';
-import {TYPES} from '../../types';
-import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
-import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
+
+import {TYPES} from '@src/types';
+
+import {IInputPort} from '@src/1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IOutputPort} from '@src/1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IPresenter} from '@src/1_enterprise_business_rules/presenters/iPresenter';
+import {IPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iPort';
+import {IUseCase} from '@src/1_enterprise_business_rules/use_cases/iUseCase';
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
+
 import {
     ImageOutputPortImpl,
-    ImageSettableOutputPortFormat
-} from './port/output/ImageOutputPortImpl';
-import requestPromise from 'request-promise';
-import {ImageInputPortFormat} from './port/input/ImageInputPortImpl';
-import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
+    ImageSettableOutputPortFormat,
+} from '@src/2_application_business_rules/use_cases/port/output/ImageOutputPortImpl';
+import {ISearchGateway} from '@src/2_application_business_rules/gateways/iSearchGateway';
+import {ImageInputPortFormat} from '@src/2_application_business_rules/use_cases/port/input/ImageInputPortImpl';
 
 const splitExt = RegExp(/\.(?=[^.]+$)/);
 

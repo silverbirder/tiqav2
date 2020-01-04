@@ -1,16 +1,17 @@
-import {ISearchGateway} from '../gateways/iSearchGateway';
-import {IUseCase} from '../../1_enterprise_business_rules/use_cases/iUseCase';
 import {inject, injectable} from 'inversify';
-import {TYPES} from '../../types';
-import {IInputPort} from '../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IOutputPort} from '../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {SearchOutputPortImpl} from './port/output/SearchOutputPortImpl';
-import {SearchInputPortFormat} from './port/input/SearchInputPortImpl';
-import {IPresenter} from '../../1_enterprise_business_rules/presenters/iPresenter';
-import {IPortFormat} from '../../1_enterprise_business_rules/use_cases/port/iPort';
-import {ImageEntityImpl} from '../../1_enterprise_business_rules/entities/imageEntityImpl';
-import {IImageGateway} from '../gateways/iImageGateway';
+import {TYPES} from '@src/types';
 
+import {IUseCase} from '@src/1_enterprise_business_rules/use_cases/iUseCase';
+import {IInputPort} from '@src/1_enterprise_business_rules/use_cases/port/iInputPort';
+import {IOutputPort} from '@src/1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IPresenter} from '@src/1_enterprise_business_rules/presenters/iPresenter';
+import {IPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iPort';
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
+
+import {IImageGateway} from '@src/2_application_business_rules/gateways/iImageGateway';
+import {SearchInputPortFormat} from '@src/2_application_business_rules/use_cases/port/input/SearchInputPortImpl';
+import {ISearchGateway} from '@src/2_application_business_rules/gateways/iSearchGateway';
+import {SearchOutputPortImpl} from '@src/2_application_business_rules/use_cases/port/output/SearchOutputPortImpl';
 
 @injectable()
 export class SearchNormalInteractorImpl implements IUseCase {
