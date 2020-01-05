@@ -6,11 +6,11 @@
   "scripts": {
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
+    "debug": "webpack -w --mode development & ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpileOnly ./dist/index.js",
     "test:unit": "NODE_ENV=test jest --config ./jest.unit.config.js",
     "test:e2e": "NODE_ENV=test jest --mode test --config ./jest.e2e.config.js",
-    "debug": "webpack -w --mode development & ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpileOnly ./dist/index.js",
     "start:dev": "webpack -w --mode development & nodemon ./dist/index.js",
-    "start:prod": "webpack --mode production & nodemon ./dist/index.js"
+    "start:prod": "node ./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,9 +32,12 @@
     "inversify": "^5.0.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
-  },
-  "devDependencies": {
+    "request-promise": "^4.2.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
     "@types/algoliasearch": "^3.34.6",
     "@types/expect-puppeteer": "^3.3.3",
     "@types/express": "^4.17.2",
@@ -42,18 +45,15 @@
     "@types/jest-environment-puppeteer": "^4.3.1",
     "@types/node": "^12.12.14",
     "@types/puppeteer": "^2.0.0",
-    "@types/request-promise": "^4.1.45",
+    "@types/request-promise": "^4.1.45"
+  },
+  "devDependencies": {
     "jest": "^24.9.0",
     "jest-puppeteer": "^4.4.0",
     "nodemon": "^2.0.1",
     "puppeteer": "^2.0.0",
     "ts-jest": "^24.2.0",
-    "ts-loader": "^6.2.1",
     "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.7.3",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-dev-server": "^3.9.0"
   }
 }
