@@ -4,7 +4,7 @@ import {IDate} from '@src/utils/date';
 
 import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
-describe('Constructor', () => {
+describe('constructor', () => {
     describe('Args: EmptyObject', () => {
         // Arrange
         const args: {} = {};
