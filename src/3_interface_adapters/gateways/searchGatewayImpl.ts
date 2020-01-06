@@ -100,9 +100,9 @@ export class SearchGatewayImpl implements ISearchGateway {
 
     async random(): Promise<Array<ImageEntityImpl>> {
         let response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search({});
-        const maxHits: number = response.nbHits;
+        const maxHits: number = response.nbHits == 0 ?  1: response.nbHits;
         const now: number = Date.now();
-        const offSet: number = new Random(now).nextInt(1, maxHits - 1);
+        const offSet: number = new Random(now).nextInt(0, maxHits - 1);
         let query: QueryParameters = {};
         query.offset = offSet;
         query.length = 1;
