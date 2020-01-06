@@ -49,11 +49,7 @@ container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
 container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
 container.bind<IController>(TYPES.TagsController).to(TagsControllerImpl);
 
-if (NODE_ENV === 'test') {
-    container.bind<IDate>(TYPES.DATE).to(DateMock);
-} else {
-    container.bind<IDate>(TYPES.DATE).to(DateImpl);
-}
+container.bind<IDate>(TYPES.DATE).to(DateImpl);
 
 
 export {container};

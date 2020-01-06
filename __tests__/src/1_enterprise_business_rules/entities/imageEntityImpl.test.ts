@@ -1,10 +1,17 @@
 import {TYPES} from '@src/types';
 import {container} from '@src/inversify.config';
-import {IDate} from '@src/utils/date';
+import {DateMock, IDate} from '@src/utils/date';
 
 import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
 describe('constructor', () => {
+    beforeEach(() => {
+        container.snapshot();
+        container.rebind<IDate>(TYPES.DATE).to(DateMock);
+    });
+    afterEach(() => {
+        container.restore();
+    });
     describe('Args: EmptyObject', () => {
         // Arrange
         const args: {} = {};

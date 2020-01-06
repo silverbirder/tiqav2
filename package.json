@@ -7,8 +7,8 @@
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "debug": "webpack -w --mode development & ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpileOnly ./dist/index.js",
-    "test:unit": "NODE_ENV=test jest --config ./jest.unit.config.js",
-    "test:e2e": "NODE_ENV=test jest --mode test --config ./jest.e2e.config.js",
+    "test:unit": "jest --config ./jest.unit.config.js",
+    "test:e2e": "jest --mode test --config ./jest.e2e.config.js",
     "start:dev": "webpack -w --mode development & nodemon ./dist/index.js",
     "start:prod": "node ./dist/index.js"
   },
