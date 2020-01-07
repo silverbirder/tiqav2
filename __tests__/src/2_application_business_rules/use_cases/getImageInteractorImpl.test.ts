@@ -12,6 +12,7 @@ import {
     ImageInputPortImpl
 } from "@src/2_application_business_rules/use_cases/port/input/ImageInputPortImpl";
 import requestPromise from "request-promise";
+import {IRequest} from "@src/2_application_business_rules/controllers/iController";
 
 
 describe('invoke', () => {
@@ -19,6 +20,10 @@ describe('invoke', () => {
         container.snapshot();
         container.rebind<ISearchGateway>(TYPES.SearchGateway).to(SearchGatewayMockImpl);
         container.rebind<IPresenter>(TYPES.SearchPresenter).to(SearchPresenterMockImpl);
+        const response: string = 'response data';
+        jest.spyOn(requestPromise, 'get').mockImplementationOnce((): any => {
+            return response;
+        });
     });
     afterEach(() => {
         container.restore();
@@ -30,10 +35,9 @@ describe('invoke', () => {
             const searchPresenter: IPresenter = container.get<IPresenter>(TYPES.SearchPresenter);
             const interactor: IUseCase = new GetImageInteractorImpl(searchGateWay, searchPresenter);
             const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
-            const response: string = 'response data';
-            jest.spyOn(requestPromise, 'get').mockImplementationOnce((): any => {
-                return response;
-            });
+            const request: IRequest = {id: 1, extension: 'jpg', keyword: '', quote: '', tags: [], url: '', savedImage: false};
+            input.set(request);
+
             // Act
             await interactor.invoke(input);
 
