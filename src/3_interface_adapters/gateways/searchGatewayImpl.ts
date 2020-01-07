@@ -1,9 +1,6 @@
 import algoliasearch, {IndexSettings, QueryParameters, Task} from 'algoliasearch';
 import {injectable} from 'inversify';
 
-import {TYPES} from '@src/types';
-import {container} from '@src/inversify.config';
-import {IDate} from '@src/utils/date';
 import {Random} from '@src/utils/random';
 
 import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
@@ -41,7 +38,6 @@ const settings: IndexSettings = {
 @injectable()
 export class SearchGatewayImpl implements ISearchGateway {
     private alogoliaAdminIndex: algoliasearch.Index;
-    private dateImpl: IDate = container.get<IDate>(TYPES.DATE);
 
     constructor() {
         const algoliaAppId: string = process.env.ALGOLIA_APP_ID || '';
@@ -64,7 +60,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         let query: QueryParameters = {};
         if (id != 0) {
             const response: any = await this.alogoliaAdminIndex.getObject(id.toString());
-            const entity: ImageEntityImpl = new ImageEntityImpl(response, this.dateImpl);
+            const entity: ImageEntityImpl = new ImageEntityImpl(response);
             return [entity];
         } else {
             query.query = keyword;
@@ -73,7 +69,7 @@ export class SearchGatewayImpl implements ISearchGateway {
             });
             const response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search(query);
             return response.hits.map((hit: IHit) => {
-                return new ImageEntityImpl(hit, this.dateImpl);
+                return new ImageEntityImpl(hit);
             });
         }
     }
@@ -94,7 +90,7 @@ export class SearchGatewayImpl implements ISearchGateway {
             await this.alogoliaAdminIndex.waitTask(task.taskID);
         }
         return hits.map((hit: IHit) => {
-            return new ImageEntityImpl(hit, this.dateImpl);
+            return new ImageEntityImpl(hit);
         });
     }
 
@@ -108,7 +104,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         query.length = 1;
         response = await this.alogoliaAdminIndex.search(query);
         return response.hits.map((hit: IHit) => {
-            return new ImageEntityImpl(hit, this.dateImpl);
+            return new ImageEntityImpl(hit);
         });
     }
 
@@ -121,8 +117,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         if (id !== 0) {
             const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id.toString());
             const tags: Array<string> = response.tags || [];
-            let uniqTags: Array<string> = Array.from(new Set(tags));
-            return uniqTags;
+            return  Array.from(new Set(tags));
         } else {
             let query: QueryParameters = {};
             query.query = keyword;
@@ -138,8 +133,7 @@ export class SearchGatewayImpl implements ISearchGateway {
                 }
                 stackTags = stackTags.concat(hit.tags);
             });
-            let uniqTags: Array<string> = Array.from(new Set(stackTags));
-            return uniqTags;
+            return Array.from(new Set(stackTags));
         }
     }
 }

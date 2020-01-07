@@ -1,5 +1,5 @@
-import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
-import {ImageEntityImpl} from '../../../../1_enterprise_business_rules/entities/imageEntityImpl';
+import {IOutputPort, IOutputPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
 export interface SearchOutputPortFormat extends IOutputPortFormat {
     results: Array<ViewableImageEntity>;
@@ -19,7 +19,7 @@ export class SearchOutputPortImpl implements IOutputPort<IOutputPortFormat> {
     private _data: SearchOutputPortFormat = {results: [], extension: []};
 
     set( entities: Array<ImageEntityImpl>) {
-        const viewableEntities: Array<ViewableImageEntity> = entities.map((entity: ImageEntityImpl) => {
+        this._data.results = entities.map((entity: ImageEntityImpl) => {
             const d: Date = entity.updateDate;
             const vd: string = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} ${d.toLocaleTimeString()}`;
             const q: string = entity.quote;
@@ -34,7 +34,6 @@ export class SearchOutputPortImpl implements IOutputPort<IOutputPortFormat> {
             };
             return v;
         });
-        this._data.results = viewableEntities;
     }
 
     get(): SearchOutputPortFormat {

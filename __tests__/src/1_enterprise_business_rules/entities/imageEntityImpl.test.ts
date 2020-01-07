@@ -1,13 +1,14 @@
-import {TYPES} from '@src/types';
 import {container} from '@src/inversify.config';
-import {DateMock, IDate} from '@src/utils/date';
 
 import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
 describe('constructor', () => {
     beforeEach(() => {
         container.snapshot();
-        container.rebind<IDate>(TYPES.DATE).to(DateMock);
+        const FIX_DATE = new Date('1994-02-14');
+        jest.spyOn(global, 'Date').mockImplementation((): any => {
+            return FIX_DATE;
+        });
     });
     afterEach(() => {
         container.restore();
@@ -21,7 +22,7 @@ describe('constructor', () => {
 
         it('Return the Default Value', () => {
             // Act
-            const entity: ImageEntityImpl = new ImageEntityImpl(args, container.get<IDate>(TYPES.DATE));
+            const entity: ImageEntityImpl = new ImageEntityImpl(args);
             // Assert
             expect(entity.id).toBe(defaultValueInt);
             expect(entity.quote).toBe(defaultValueStr);
@@ -43,7 +44,7 @@ describe('constructor', () => {
         };
        it('Return the Args Values', () => {
            // Act
-           const entity: ImageEntityImpl = new ImageEntityImpl(allProperties, container.get<IDate>(TYPES.DATE));
+           const entity: ImageEntityImpl = new ImageEntityImpl(allProperties);
 
            // Assert
            expect(entity.id).toBe(allProperties.objectID);

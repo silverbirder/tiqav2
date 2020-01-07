@@ -1,5 +1,4 @@
 import {TYPES} from '@src/types';
-import {DateImpl, DateMock, IDate} from '@src/utils/date';
 
 import {Container} from 'inversify';
 
@@ -27,7 +26,6 @@ import {TagsControllerImpl} from '@src/3_interface_adapters/controllers/tagsCont
 import {ImagePresenterImpl} from '@src/3_interface_adapters/presenters/imagePresenterImpl';
 import {SearchPresenterImpl} from '@src/3_interface_adapters/presenters/searchPresenterImpl';
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
 const container = new Container();
 
 container.bind<IImageGateway>(TYPES.ImageGateway).to(ImageGatewayImpl);
@@ -48,8 +46,6 @@ container.bind<IUseCase>(TYPES.GetImageUseCase).to(GetImageInteractorImpl);
 container.bind<IController>(TYPES.SearchController).to(SearchControllerImpl);
 container.bind<IController>(TYPES.ImageController).to(ImageControllerImpl);
 container.bind<IController>(TYPES.TagsController).to(TagsControllerImpl);
-
-container.bind<IDate>(TYPES.DATE).to(DateImpl);
 
 
 export {container};

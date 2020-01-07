@@ -1,9 +1,5 @@
 import {injectable} from 'inversify';
 
-import {container} from '@src/inversify.config';
-import {TYPES} from '@src/types';
-import {IDate} from '@src/utils/date';
-
 import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEntityImpl';
 
 import {IndexObject, ISearchGateway,} from '@src/2_application_business_rules/gateways/iSearchGateway';
@@ -15,7 +11,7 @@ const entity: ImageEntityImpl = new ImageEntityImpl({
     tags: ['tag'],
     extension: [],
     updateDate: new Date('1994-02-14'),
-}, container.get<IDate>(TYPES.DATE));
+});
 const entities: Array<ImageEntityImpl> = Array(entity);
 
 @injectable()

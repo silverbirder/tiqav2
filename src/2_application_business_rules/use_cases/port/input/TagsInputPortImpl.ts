@@ -1,5 +1,7 @@
-import {IInputPort, IInputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iInputPort';
-import {IRequest} from '../../../controllers/iController';
+import {IInputPort, IInputPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iInputPort';
+
+import {IRequest} from '@src/2_application_business_rules/controllers/iController';
+
 
 export interface TagsInputPortFormat extends IInputPortFormat {
     id: number;

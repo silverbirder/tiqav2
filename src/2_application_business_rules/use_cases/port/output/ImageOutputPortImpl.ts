@@ -1,4 +1,4 @@
-import {IOutputPort, IOutputPortFormat} from '../../../../1_enterprise_business_rules/use_cases/port/iOutputPort';
+import {IOutputPort, IOutputPortFormat} from '@src/1_enterprise_business_rules/use_cases/port/iOutputPort';
 
 export interface ImageOutputPortFormat extends IOutputPortFormat {
     binary: ArrayBuffer;
