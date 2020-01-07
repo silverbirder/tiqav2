@@ -21,4 +21,8 @@ export class ImageEntityImpl implements IEntity {
 
     static SORT_KRY: string = 'updateDate';
     static FILTER_KEY: string = 'tags';
+
+    hasExt(ext: string): boolean {
+        return this.extension.indexOf(ext) !== -1;
+    }
 }

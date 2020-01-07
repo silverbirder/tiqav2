@@ -5,11 +5,11 @@ import {ImageEntityImpl} from '@src/1_enterprise_business_rules/entities/imageEn
 import {IndexObject, ISearchGateway,} from '@src/2_application_business_rules/gateways/iSearchGateway';
 
 const entity: ImageEntityImpl = new ImageEntityImpl({
-    url: 'http://example.com',
+    url: 'http://example.jpg',
     quote: 'example',
     id: 1,
     tags: ['tag'],
-    extension: [],
+    extension: ['jpg'],
     updateDate: new Date('1994-02-14'),
 });
 const entities: Array<ImageEntityImpl> = Array(entity);

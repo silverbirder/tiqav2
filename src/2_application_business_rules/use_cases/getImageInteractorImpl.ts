@@ -36,7 +36,11 @@ export class GetImageInteractorImpl implements IUseCase {
     async invoke(inputPort: IInputPort<ImageInputPortFormat>): Promise<void> {
         const input: ImageInputPortFormat = inputPort.get();
         const entities: Array<ImageEntityImpl> = await this.searchGateWay.search(input.id, '', []);
-        const hitUrl: string = entities[0].url;
+        const entity: ImageEntityImpl = entities[0];
+        if(!entity.hasExt(input.extension)) {
+          throw new Error(`Please choose one of [${entity.extension}]`);
+        };
+        const hitUrl: string = entity.url;
         const updateUrl: string = `${hitUrl.split(splitExt)[0]}.${input.extension}`;
         const binary: ArrayBuffer = await requestPromise.get(updateUrl, {encoding: null});
         const outPutPort: IOutputPort<IPortFormat> = new ImageOutputPortImpl();
