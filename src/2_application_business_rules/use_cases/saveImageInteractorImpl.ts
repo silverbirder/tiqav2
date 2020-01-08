@@ -2,8 +2,6 @@ import path from 'path';
 
 import {inject, injectable} from 'inversify';
 import {TYPES} from '@src/types';
-import {container} from '@src/inversify.config';
-import {IDate} from '@src/utils/date';
 
 import {IUseCase} from '@src/1_enterprise_business_rules/use_cases/iUseCase';
 import {IInputPort} from '@src/1_enterprise_business_rules/use_cases/port/iInputPort';
@@ -60,7 +58,7 @@ export class SaveImageInteractorImpl implements IUseCase {
         const objectID = await this.searchGateWay.save(index);
         index.objectID = objectID;
         const outPutPort: IOutputPort<IPortFormat> = new SearchOutputPortImpl();
-        const entity: ImageEntityImpl = new ImageEntityImpl(index, container.get<IDate>(TYPES.DATE));
+        const entity: ImageEntityImpl = new ImageEntityImpl(index);
         outPutPort.set([entity]);
         this.presenter.render(outPutPort);
         return;
