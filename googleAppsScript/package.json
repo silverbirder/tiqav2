@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "push": "clasp push",
+    "deploy": "clasp deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
