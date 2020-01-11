@@ -1,0 +1,19 @@
+{
+  "name": "googleAppsScript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "push": "clasp push",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "silverbirder <silverbirder@gmail.com> (https://silver-birder.github.io)",
+  "license": "ISC",
+  "dependencies": {
+    "@google/clasp": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.9"
+  }
+}
