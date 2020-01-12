@@ -31,6 +31,20 @@ function doPost(e: any): any {
     const text: string = e.parameter.text;
     const splitText: Array<string> = text.split(/\s/);
     const command: string = splitText[0];
+    let attachments: Array<ISlackAttachment> = [];
+    switch (command) {
+        case 'search':
+            attachments = search(e.parameter.text);
+            break;
+    }
+    const response: {} = {
+        attachments: attachments
+    };
+    return ContentService.createTextOutput(JSON.stringify(response)).setMimeType(ContentService.MimeType.JSON);
+};
+
+const search = (text: string): Array<ISlackAttachment> => {
+    const splitText: Array<string> = text.split(/\s/);
     const keyword: string = splitText[1];
     const params: any = {
         q: keyword,
@@ -68,10 +82,7 @@ function doPost(e: any): any {
             attachments.push(attachment);
         });
     }
-    const result: {} = {
-        attachments: attachments
-    };
-    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return attachments;
 };
 
 const _buildParams = (params: any): any => {
@@ -81,6 +92,7 @@ const _buildParams = (params: any): any => {
     });
     return strParams.slice(0, -1);
 };
+
 const _initAttachment = (url: string): ISlackAttachment => {
     const now: Date = new Date();
     return {
