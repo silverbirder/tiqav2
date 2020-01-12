@@ -38,54 +38,33 @@ function doPost(e: any): any {
     const url: string = `${URL}${SEARCH_PATH}${_buildParams(params)}`;
     const response: IResponse = urlGetFetch(url);
     let attachments: Array<ISlackAttachment> = [];
-    const now: Date = new Date();
-    if(response.parseError || response.body.length == 0) {
-        const attachment: ISlackAttachment = {
-            color: "bad",
-            author_name: "silverbirder",
-            author_link: "https://silver-birder.github.io/",
-            author_icon: "https://pbs.twimg.com/profile_images/1075008669903814656/a8nmRE1o_reasonably_small.jpg",
-            pretext: `Search Keywords: ${params.q}`,
-            title: "Tiqav2 API Response Results",
-            title_link: url,
-            text: '',
-            image_url: '',
-            thumb_url: '',
-            footer: "Tiqav2 API",
-            fields: [],
-            ts: now.getTime()
-        };
+    if (response.parseError || response.body.length == 0) {
+        let attachment: ISlackAttachment = _initAttachment(url);
+        attachment.pretext = `Search Keywords: ${params.q}`;
+        attachment.text = 'Not Found';
         attachments.push(attachment);
     } else {
         response.body.forEach((j: any) => {
-            const attachment: ISlackAttachment = {
-                color: "good",
-                author_name: "silverbirder",
-                author_link: "https://silver-birder.github.io/",
-                author_icon: "https://pbs.twimg.com/profile_images/1075008669903814656/a8nmRE1o_reasonably_small.jpg",
-                pretext: `Search Keywords: ${params.q}`,
-                title: "Tiqav2 API Response Results",
-                title_link: url,
-                text: j.quote,
-                image_url: j.sourceURL,
-                thumb_url: j.sourceURL,
-                footer: "Tiqav2 API",
-                fields: [
-                    {
-                        title: "Tags",
-                        value: j.tags.join(),
-                    },
-                    {
-                        title: "Ext",
-                        value: j.ext.join(),
-                    },
-                    {
-                        title: "Link",
-                        value: `${URL}/api/${j.id}.${j.ext[0]}`,
-                    },
-                ],
-                ts: now.getTime()
-            };
+            let attachment: ISlackAttachment = _initAttachment(url);
+            attachment.pretext = `Search Keywords: ${params.q}`;
+            attachment.color = "good";
+            attachment.text = j.quote;
+            attachment.image_url = j.sourceURL;
+            attachment.thumb_url = j.sourceURL;
+            attachment.fields = [
+                {
+                    title: "Tags",
+                    value: j.tags.join(),
+                },
+                {
+                    title: "Ext",
+                    value: j.ext.join(),
+                },
+                {
+                    title: "Link",
+                    value: `${URL}/api/${j.id}.${j.ext[0]}`,
+                },
+            ];
             attachments.push(attachment);
         });
     }
@@ -102,6 +81,25 @@ const _buildParams = (params: any): any => {
     });
     return strParams.slice(0, -1);
 };
+const _initAttachment = (url: string): ISlackAttachment => {
+    const now: Date = new Date();
+    return {
+        color: "danger",
+        author_name: "silverbirder",
+        author_link: "https://silver-birder.github.io/",
+        author_icon: "https://pbs.twimg.com/profile_images/1075008669903814656/a8nmRE1o_reasonably_small.jpg",
+        pretext: ``,
+        title: "Tiqav2 API Response Results",
+        title_link: url,
+        text: '',
+        image_url: '',
+        thumb_url: '',
+        footer: "Tiqav2 API",
+        fields: [],
+        ts: now.getTime()
+    };
+};
+
 const urlGetFetch = (url: string): IResponse => {
     const option: {} = {
         method: 'get',
