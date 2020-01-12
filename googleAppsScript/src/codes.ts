@@ -37,39 +37,58 @@ function doPost(e: any): any {
     };
     const url: string = `${URL}${SEARCH_PATH}${_buildParams(params)}`;
     const response: IResponse = urlGetFetch(url);
-    const now: Date = new Date();
     let attachments: Array<ISlackAttachment> = [];
-    response.body.forEach((j: any) => {
+    const now: Date = new Date();
+    if(response.parseError || response.body.length == 0) {
         const attachment: ISlackAttachment = {
-            color: "good",
+            color: "bad",
             author_name: "silverbirder",
             author_link: "https://silver-birder.github.io/",
             author_icon: "https://pbs.twimg.com/profile_images/1075008669903814656/a8nmRE1o_reasonably_small.jpg",
             pretext: `Search Keywords: ${params.q}`,
             title: "Tiqav2 API Response Results",
             title_link: url,
-            text: j.quote,
-            image_url: j.sourceURL,
-            thumb_url: j.sourceURL,
+            text: '',
+            image_url: '',
+            thumb_url: '',
             footer: "Tiqav2 API",
-            fields: [
-                {
-                    title: "Tags",
-                    value: j.tags.join(),
-                },
-                {
-                  titile: "Ext",
-                  value: j.ext.join(),
-                },
-                {
-                  title: "Link",
-                  value: `${URL}/api/${j.id}.${j.ext[0]}`,
-                },
-            ],
+            fields: [],
             ts: now.getTime()
         };
         attachments.push(attachment);
-    });
+    } else {
+        response.body.forEach((j: any) => {
+            const attachment: ISlackAttachment = {
+                color: "good",
+                author_name: "silverbirder",
+                author_link: "https://silver-birder.github.io/",
+                author_icon: "https://pbs.twimg.com/profile_images/1075008669903814656/a8nmRE1o_reasonably_small.jpg",
+                pretext: `Search Keywords: ${params.q}`,
+                title: "Tiqav2 API Response Results",
+                title_link: url,
+                text: j.quote,
+                image_url: j.sourceURL,
+                thumb_url: j.sourceURL,
+                footer: "Tiqav2 API",
+                fields: [
+                    {
+                        title: "Tags",
+                        value: j.tags.join(),
+                    },
+                    {
+                        title: "Ext",
+                        value: j.ext.join(),
+                    },
+                    {
+                        title: "Link",
+                        value: `${URL}/api/${j.id}.${j.ext[0]}`,
+                    },
+                ],
+                ts: now.getTime()
+            };
+            attachments.push(attachment);
+        });
+    }
     const result: {} = {
         attachments: attachments
     };
