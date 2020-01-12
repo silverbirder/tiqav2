@@ -36,6 +36,9 @@ function doPost(e: any): any {
         case 'search':
             attachments = search(e.parameter.text);
             break;
+        case 'save':
+            attachments = save(e.parameter.text);
+            break;
     }
     const response: {} = {
         attachments: attachments
@@ -61,6 +64,48 @@ const search = (text: string): Array<ISlackAttachment> => {
         response.body.forEach((j: any) => {
             let attachment: ISlackAttachment = _initAttachment(url);
             attachment.pretext = `Search Keywords: ${params.q}`;
+            attachment.color = "good";
+            attachment.text = j.quote;
+            attachment.image_url = j.sourceURL;
+            attachment.thumb_url = j.sourceURL;
+            attachment.fields = [
+                {
+                    title: "Tags",
+                    value: j.tags.join(),
+                },
+                {
+                    title: "Ext",
+                    value: j.ext.join(),
+                },
+                {
+                    title: "Link",
+                    value: `${URL}/api/${j.id}.${j.ext[0]}`,
+                },
+            ];
+            attachments.push(attachment);
+        });
+    }
+    return attachments;
+};
+
+const save = (text: string): Array<ISlackAttachment> => {
+    const splitText: Array<string> = text.split(/\s/);
+    const targetUrl: string = splitText[1];
+    const params: any = {
+        url: targetUrl,
+    };
+    const url: string = `${URL}${SAVE_PATH}${_buildParams(params)}`;
+    const response: IResponse = urlGetFetch(url);
+    let attachments: Array<ISlackAttachment> = [];
+    if (response.parseError || response.body.length == 0) {
+        let attachment: ISlackAttachment = _initAttachment(url);
+        attachment.pretext = `Save Target URL: ${params.url}`;
+        attachment.text = 'Not Saved';
+        attachments.push(attachment);
+    } else {
+        response.body.forEach((j: any) => {
+            let attachment: ISlackAttachment = _initAttachment('');
+            attachment.pretext = `Save Target URL: ${params.url}`;
             attachment.color = "good";
             attachment.text = j.quote;
             attachment.image_url = j.sourceURL;
