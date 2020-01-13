@@ -1,8 +1,6 @@
 const URL: string = 'https://tiqav2.work';
 const SEARCH_PATH: string = '/api/search.json/';
 const RANDOM_PATH: string = '/api/search/random.json';
-const NEWEST_PATH: string = '/api/search/newest.json';
-const TAGS_PATH: string = '/api/tags.json';
 const SAVE_PATH: string = '/api/images.json';
 
 interface IResponse {
@@ -41,9 +39,6 @@ function doPost(e: any): any {
             break;
         case 'random':
             attachments = random();
-            break;
-        case 'newest':
-            attachments = newest();
             break;
     }
     const response: {} = {
@@ -117,26 +112,6 @@ const random = (): Array<ISlackAttachment> => {
         response.body.forEach((j: any) => {
             let attachment: ISlackAttachment = _initAttachment(url);
             attachment.pretext = `Random:`;
-            attachment = _successInputAttachment(attachment, j);
-            attachments.push(attachment);
-        });
-    }
-    return attachments;
-};
-
-const newest = (): Array<ISlackAttachment> => {
-    const url: string = `${URL}${NEWEST_PATH}`;
-    const response: IResponse = urlGetFetch(url);
-    let attachments: Array<ISlackAttachment> = [];
-    if (response.parseError || response.body.length == 0) {
-        let attachment: ISlackAttachment = _initAttachment(url);
-        attachment.pretext = `Newest:`;
-        attachment.text = 'Not Found';
-        attachments.push(attachment);
-    } else {
-        response.body.forEach((j: any) => {
-            let attachment: ISlackAttachment = _initAttachment(url);
-            attachment.pretext = `Newest:`;
             attachment = _successInputAttachment(attachment, j);
             attachments.push(attachment);
         });
