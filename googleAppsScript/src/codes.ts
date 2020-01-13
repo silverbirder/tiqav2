@@ -43,6 +43,7 @@ function doPost(e: any): any {
     const response: {} = {
         attachments: attachments
     };
+    // @ts-ignore
     return ContentService.createTextOutput(JSON.stringify(response)).setMimeType(ContentService.MimeType.JSON);
 };
 
@@ -151,6 +152,7 @@ const urlGetFetch = (url: string): IResponse => {
         method: 'get',
         contentType: 'application/json; charset=utf-8',
     };
+    // @ts-ignore
     const response = UrlFetchApp.fetch(`${url}`, option);
     try {
         return {
