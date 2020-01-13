@@ -76,6 +76,7 @@ const save = (text: string): Array<ISlackAttachment> => {
     const targetUrl: string = splitText[1];
     const params: any = {
         url: targetUrl,
+        si: 1,
     };
     const url: string = `${URL}${SAVE_PATH}${_buildParams(params)}`;
     const response: IResponse = urlGetFetch(url);
