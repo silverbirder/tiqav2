@@ -39,6 +39,12 @@ function doPost(e: any): any {
         case 'save':
             attachments = save(e.parameter.text);
             break;
+        case 'random':
+            attachments = random();
+            break;
+        case 'newest':
+            attachments = newest();
+            break;
     }
     const response: {} = {
         attachments: attachments
@@ -91,6 +97,46 @@ const save = (text: string): Array<ISlackAttachment> => {
         response.body.forEach((j: any) => {
             let attachment: ISlackAttachment = _initAttachment('');
             attachment.pretext = `Save Target URL: ${params.url}`;
+            attachment = _successInputAttachment(attachment, j);
+            attachments.push(attachment);
+        });
+    }
+    return attachments;
+};
+
+const random = (): Array<ISlackAttachment> => {
+    const url: string = `${URL}${RANDOM_PATH}`;
+    const response: IResponse = urlGetFetch(url);
+    let attachments: Array<ISlackAttachment> = [];
+    if (response.parseError || response.body.length == 0) {
+        let attachment: ISlackAttachment = _initAttachment(url);
+        attachment.pretext = `Random:`;
+        attachment.text = 'Not Found';
+        attachments.push(attachment);
+    } else {
+        response.body.forEach((j: any) => {
+            let attachment: ISlackAttachment = _initAttachment(url);
+            attachment.pretext = `Random:`;
+            attachment = _successInputAttachment(attachment, j);
+            attachments.push(attachment);
+        });
+    }
+    return attachments;
+};
+
+const newest = (): Array<ISlackAttachment> => {
+    const url: string = `${URL}${NEWEST_PATH}`;
+    const response: IResponse = urlGetFetch(url);
+    let attachments: Array<ISlackAttachment> = [];
+    if (response.parseError || response.body.length == 0) {
+        let attachment: ISlackAttachment = _initAttachment(url);
+        attachment.pretext = `Newest:`;
+        attachment.text = 'Not Found';
+        attachments.push(attachment);
+    } else {
+        response.body.forEach((j: any) => {
+            let attachment: ISlackAttachment = _initAttachment(url);
+            attachment.pretext = `Newest:`;
             attachment = _successInputAttachment(attachment, j);
             attachments.push(attachment);
         });
