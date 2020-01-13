@@ -64,24 +64,7 @@ const search = (text: string): Array<ISlackAttachment> => {
         response.body.forEach((j: any) => {
             let attachment: ISlackAttachment = _initAttachment(url);
             attachment.pretext = `Search Keywords: ${params.q}`;
-            attachment.color = "good";
-            attachment.text = j.quote;
-            attachment.image_url = j.sourceURL;
-            attachment.thumb_url = j.sourceURL;
-            attachment.fields = [
-                {
-                    title: "Tags",
-                    value: j.tags.join(),
-                },
-                {
-                    title: "Ext",
-                    value: j.ext.join(),
-                },
-                {
-                    title: "Link",
-                    value: `${URL}/api/${j.id}.${j.ext[0]}`,
-                },
-            ];
+            attachment = _successInputAttachment(attachment, j);
             attachments.push(attachment);
         });
     }
@@ -106,24 +89,7 @@ const save = (text: string): Array<ISlackAttachment> => {
         response.body.forEach((j: any) => {
             let attachment: ISlackAttachment = _initAttachment('');
             attachment.pretext = `Save Target URL: ${params.url}`;
-            attachment.color = "good";
-            attachment.text = j.quote;
-            attachment.image_url = j.sourceURL;
-            attachment.thumb_url = j.sourceURL;
-            attachment.fields = [
-                {
-                    title: "Tags",
-                    value: j.tags.join(),
-                },
-                {
-                    title: "Ext",
-                    value: j.ext.join(),
-                },
-                {
-                    title: "Link",
-                    value: `${URL}/api/${j.id}.${j.ext[0]}`,
-                },
-            ];
+            attachment = _successInputAttachment(attachment, j);
             attachments.push(attachment);
         });
     }
@@ -155,6 +121,28 @@ const _initAttachment = (url: string): ISlackAttachment => {
         fields: [],
         ts: now.getTime()
     };
+};
+
+const _successInputAttachment = (attachment: ISlackAttachment, j: any): ISlackAttachment => {
+    attachment.color = "good";
+    attachment.text = j.quote;
+    attachment.image_url = j.sourceURL;
+    attachment.thumb_url = j.sourceURL;
+    attachment.fields = [
+        {
+            title: "Tags",
+            value: j.tags.join(),
+        },
+        {
+            title: "Ext",
+            value: j.ext.join(),
+        },
+        {
+            title: "Link",
+            value: `${URL}/api/${j.id}.${j.ext[0]}`,
+        },
+    ];
+    return attachment;
 };
 
 const urlGetFetch = (url: string): IResponse => {
