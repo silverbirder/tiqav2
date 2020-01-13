@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "login":"clasp login",
     "push": "clasp push",
     "deploy": "clasp deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
