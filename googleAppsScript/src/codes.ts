@@ -76,10 +76,16 @@ const search = (text: string): Array<ISlackAttachment> => {
 const save = (text: string): Array<ISlackAttachment> => {
     const splitText: Array<string> = text.split(/\s/);
     const targetUrl: string = splitText[1];
-    const params: any = {
+    let params: any = {
         url: targetUrl,
         si: 1,
     };
+    if(splitText.length === 3) {
+        params.quote = splitText[2];
+    }
+    if(splitText.length === 4) {
+        params.tags = splitText[3];
+    }
     const url: string = `${URL}${SAVE_PATH}${_buildParams(params)}`;
     const response: IResponse = urlGetFetch(url);
     let attachments: Array<ISlackAttachment> = [];
