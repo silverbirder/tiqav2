@@ -4,14 +4,14 @@ import express, {Request, Response, Router} from 'express';
 
 const router: Router = express.Router();
 
-import {SearchRouterImpl} from './routers/searchRouterImpl';
-import {CustomRequest} from './schema';
-import {SEARCH_TYPES} from '../3_interface_adapters/controllers/searchControllerImpl';
-import {IRequest} from '../2_application_business_rules/controllers/iController';
-import {ImageRouterImpl} from './routers/imageRouterImpl';
-import {IMAGE_TYPES} from '../3_interface_adapters/controllers/imageControllerImpl';
-import {TagsRouterImpl} from './routers/tagsRouterImpl';
-import {IRouter} from '../3_interface_adapters/routers/iRouter';
+import {SearchRouterImpl} from '@src/4_frameworks_and_drivers/routers/searchRouterImpl';
+import {CustomRequest} from '@src/4_frameworks_and_drivers/schema';
+import {SEARCH_TYPES} from '@src/3_interface_adapters/controllers/searchControllerImpl';
+import {IRequest} from '@src/2_application_business_rules/controllers/iController';
+import {ImageRouterImpl} from '@src/4_frameworks_and_drivers/routers/imageRouterImpl';
+import {IMAGE_TYPES} from '@src/3_interface_adapters/controllers/imageControllerImpl';
+import {TagsRouterImpl} from '@src/4_frameworks_and_drivers/routers/tagsRouterImpl';
+import {IRouter} from '@src/3_interface_adapters/routers/iRouter';
 
 
 router.get('/images.json', async (req: Request, res: Response) => {
