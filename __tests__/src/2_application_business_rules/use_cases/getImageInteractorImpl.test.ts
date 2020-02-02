@@ -33,7 +33,7 @@ describe('invoke', () => {
         container.restore();
     });
     describe('Args: ID (Not Extension)', () => {
-        it('Throw Error', async () => {
+        it('Assert: Throw Error', async () => {
             // Arrange
             const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
             const request: IRequest = {
@@ -52,7 +52,7 @@ describe('invoke', () => {
         });
     });
     describe('Args: ID and Extension', () => {
-        it('Set Presenter View', async () => {
+        it('Assert: Set Presenter View', async () => {
             // Arrange
             const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
             const request: IRequest = {

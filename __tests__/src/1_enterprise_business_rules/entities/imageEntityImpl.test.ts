@@ -33,16 +33,17 @@ describe('constructor', () => {
         });
     });
     describe('Args: All Properties', () => {
-        // Arrange
-        const allProperties: any = {
-            objectID: 1,
-            quote: 'LGTM',
-            url: 'https://pbs.twimg.com/profile_images/751281815571140608/g4Yx5IDW.jpg',
-            extension: ['jpg'],
-            tags: ['cute'],
-            updateDate: '2020-01-04',
-        };
-       it('Return the Args Values', () => {
+        it('Return the Args Values', () => {
+            // Arrange
+            const allProperties: any = {
+                objectID: 1,
+                quote: 'LGTM',
+                url: 'https://pbs.twimg.com/profile_images/751281815571140608/g4Yx5IDW.jpg',
+                extension: ['jpg'],
+                tags: ['cute'],
+                updateDate: '2020-01-04',
+            };
+
            // Act
            const entity: ImageEntityImpl = new ImageEntityImpl(allProperties);
 
