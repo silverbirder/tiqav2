@@ -12,8 +12,8 @@ const settings: IndexSettings = {
     minWordSizefor2Typos: 8,
     hitsPerPage: 20,
     maxValuesPerFacet: 100,
-    attributesToIndex: [ 'unordered(quote)' ],
-    attributesForFaceting: [ 'tags' ],
+    attributesToIndex: ['unordered(quote)'],
+    attributesForFaceting: ['tags'],
     paginationLimitedTo: 1000,
     exactOnSingleWordQuery: 'attribute',
     ranking: [
@@ -32,7 +32,7 @@ const settings: IndexSettings = {
     highlightPreTag: '<em>',
     highlightPostTag: '</em>',
     snippetEllipsisText: '',
-    alternativesAsExact: [ 'ignorePlurals', 'singleWordSynonym' ]
+    alternativesAsExact: ['ignorePlurals', 'singleWordSynonym']
 };
 
 @injectable()
@@ -51,7 +51,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         this.algoliaSettings();
     }
 
-    private async algoliaSettings(): Promise<void>{
+    private async algoliaSettings(): Promise<void> {
         const task: Task = await this.alogoliaAdminIndex.setSettings(settings);
         await this.alogoliaAdminIndex.waitTask(task.taskID);
     }
@@ -96,7 +96,7 @@ export class SearchGatewayImpl implements ISearchGateway {
 
     async random(): Promise<Array<ImageEntityImpl>> {
         let response: algoliasearch.Response<IHit> = await this.alogoliaAdminIndex.search({});
-        const maxHits: number = response.nbHits == 0 ?  1: response.nbHits;
+        const maxHits: number = response.nbHits == 0 ? 1 : response.nbHits;
         const now: number = Date.now();
         const offSet: number = new Random(now).nextInt(0, maxHits - 1);
         let query: QueryParameters = {};
@@ -117,7 +117,7 @@ export class SearchGatewayImpl implements ISearchGateway {
         if (id !== 0) {
             const response: Partial<IHit> = await this.alogoliaAdminIndex.getObject(id.toString());
             const tags: Array<string> = response.tags || [];
-            return  Array.from(new Set(tags));
+            return Array.from(new Set(tags));
         } else {
             let query: QueryParameters = {};
             query.query = keyword;
