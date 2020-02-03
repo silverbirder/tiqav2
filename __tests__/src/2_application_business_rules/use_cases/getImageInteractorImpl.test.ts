@@ -14,63 +14,64 @@ import {
 import requestPromise from "request-promise";
 import {IRequest} from "@src/2_application_business_rules/controllers/iController";
 
-
-describe('invoke', () => {
-    let interactor: IUseCase;
-    beforeEach(() => {
-        container.snapshot();
-        container.rebind<ISearchGateway>(TYPES.SearchGateway).to(SearchGatewayMockImpl);
-        container.rebind<IPresenter>(TYPES.SearchPresenter).to(SearchPresenterMockImpl);
-        const response: string = 'response data';
-        jest.spyOn(requestPromise, 'get').mockImplementationOnce((): any => {
-            return response;
+describe('Class: GetImageInteractorImpl', () => {
+    describe('Method: invoke', () => {
+        let interactor: IUseCase;
+        beforeEach(() => {
+            container.snapshot();
+            container.rebind<ISearchGateway>(TYPES.SearchGateway).to(SearchGatewayMockImpl);
+            container.rebind<IPresenter>(TYPES.SearchPresenter).to(SearchPresenterMockImpl);
+            const response: string = 'response data';
+            jest.spyOn(requestPromise, 'get').mockImplementationOnce((): any => {
+                return response;
+            });
+            const searchGateWay: ISearchGateway = container.get<ISearchGateway>(TYPES.SearchGateway);
+            const searchPresenter: IPresenter = container.get<IPresenter>(TYPES.SearchPresenter);
+            interactor = new GetImageInteractorImpl(searchGateWay, searchPresenter);
         });
-        const searchGateWay: ISearchGateway = container.get<ISearchGateway>(TYPES.SearchGateway);
-        const searchPresenter: IPresenter = container.get<IPresenter>(TYPES.SearchPresenter);
-        interactor = new GetImageInteractorImpl(searchGateWay, searchPresenter);
-    });
-    afterEach(() => {
-        container.restore();
-    });
-    describe('Args: ID (Not Extension)', () => {
-        it('Assert: Throw Error', async () => {
-            // Arrange
-            const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
-            const request: IRequest = {
-                id: 1,
-                extension: '',
-                keyword: '',
-                quote: '',
-                tags: [],
-                url: '',
-                savedImage: false
-            };
-            input.set(request);
-
-            // Act & Assert
-            await expect(interactor.invoke(input)).rejects.toThrow();
+        afterEach(() => {
+            container.restore();
         });
-    });
-    describe('Args: ID and Extension', () => {
-        it('Assert: Set Presenter View', async () => {
-            // Arrange
-            const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
-            const request: IRequest = {
-                id: 1,
-                extension: 'jpg',
-                keyword: '',
-                quote: '',
-                tags: [],
-                url: '',
-                savedImage: false
-            };
-            input.set(request);
+        describe('Args: ID (Not Extension)', () => {
+            it('Assert: Throw Error', async () => {
+                // Arrange
+                const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
+                const request: IRequest = {
+                    id: 1,
+                    extension: '',
+                    keyword: '',
+                    quote: '',
+                    tags: [],
+                    url: '',
+                    savedImage: false
+                };
+                input.set(request);
 
-            // Act
-            await interactor.invoke(input);
+                // Act & Assert
+                await expect(interactor.invoke(input)).rejects.toThrow();
+            });
+        });
+        describe('Args: ID and Extension', () => {
+            it('Assert: Set Presenter View', async () => {
+                // Arrange
+                const input: IInputPort<ImageInputPortFormat> = new ImageInputPortImpl();
+                const request: IRequest = {
+                    id: 1,
+                    extension: 'jpg',
+                    keyword: '',
+                    quote: '',
+                    tags: [],
+                    url: '',
+                    savedImage: false
+                };
+                input.set(request);
 
-            // Assert
-            expect(interactor.presenter.view).toBe('binary');
+                // Act
+                await interactor.invoke(input);
+
+11                // Assert
+                expect(interactor.presenter.view).toBe('binary');
+            });
         });
     });
 });
