@@ -27,6 +27,40 @@ describe('Class: SearchGatewayImpl', () => {
         delete process.env.ALGOLIA_INDEX_NAME;
     };
 
+    function spySearch(searchGateway: ISearchGateway): void {
+        // @ts-ignore
+        const searchMock: jest.Spy = jest.spyOn(searchGateway.alogoliaAdminIndex, 'search');
+        searchMock.mockImplementationOnce((query: any) => {
+            const result: { hits: any } = {hits: []};
+            const hitsData: Array<{ tag: string }> = [{tag: 'red'}, {tag: 'red'}, {tag: 'blue'}];
+            const filter: Array<string> = query.facetFilters;
+            for (let i = 0; i < filter.length; i++) {
+                const value: string = filter[i].split(':')[1];
+                for (let j = 0; j < hitsData.length; j++) {
+                    if (hitsData[j].tag === value) {
+                        result.hits.push(hitsData[j]);
+                    }
+                }
+            }
+            return result;
+        });
+    };
+
+    function spyGetObject(searchGateway: ISearchGateway): void {
+        // @ts-ignore
+        const searchMock: jest.Spy = jest.spyOn(searchGateway.alogoliaAdminIndex, 'getObject');
+        searchMock.mockImplementationOnce((id: string) => {
+            const result: { hits: any } = {hits: []};
+            const hitsData: Array<{ id: string }> = [{id: '1'}, {id: '2'}, {id: '3'}];
+            for (let j = 0; j < hitsData.length; j++) {
+                if (hitsData[j].id === id) {
+                    result.hits.push(hitsData[j]);
+                }
+            }
+            return result;
+        });
+    };
+
     describe('Method: constructor', () => {
         describe('Env: no env', () => {
             it('Assert: Error', () => {
@@ -48,21 +82,34 @@ describe('Class: SearchGatewayImpl', () => {
         });
     });
     describe('Method: search', () => {
-        describe('Args: No', () => {
-            it('Assert: No results', async () => {
-                // Arrange
-                const searchGateway: ISearchGateway = createSearchGateway();
-                // @ts-ignore
-                const searchMock: jest.Spy = jest.spyOn(searchGateway.alogoliaAdminIndex, 'search');
-                searchMock.mockImplementationOnce(() => {
-                    return {hits: []}
+        describe('Args: tags [blue]', () => {
+            describe('Data: [tag: red], [tag: red], [tag: blue]', () => {
+                it('Assert: return [tag: blue]', async () => {
+                    // Arrange
+                    const searchGateway: ISearchGateway = createSearchGateway();
+                    spySearch(searchGateway);
+
+                    // Act
+                    const results: Array<ImageEntityImpl> = await searchGateway.search(0, '', ['blue']);
+
+                    // Assert
+                    expect(results).toHaveLength(1);
                 });
+            });
+        });
+        describe('Args: id 1', () => {
+            describe('Data: [id: 1], [id: 2], [id: 3]', () => {
+                it('Assert: return [id: 1]', async () => {
+                    // Arrange
+                    const searchGateway: ISearchGateway = createSearchGateway();
+                    spyGetObject(searchGateway);
 
-                // Act
-                const results: Array<ImageEntityImpl> = await searchGateway.search(0, '', []);
+                    // Act
+                    const results: Array<ImageEntityImpl> = await searchGateway.search(1, '', []);
 
-                // Assert
-                // TBD
+                    // Assert
+                    expect(results).toHaveLength(1);
+                });
             });
         });
     });
