@@ -1,13 +1,27 @@
 export default class AlgoliaIndexMock {
     search(query: any): any {
-        const result: { hits: any } = {hits: []};
-        const hitsData: Array<{ tag: string }> = [{tag: 'red'}, {tag: 'red'}, {tag: 'blue'}];
+        const result: { hits: any, nbHits: number } = {hits: [], nbHits: 0};
+        const hitsData: Array<{ tags: string }> = [{tags: 'red'}, {tags: 'red'}, {tags: 'blue'}];
+        if (Object.keys(query).length === 0) {
+            result.hits = hitsData;
+            return result;
+        }
+        if (query.length === 1) {
+            result.hits.push(hitsData[query.offset]);
+            result.nbHits = 1;
+            return result;
+        }
         const filter: Array<string> = query.facetFilters;
+        if (!filter) {
+            result.hits = hitsData;
+            return result;
+        }
         for (let i = 0; i < filter.length; i++) {
             const value: string = filter[i].split(':')[1];
             for (let j = 0; j < hitsData.length; j++) {
-                if (hitsData[j].tag === value) {
+                if (hitsData[j].tags === value) {
                     result.hits.push(hitsData[j]);
+                    result.nbHits++;
                 }
             }
         }
@@ -25,15 +39,15 @@ export default class AlgoliaIndexMock {
         return result;
     }
 
-    waitTask(): any {
-
+    waitTask(i: any): void {
+        return;
     }
 
-    setSettings(): any {
-
+    setSettings(s: any): any {
+        return {taskID: 1};
     }
 
     getSettings(): any {
-
+        return [];
     }
 }

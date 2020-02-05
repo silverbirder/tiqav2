@@ -52,8 +52,8 @@ describe('Class: SearchGatewayImpl', () => {
     });
     describe('Method: search', () => {
         describe('Args: tags [blue]', () => {
-            describe('Data: [tag: red], [tag: red], [tag: blue]', () => {
-                it('Assert: return [tag: blue]', async () => {
+            describe('Data: [tags: red], [tags: red], [tags: blue]', () => {
+                it('Assert: return [tags: blue]', async () => {
                     // Arrange
                     const searchGateway: ISearchGateway = createSearchGateway();
 
@@ -81,30 +81,50 @@ describe('Class: SearchGatewayImpl', () => {
         });
     });
     describe('Method: newest', () => {
-        describe('Args:', () => {
-            it('Assert:', async () => {
-                // Arrange
-                const searchGateway: ISearchGateway = createSearchGateway();
+        describe('Args: No', () => {
+            describe('Data: [id: 1], [id: 2], [id: 3]', () => {
+                it('Assert: return all data', async () => {
+                    // Arrange
+                    const searchGateway: ISearchGateway = createSearchGateway();
 
-                // Act
-                // const results: Array<ImageEntityImpl> = await searchGateway.newest();
+                    // Act
+                    const results: Array<ImageEntityImpl> = await searchGateway.newest();
 
-                // Assert
-                // expect(results).toHaveLength(1);
+                    // Assert
+                    expect(results).toHaveLength(3);
+                });
             });
         });
     });
     describe('Method: random', () => {
-        describe('Args:', () => {
-            it('Assert:', () => {
+        describe('Args: No', () => {
+            describe('Data: [id: 1], [id: 2], [id: 3]', () => {
+                it('Assert: return single data', async () => {
+                    // Arrange
+                    const searchGateway: ISearchGateway = createSearchGateway();
 
+                    // Act
+                    const results: Array<ImageEntityImpl> = await searchGateway.random();
+
+                    // Assert
+                    expect(results).toHaveLength(1);
+                });
             });
         });
     });
     describe('Method: tags', () => {
-        describe('Args:', () => {
-            it('Assert:', () => {
+        describe('Args: No', () => {
+            describe('Data: [tags: red], [tags: red], [tags: blue]', () => {
+                it('Assert: return 2 [tags: red, blue]', async () => {
+                    // Arrange
+                    const searchGateway: ISearchGateway = createSearchGateway();
 
+                    // Act
+                    const results: Array<string> = await searchGateway.tags(0, '');
+
+                    // Assert
+                    expect(results).toHaveLength(2);
+                });
             });
         });
     });
