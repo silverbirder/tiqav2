@@ -44,14 +44,12 @@
     "@types/jest": "^24.0.25",
     "@types/jest-environment-puppeteer": "^4.3.1",
     "@types/node": "^12.12.14",
-    "@types/puppeteer": "^2.0.0",
     "@types/request-promise": "^4.1.45"
   },
   "devDependencies": {
     "jest": "^24.9.0",
     "jest-puppeteer": "^4.4.0",
     "nodemon": "^2.0.1",
-    "puppeteer": "^2.0.0",
     "ts-jest": "^24.2.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "webpack-dev-server": "^3.9.0"
