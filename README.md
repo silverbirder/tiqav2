@@ -4,13 +4,13 @@ Tiqav2 is the platform that provide Searching Image API.
 
 ### 1. Save the image
 ```bash
-$ curl https://<YOUR SITE>/api/images.json?url=https://i.imgur.com/xjVvv1C.jpg&si=1
+$ curl https://<YOUR SITE>/api/images.json?url=https://res.cloudinary.com/silverbirder/image/upload/v1580997144/LGTM/golia.png&si=1
 [
  {
   id: 35263091,
   sourceURL: "https://res.cloudinary.com/<YOUR NAME>/image/upload/v1580980156/tljq6o8viduq6bx9mdnc.jpg",
   tags: [ ],
-  quote: "LGTM!! ",
+  quote: "LGTM",
   ext: [
         "gif",
         "png",
@@ -31,7 +31,7 @@ $ curl https://<YOUR SITE>/api/search.json/?q=LGTM
   id: 35263091,
   sourceURL: "https://res.cloudinary.com/<YOUR NAME>/image/upload/v1580980156/tljq6o8viduq6bx9mdnc.jpg",
   tags: [ ],
-  quote: "LGTM!! ",
+  quote: "LGTM",
   ext: [
         "gif",
         "png",
@@ -47,7 +47,7 @@ $ curl https://<YOUR SITE>/api/search.json/?q=LGTM
 ## 3. See the image  
 Access the `https://<YOUR SITE>/api/35263091.jpg` on browser.
 
-![https://<YOUR SITE>/api/35263091.jpg](https://i.imgur.com/xjVvv1C.jpg)
+![https://<YOUR SITE>/api/35263091.jpg](https://res.cloudinary.com/silverbirder/image/upload/v1580997144/LGTM/golia.png)
 
 # Setup
 Use the some services.
