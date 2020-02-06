@@ -2,6 +2,53 @@
 Tiqav2 is the platform that provide Searching Image API.
 (inspired from [tiqav](http://dev.tiqav.com/))
 
+### 1. Save the image
+```bash
+$ curl https://<YOUR SITE>/api/images.json?url=https://i.imgur.com/xjVvv1C.jpg&si=1
+[
+ {
+  id: 35263091,
+  sourceURL: "https://res.cloudinary.com/<YOUR NAME>/image/upload/v1580980156/tljq6o8viduq6bx9mdnc.jpg",
+  tags: [ ],
+  quote: "LGTM!! ",
+  ext: [
+        "gif",
+        "png",
+        "jpg",
+...
+        "heic"
+        ],
+  updateDate: "2020/2/6 9:09:16 AM"
+ }
+]
+```
+
+### 2. Search the image
+```bash
+$ curl https://<YOUR SITE>/api/search.json/?q=LGTM
+[
+ {
+  id: 35263091,
+  sourceURL: "https://res.cloudinary.com/<YOUR NAME>/image/upload/v1580980156/tljq6o8viduq6bx9mdnc.jpg",
+  tags: [ ],
+  quote: "LGTM!! ",
+  ext: [
+        "gif",
+        "png",
+        "jpg",
+...
+        "heic"
+        ],
+  updateDate: "2020/2/6 9:09:16 AM"
+ }
+]
+```
+
+## 3. See the image  
+Access the `https://<YOUR SITE>/api/35263091.jpg` on browser.
+
+![https://<YOUR SITE>/api/35263091.jpg](https://i.imgur.com/xjVvv1C.jpg)
+
 # Setup
 Use the some services.
 1. [algolia](https://www.algolia.com/)
